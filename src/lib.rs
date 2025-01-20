@@ -26,7 +26,8 @@ trait BumpaloExt {
 }
 
 type Bump<const MIN_ALIGN: usize, const UP: bool> = bump_scope::Bump<Global, MIN_ALIGN, UP>;
-type MutBumpVec<'a, T, const MIN_ALIGN: usize, const UP: bool> = bump_scope::MutBumpVec<T, &'a mut Bump<MIN_ALIGN, UP>>;
+type MutBumpVec<'a, T, const MIN_ALIGN: usize, const UP: bool> =
+    bump_scope::MutBumpVec<T, &'a mut Bump<MIN_ALIGN, UP>>;
 type MutBumpVecRev<'a, T, const MIN_ALIGN: usize, const UP: bool> =
     bump_scope::MutBumpVecRev<T, &'a mut Bump<MIN_ALIGN, UP>>;
 
@@ -506,67 +507,102 @@ pub mod alloc_iter_u32 {
     }
 
     pub fn try_up<'a>(bump: &'a Bump<1, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_up_a<'a>(bump: &'a Bump<4, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_down<'a>(bump: &'a Bump<1, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_down_a<'a>(bump: &'a Bump<4, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_exact_up<'a>(bump: &'a Bump<1, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_exact(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_exact(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_exact_up_a<'a>(bump: &'a Bump<4, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_exact(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_exact(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_exact_down<'a>(bump: &'a Bump<1, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_exact(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_exact(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_exact_down_a<'a>(bump: &'a Bump<4, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_exact(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_exact(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_mut_up<'a>(bump: &'a mut Bump<1, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_mut(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_mut_up_a<'a>(bump: &'a mut Bump<4, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_mut(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_mut_down<'a>(bump: &'a mut Bump<1, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_mut(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_mut_down_a<'a>(bump: &'a mut Bump<4, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_mut(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_mut_rev_up<'a>(bump: &'a mut Bump<1, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_mut_rev(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_mut_rev_up_a<'a>(bump: &'a mut Bump<4, true>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_mut_rev(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn try_mut_rev_down<'a>(bump: &'a mut Bump<1, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied()).ok().map(BumpBox::into_ref)
+        bump.try_alloc_iter_mut_rev(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
-    pub fn try_mut_rev_down_a<'a>(bump: &'a mut Bump<4, false>, slice: &[u32]) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied()).ok().map(BumpBox::into_ref)
+    pub fn try_mut_rev_down_a<'a>(
+        bump: &'a mut Bump<4, false>,
+        slice: &[u32],
+    ) -> Option<&'a [u32]> {
+        bump.try_alloc_iter_mut_rev(slice.iter().copied())
+            .ok()
+            .map(BumpBox::into_ref)
     }
 
     pub fn bumpalo<'a>(bump: &'a bumpalo::Bump, slice: &[u32]) -> &'a [u32] {
@@ -648,19 +684,23 @@ pub mod alloc_fmt {
     }
 
     pub fn mut_up<'a>(bump: &'a mut Bump<1, true>, display: &str) -> &'a str {
-        bump.alloc_fmt_mut(format_args!("begin{display}end")).into_ref()
+        bump.alloc_fmt_mut(format_args!("begin{display}end"))
+            .into_ref()
     }
 
     pub fn mut_up_a<'a>(bump: &'a mut Bump<4, true>, display: &str) -> &'a str {
-        bump.alloc_fmt_mut(format_args!("begin{display}end")).into_ref()
+        bump.alloc_fmt_mut(format_args!("begin{display}end"))
+            .into_ref()
     }
 
     pub fn mut_down<'a>(bump: &'a mut Bump<1, false>, display: &str) -> &'a str {
-        bump.alloc_fmt_mut(format_args!("begin{display}end")).into_ref()
+        bump.alloc_fmt_mut(format_args!("begin{display}end"))
+            .into_ref()
     }
 
     pub fn mut_down_a<'a>(bump: &'a mut Bump<4, false>, display: &str) -> &'a str {
-        bump.alloc_fmt_mut(format_args!("begin{display}end")).into_ref()
+        bump.alloc_fmt_mut(format_args!("begin{display}end"))
+            .into_ref()
     }
 
     pub fn try_up<'a>(bump: &'a Bump<1, true>, display: &str) -> Option<&'a str> {
