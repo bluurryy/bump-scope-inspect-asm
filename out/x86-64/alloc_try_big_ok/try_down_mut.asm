@@ -64,7 +64,7 @@ inspect_asm::alloc_try_big_ok::try_down_mut:
 .LBB0_4:
 	mov rdi, r14
 	mov r13, rdx
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::prepare_allocation_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::prepare_allocation_in_another_chunk@GOTPCREL]
 	mov rdx, r13
 	mov r13, rax
 	test rax, rax

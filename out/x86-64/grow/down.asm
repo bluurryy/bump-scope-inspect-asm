@@ -36,7 +36,7 @@ inspect_asm::grow::down:
 	neg r14
 	and r14, r9
 	cmp r14, qword ptr [rax + 8]
-	jb .LBB0_6
+	jb .LBB0_7
 	mov r15, rdi
 	lea rax, [r14 + rbx]
 	mov rdi, r14
@@ -64,27 +64,26 @@ inspect_asm::grow::down:
 	mov rsi, r8
 	mov rdx, rbx
 	mov r15, rcx
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk@GOTPCREL]
 	mov rsi, r14
 	mov rcx, r15
 	mov r14, rax
 	test rax, rax
 	jne .LBB0_0
-	jmp .LBB0_7
 .LBB0_6:
+	xor r14d, r14d
+	jmp .LBB0_4
+.LBB0_7:
 	mov r12, rsi
 	mov r15, rcx
 	mov rsi, r8
 	mov rdx, rbx
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk@GOTPCREL]
 	test rax, rax
-	je .LBB0_7
+	je .LBB0_6
 	mov r14, rax
 	mov rdi, rax
 	mov rsi, r12
 	mov rdx, r15
 	call qword ptr [rip + memcpy@GOTPCREL]
-	jmp .LBB0_4
-.LBB0_7:
-	xor r14d, r14d
 	jmp .LBB0_4

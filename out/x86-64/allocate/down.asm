@@ -16,7 +16,7 @@ inspect_asm::allocate::down:
 .LBB0_0:
 	push rbx
 	mov rbx, rdx
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk@GOTPCREL]
 	mov rdx, rbx
 	pop rbx
 	ret

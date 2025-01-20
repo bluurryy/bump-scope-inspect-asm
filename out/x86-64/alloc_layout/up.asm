@@ -10,8 +10,10 @@ inspect_asm::alloc_layout::up:
 	mov r8, -1
 	cmovae r8, r9
 	cmp r8, qword ptr [rcx + 8]
-	ja bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk
+	ja .LBB0_0
 	mov qword ptr [rcx], r8
 	add rax, rsi
-	je bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk
+	je .LBB0_0
 	ret
+.LBB0_0:
+	jmp qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk@GOTPCREL]

@@ -67,7 +67,7 @@ inspect_asm::alloc_try_u32::try_up:
 	mov rdi, r14
 	mov r13, r12
 	mov r12, rdx
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov rdx, r12
 	mov r12, r13
 	mov r13, rax

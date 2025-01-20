@@ -18,8 +18,9 @@ inspect_asm::bump_vec_u32::up::try_push:
 	ret
 .LBB0_2:
 	mov ebx, esi
+	mov esi, 1
 	mov r14, rdi
-	call bump_scope::mut_bump_vec::MutBumpVec<T,A>::generic_grow_amortized
+	call qword ptr [rip + bump_scope::mut_bump_vec::MutBumpVec<T,A>::generic_grow_amortized@GOTPCREL]
 	mov ecx, eax
 	mov al, 1
 	test cl, cl

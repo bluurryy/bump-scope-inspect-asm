@@ -13,7 +13,7 @@ inspect_asm::alloc_overaligned_but_size_matches::up:
 	ret
 .LBB0_0:
 	mov ebx, esi
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov esi, ebx
 	mov dword ptr [rax], esi
 	pop rbx

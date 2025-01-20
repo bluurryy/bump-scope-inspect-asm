@@ -72,7 +72,7 @@ inspect_asm::alloc_try_big_ok::up:
 .LBB0_5:
 	mov rdi, r14
 	mov rbx, rdx
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov rdx, rbx
 	mov r13, rax
 	jmp .LBB0_0

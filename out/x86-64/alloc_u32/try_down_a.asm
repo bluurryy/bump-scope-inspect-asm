@@ -12,7 +12,7 @@ inspect_asm::alloc_u32::try_down_a:
 	ret
 .LBB0_1:
 	mov ebx, esi
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov esi, ebx
 	test rax, rax
 	jne .LBB0_0

@@ -25,7 +25,7 @@ inspect_asm::vec_map::grow:
 	jbe .LBB0_1
 	mov rdi, rbx
 	mov rsi, r15
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
 	jmp .LBB0_2
 .LBB0_0:
 	mov eax, 8

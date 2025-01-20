@@ -30,7 +30,7 @@ inspect_asm::vec_map::try_grow:
 .LBB0_0:
 	mov rdi, r14
 	mov rsi, r15
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
 	test rax, rax
 	je .LBB0_5
 .LBB0_1:

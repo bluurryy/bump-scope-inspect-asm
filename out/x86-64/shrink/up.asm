@@ -1,25 +1,23 @@
 inspect_asm::shrink::up:
+	mov rdx, r9
 	mov rax, rsi
-	lea rdx, [r8 - 1]
-	test rdx, rsi
+	lea rsi, [r8 - 1]
+	test rsi, rax
 	jne .LBB0_1
-	lea rsi, [rax + rcx]
-	mov rdx, qword ptr [rdi]
-	cmp rsi, qword ptr [rdx]
+	lea r8, [rax + rcx]
+	mov rsi, qword ptr [rdi]
+	cmp r8, qword ptr [rsi]
 	je .LBB0_0
 	mov rdx, rcx
 	ret
 .LBB0_0:
-	lea rcx, [rax + r9]
-	mov qword ptr [rdx], rcx
-	mov rdx, r9
+	lea rcx, [rax + rdx]
+	mov qword ptr [rsi], rcx
 	ret
 .LBB0_1:
 	push rax
 	mov rsi, rax
-	mov rdx, rcx
-	mov rcx, r8
-	mov r8, r9
-	call bump_scope::allocator::shrink::shrink_unfit
+	mov r9, rdx
+	call qword ptr [rip + bump_scope::allocator::shrink::shrink_unfit@GOTPCREL]
 	add rsp, 8
 	ret

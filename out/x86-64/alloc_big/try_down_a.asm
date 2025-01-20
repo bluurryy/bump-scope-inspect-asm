@@ -19,7 +19,7 @@ inspect_asm::alloc_big::try_down_a:
 	ret
 .LBB0_0:
 	mov rbx, rsi
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	test rax, rax
 	je .LBB0_1
 	mov edx, 512

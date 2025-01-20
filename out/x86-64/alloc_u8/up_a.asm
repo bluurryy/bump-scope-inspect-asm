@@ -13,7 +13,7 @@ inspect_asm::alloc_u8::up_a:
 	ret
 .LBB0_0:
 	mov ebx, esi
-	call bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov esi, ebx
 	mov byte ptr [rax], sil
 	pop rbx
