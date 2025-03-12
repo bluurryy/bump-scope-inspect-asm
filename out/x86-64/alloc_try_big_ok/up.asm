@@ -35,8 +35,8 @@ inspect_asm::alloc_try_big_ok::up:
 	call qword ptr [rip + memcpy@GOTPCREL]
 	mov rax, qword ptr [r14]
 	mov rdx, qword ptr [rax]
-	test byte ptr [r13], 1
-	je .LBB0_2
+	cmp dword ptr [r13], 1
+	jne .LBB0_2
 	mov r12d, dword ptr [r13 + 4]
 	cmp rbx, rdx
 	jne .LBB0_1

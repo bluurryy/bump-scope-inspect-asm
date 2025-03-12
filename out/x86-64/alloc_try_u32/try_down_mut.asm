@@ -19,12 +19,12 @@ inspect_asm::alloc_try_u32::try_down_mut:
 	je .LBB0_4
 .LBB0_0:
 	call rdx
-	mov ebp, edx
 	mov dword ptr [r14], eax
 	mov dword ptr [r14 + 4], edx
 	add r14, 4
-	test eax, eax
+	test al, 1
 	je .LBB0_1
+	mov ebp, edx
 	mov rdi, r12
 	mov rsi, r13
 	call qword ptr [rip + bump_scope::bump_scope_guard::Checkpoint::reset_within_chunk@GOTPCREL]

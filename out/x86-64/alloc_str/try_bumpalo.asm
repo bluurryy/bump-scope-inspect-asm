@@ -5,8 +5,9 @@ inspect_asm::alloc_str::try_bumpalo:
 	mov rbx, rdx
 	mov rax, qword ptr [rdi + 16]
 	mov r14, qword ptr [rax + 32]
-	sub r14, rdx
-	jb .LBB0_2
+	cmp rdx, r14
+	ja .LBB0_2
+	sub r14, rbx
 	cmp r14, qword ptr [rax]
 	jb .LBB0_2
 	mov qword ptr [rax + 32], r14

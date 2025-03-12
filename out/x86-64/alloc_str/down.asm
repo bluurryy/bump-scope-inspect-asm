@@ -7,8 +7,8 @@ inspect_asm::alloc_str::down:
 	mov rbx, qword ptr [rax]
 	mov rcx, rbx
 	sub rcx, qword ptr [rax + 8]
-	cmp rcx, rdx
-	jb .LBB0_1
+	cmp rdx, rcx
+	ja .LBB0_1
 	sub rbx, r14
 	mov qword ptr [rax], rbx
 .LBB0_0:

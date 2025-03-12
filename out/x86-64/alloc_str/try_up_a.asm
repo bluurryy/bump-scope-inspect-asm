@@ -7,8 +7,8 @@ inspect_asm::alloc_str::try_up_a:
 	mov r14, qword ptr [rax]
 	mov rcx, qword ptr [rax + 8]
 	sub rcx, r14
-	cmp rcx, rdx
-	jb .LBB0_2
+	cmp rdx, rcx
+	ja .LBB0_2
 	lea rcx, [rbx + r14]
 	add rcx, 3
 	and rcx, -4

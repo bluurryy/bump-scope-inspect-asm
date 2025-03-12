@@ -10,18 +10,18 @@ inspect_asm::alloc_fmt::down:
 	mov qword ptr [rsp + 56], rax
 	lea rax, [rip + <&T as core::fmt::Display>::fmt]
 	mov qword ptr [rsp + 64], rax
-	lea rax, [rip + .L__unnamed_0]
+	lea rax, [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.25]
 	mov qword ptr [rsp + 72], rax
 	mov qword ptr [rsp + 80], 2
 	mov qword ptr [rsp + 104], 0
 	lea rax, [rsp + 56]
 	mov qword ptr [rsp + 88], rax
 	mov qword ptr [rsp + 96], 1
-	movups xmm0, xmmword ptr [rip + .L__unnamed_1]
+	movups xmm0, xmmword ptr [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.0]
 	movaps xmmword ptr [rsp], xmm0
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdi
-	lea rsi, [rip + .L__unnamed_2]
+	lea rsi, [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.12]
 	mov rdi, rsp
 	lea rdx, [rsp + 72]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
@@ -31,7 +31,7 @@ inspect_asm::alloc_fmt::down:
 	mov rbx, qword ptr [rsp + 8]
 	mov r12, qword ptr [rsp + 24]
 	mov rax, qword ptr [r12]
-	cmp qword ptr [rax], r14
+	cmp r14, qword ptr [rax]
 	jne .LBB0_2
 	mov rax, qword ptr [rsp + 16]
 	add rax, r14
@@ -68,7 +68,7 @@ inspect_asm::alloc_fmt::down:
 	mov rcx, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 24]
 	mov rdx, qword ptr [rdx]
-	cmp qword ptr [rdx], rcx
+	cmp rcx, qword ptr [rdx]
 	jne .LBB0_4
 	add rcx, qword ptr [rsp + 16]
 	mov qword ptr [rdx], rcx

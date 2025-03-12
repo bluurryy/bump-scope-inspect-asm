@@ -31,27 +31,25 @@ inspect_asm::alloc_try_big_ok::try_up_mut:
 	mov rdi, r13
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	lea rax, [r13 + 4]
-	lea r12, [r13 + 512]
-	cmp dword ptr [r13], 0
-	cmovne r12, rax
-	je .LBB0_1
-	mov r13d, dword ptr [rax]
+	cmp dword ptr [r13], 1
+	jne .LBB0_1
+	mov r12d, dword ptr [r13 + 4]
 	mov rdi, r15
 	mov rsi, qword ptr [rsp + 504]
 	call qword ptr [rip + bump_scope::bump_scope_guard::Checkpoint::reset_within_chunk@GOTPCREL]
 	mov qword ptr [r14], r15
-	mov eax, 1
+	mov ecx, 1
 	jmp .LBB0_2
 .LBB0_1:
+	lea rax, [r13 + 512]
 	add r13, 1024
-	mov rax, qword ptr [r14]
-	mov qword ptr [rax], r13
-	xor eax, eax
+	mov rcx, qword ptr [r14]
+	mov qword ptr [rcx], r13
+	xor ecx, ecx
 .LBB0_2:
-	mov dword ptr [rbx], eax
-	mov dword ptr [rbx + 4], r13d
-	mov qword ptr [rbx + 8], r12
+	mov dword ptr [rbx], ecx
+	mov dword ptr [rbx + 4], r12d
+	mov qword ptr [rbx + 8], rax
 .LBB0_3:
 	mov rax, rbx
 	lea rsp, [rbp - 40]

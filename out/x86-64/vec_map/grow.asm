@@ -41,8 +41,8 @@ inspect_asm::vec_map::grow:
 	and rdi, rdx
 	cmp rdi, rcx
 	cmovae rdi, rcx
-	cmp rdi, 18
-	jbe .LBB0_3
+	cmp rdi, 19
+	jb .LBB0_3
 	lea rsi, [r15 + rdx]
 	and rsi, rdx
 	cmp rsi, rcx

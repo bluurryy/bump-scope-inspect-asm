@@ -14,11 +14,12 @@ inspect_asm::grow::bumpalo:
 	je .LBB0_3
 .LBB0_0:
 	mov rax, qword ptr [rdi + 16]
-	mov r14, qword ptr [rax + 32]
-	sub r14, rbx
-	jb .LBB0_4
-	mov rdx, r8
-	neg rdx
+	mov rdx, qword ptr [rax + 32]
+	cmp rbx, rdx
+	ja .LBB0_4
+	sub rdx, rbx
+	mov r14, r8
+	neg r14
 	and r14, rdx
 	cmp r14, qword ptr [rax]
 	jb .LBB0_4

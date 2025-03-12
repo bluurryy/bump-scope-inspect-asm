@@ -22,7 +22,7 @@ inspect_asm::alloc_try_u32::down:
 	mov dword ptr [r13 + 4], edx
 	mov rcx, qword ptr [r14]
 	mov rsi, qword ptr [rcx]
-	test eax, eax
+	test al, 1
 	je .LBB0_2
 	cmp r13, rsi
 	jne .LBB0_1

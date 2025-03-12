@@ -4,8 +4,9 @@ inspect_asm::alloc_str::bumpalo:
 	push rax
 	mov rax, qword ptr [rdi + 16]
 	mov rbx, qword ptr [rax + 32]
+	cmp rdx, rbx
+	ja .LBB0_1
 	sub rbx, rdx
-	jb .LBB0_1
 	cmp rbx, qword ptr [rax]
 	jb .LBB0_1
 	mov qword ptr [rax + 32], rbx

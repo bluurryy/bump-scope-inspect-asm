@@ -20,12 +20,12 @@ inspect_asm::alloc_try_u32::try_up_mut:
 	je .LBB0_4
 .LBB0_0:
 	call rdx
-	mov ebp, edx
 	mov dword ptr [r13], eax
 	lea rcx, [r13 + 4]
 	mov dword ptr [r13 + 4], edx
-	test eax, eax
+	test al, 1
 	je .LBB0_1
+	mov ebp, edx
 	mov rdi, r15
 	mov rsi, r12
 	mov r12, rcx

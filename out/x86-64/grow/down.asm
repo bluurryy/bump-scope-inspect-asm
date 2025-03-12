@@ -7,7 +7,7 @@ inspect_asm::grow::down:
 	mov rbx, r9
 	mov rax, qword ptr [rdi]
 	mov rdx, qword ptr [rax]
-	cmp rdx, rsi
+	cmp rsi, rdx
 	je .LBB0_1
 	xor r9d, r9d
 	sub rdx, rbx

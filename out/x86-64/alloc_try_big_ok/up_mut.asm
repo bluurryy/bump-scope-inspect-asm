@@ -30,8 +30,8 @@ inspect_asm::alloc_try_big_ok::up_mut:
 	mov rdi, r13
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	test byte ptr [r13], 1
-	je .LBB0_1
+	cmp dword ptr [r13], 1
+	jne .LBB0_1
 	mov r12d, dword ptr [r13 + 4]
 	mov rdi, r15
 	mov rsi, qword ptr [rsp + 504]

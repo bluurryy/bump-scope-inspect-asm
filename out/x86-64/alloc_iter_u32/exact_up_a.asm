@@ -1,49 +1,49 @@
 inspect_asm::alloc_iter_u32::exact_up_a:
+	push r15
 	push r14
 	push rbx
-	push rax
 	test rdx, rdx
 	je .LBB0_2
 	mov rax, rdx
 	shr rax, 61
 	jne .LBB0_8
-	lea rcx, [4*rdx]
-	mov r8, qword ptr [rdi]
-	mov rax, qword ptr [r8]
-	mov r9, qword ptr [r8 + 8]
-	sub r9, rax
-	cmp rcx, r9
+	lea rbx, [4*rdx]
+	mov rcx, qword ptr [rdi]
+	mov rax, qword ptr [rcx]
+	mov r8, qword ptr [rcx + 8]
+	sub r8, rax
+	cmp rbx, r8
 	ja .LBB0_7
-	add rcx, rax
-	mov qword ptr [r8], rcx
+	lea rdi, [rbx + rax]
+	mov qword ptr [rcx], rdi
 .LBB0_0:
+	add rbx, -4
+	shr rbx, 2
 	lea rdi, [rdx - 1]
-	movabs r9, 4611686018427387903
-	and r9, rdi
-	cmp r9, rdi
-	cmovae r9, rdi
+	cmp rbx, rdi
+	cmovae rbx, rdi
 	xor ecx, ecx
-	cmp r9, 7
+	cmp rbx, 7
 	jb .LBB0_3
-	mov r10, rax
-	sub r10, rsi
+	mov r9, rax
+	sub r9, rsi
 	mov r8, rsi
-	cmp r10, 32
+	cmp r9, 32
 	jb .LBB0_4
-	inc r9
+	inc rbx
 	movabs rcx, 9223372036854775800
-	and rcx, r9
+	and rcx, rbx
 	lea r8, [rsi + 4*rcx]
-	xor r10d, r10d
+	xor r9d, r9d
 .LBB0_1:
-	movups xmm0, xmmword ptr [rsi + 4*r10]
-	movups xmm1, xmmword ptr [rsi + 4*r10 + 16]
-	movups xmmword ptr [rax + 4*r10], xmm0
-	movups xmmword ptr [rax + 4*r10 + 16], xmm1
-	add r10, 8
-	cmp rcx, r10
+	movups xmm0, xmmword ptr [rsi + 4*r9]
+	movups xmm1, xmmword ptr [rsi + 4*r9 + 16]
+	movups xmmword ptr [rax + 4*r9], xmm0
+	movups xmmword ptr [rax + 4*r9 + 16], xmm1
+	add r9, 8
+	cmp rcx, r9
 	jne .LBB0_1
-	cmp r9, rcx
+	cmp rbx, rcx
 	jne .LBB0_4
 	jmp .LBB0_6
 .LBB0_2:
@@ -68,17 +68,17 @@ inspect_asm::alloc_iter_u32::exact_up_a:
 	jne .LBB0_5
 .LBB0_6:
 	mov rdx, rcx
-	add rsp, 8
 	pop rbx
 	pop r14
+	pop r15
 	ret
 .LBB0_7:
-	mov rbx, rsi
+	mov r14, rsi
 	mov rsi, rdx
-	mov r14, rdx
+	mov r15, rdx
 	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
-	mov rsi, rbx
-	mov rdx, r14
+	mov rsi, r14
+	mov rdx, r15
 	jmp .LBB0_0
 .LBB0_8:
 	call qword ptr [rip + bump_scope::private::capacity_overflow@GOTPCREL]

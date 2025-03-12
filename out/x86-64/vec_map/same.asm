@@ -5,7 +5,7 @@ inspect_asm::vec_map::same:
 	mov rdi, qword ptr [rsi + 16]
 	mov rsi, qword ptr [rsi + 24]
 	test rdx, rdx
-	jle .LBB0_1
+	je .LBB0_1
 	lea r8, [rcx + 4*rdx]
 	mov r9, rcx
 .LBB0_0:

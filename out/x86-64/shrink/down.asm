@@ -2,31 +2,28 @@ inspect_asm::shrink::down:
 	push r15
 	push r14
 	push rbx
+	mov rbx, r9
 	lea rax, [r8 - 1]
 	test rax, rsi
-	jne .LBB0_3
+	jne .LBB0_4
 	mov rax, qword ptr [rdi]
-	cmp qword ptr [rax], rsi
+	cmp rsi, qword ptr [rax]
 	je .LBB0_0
-	mov rdx, rcx
 	mov rax, rsi
-	pop rbx
-	pop r14
-	pop r15
-	ret
+	mov rbx, rcx
+	jmp .LBB0_3
 .LBB0_0:
-	mov rbx, rdi
+	mov r14, rdi
 	add rcx, rsi
 	xor eax, eax
-	sub rcx, r9
+	sub rcx, rbx
 	cmovae rax, rcx
 	neg r8
 	and r8, rax
-	lea rax, [rsi + r9]
-	mov r14, r8
+	lea rax, [rbx + rsi]
+	mov r15, r8
 	mov rdi, r8
-	mov r15, r9
-	mov rdx, r9
+	mov rdx, rbx
 	cmp rax, r8
 	jbe .LBB0_1
 	call qword ptr [rip + memmove@GOTPCREL]
@@ -34,17 +31,18 @@ inspect_asm::shrink::down:
 .LBB0_1:
 	call qword ptr [rip + memcpy@GOTPCREL]
 .LBB0_2:
-	mov rcx, qword ptr [rbx]
-	mov rax, r14
-	mov qword ptr [rcx], r14
-	mov rdx, r15
-	pop rbx
-	pop r14
-	pop r15
-	ret
+	mov rcx, qword ptr [r14]
+	mov rax, r15
+	mov qword ptr [rcx], r15
 .LBB0_3:
-	call qword ptr [rip + bump_scope::allocator::shrink::shrink_unfit@GOTPCREL]
+	mov rdx, rbx
 	pop rbx
 	pop r14
 	pop r15
 	ret
+.LBB0_4:
+	mov r9, rbx
+	pop rbx
+	pop r14
+	pop r15
+	jmp qword ptr [rip + bump_scope::allocator::shrink::shrink_unfit@GOTPCREL]

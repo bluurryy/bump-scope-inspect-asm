@@ -15,7 +15,7 @@ inspect_asm::bump_vec_u32::down::try_with_capacity:
 	pop r14
 	ret
 .LBB0_1:
-	movups xmm0, xmmword ptr [rip + .L__unnamed_0]
+	movups xmm0, xmmword ptr [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.1]
 	movups xmmword ptr [rax], xmm0
 	mov qword ptr [rax + 16], 0
 	mov qword ptr [rax + 24], rdx
@@ -24,19 +24,21 @@ inspect_asm::bump_vec_u32::down::try_with_capacity:
 	shl rsi, 2
 	mov rdi, qword ptr [rdx]
 	mov rcx, qword ptr [rdi]
-	mov rdi, qword ptr [rdi + 8]
+	mov r9, rsi
+	mov rsi, qword ptr [rdi + 8]
 	and rcx, -4
-	mov r8, rcx
-	sub r8, rdi
-	cmp rsi, r8
+	mov rdi, rcx
+	sub rdi, rsi
+	mov r8, r9
+	cmp r9, rdi
 	ja .LBB0_4
-	add rdi, 3
-	and rdi, -4
+	add rsi, 3
+	and rsi, -4
 	je .LBB0_4
 .LBB0_3:
-	sub rcx, rdi
+	sub rcx, rsi
 	shr rcx, 2
-	mov qword ptr [rax], rdi
+	mov qword ptr [rax], rsi
 	mov qword ptr [rax + 8], 0
 	mov qword ptr [rax + 16], rcx
 	mov qword ptr [rax + 24], rdx
@@ -45,16 +47,15 @@ inspect_asm::bump_vec_u32::down::try_with_capacity:
 	pop r14
 	ret
 .LBB0_4:
-	mov rcx, rsi
 	mov esi, 4
 	mov rdi, rdx
 	mov rbx, rdx
-	mov rdx, rcx
+	mov rdx, r8
 	mov r14, rax
 	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::prepare_allocation_range_in_another_chunk@GOTPCREL]
-	mov rdi, rax
+	mov rsi, rax
 	mov rax, r14
-	test rdi, rdi
+	test rsi, rsi
 	je .LBB0_0
 	mov rcx, rdx
 	mov rdx, rbx

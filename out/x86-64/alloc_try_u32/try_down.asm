@@ -14,39 +14,41 @@ inspect_asm::alloc_try_u32::try_down:
 	and r13, -4
 	add r13, -8
 	cmp r13, qword ptr [r15 + 8]
-	jb .LBB0_4
+	jb .LBB0_5
 	mov qword ptr [r15], r13
 	test r13, r13
-	je .LBB0_4
+	je .LBB0_5
 .LBB0_0:
 	call rdx
+	mov ebp, edx
 	mov dword ptr [r13], eax
-	lea rbp, [r13 + 4]
+	lea rdi, [r13 + 4]
 	mov dword ptr [r13 + 4], edx
 	mov rcx, qword ptr [r14]
-	mov rdi, qword ptr [rcx]
-	test eax, eax
+	mov rdx, qword ptr [rcx]
+	test al, 1
 	je .LBB0_1
 	mov rsi, r12
 	mov r12d, 1
-	cmp r13, rdi
-	jne .LBB0_2
+	cmp r13, rdx
+	jne .LBB0_3
+	mov r13, rdi
 	mov rdi, r15
-	mov r13d, edx
 	call qword ptr [rip + bump_scope::bump_scope_guard::Checkpoint::reset_within_chunk@GOTPCREL]
-	mov edx, r13d
+	mov rdi, r13
 	mov qword ptr [r14], r15
-	jmp .LBB0_2
+	jmp .LBB0_3
 .LBB0_1:
 	xor r12d, r12d
-	cmp r13, rdi
+	cmp r13, rdx
 	jne .LBB0_2
-	mov qword ptr [rcx], rbp
+	mov qword ptr [rcx], rdi
 .LBB0_2:
-	mov dword ptr [rbx], r12d
-	mov dword ptr [rbx + 4], edx
-	mov qword ptr [rbx + 8], rbp
 .LBB0_3:
+	mov dword ptr [rbx], r12d
+	mov dword ptr [rbx + 4], ebp
+	mov qword ptr [rbx + 8], rdi
+.LBB0_4:
 	mov rax, rbx
 	add rsp, 8
 	pop rbx
@@ -56,7 +58,7 @@ inspect_asm::alloc_try_u32::try_down:
 	pop r15
 	pop rbp
 	ret
-.LBB0_4:
+.LBB0_5:
 	mov rdi, r14
 	mov r13, r12
 	mov r12, rdx
@@ -67,4 +69,4 @@ inspect_asm::alloc_try_u32::try_down:
 	test rax, rax
 	jne .LBB0_0
 	mov dword ptr [rbx], 2
-	jmp .LBB0_3
+	jmp .LBB0_4

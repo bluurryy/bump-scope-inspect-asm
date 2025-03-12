@@ -14,13 +14,13 @@ inspect_asm::alloc_try_u32::up_mut:
 	lea r13, [r12 + 3]
 	and r13, -4
 	sub rax, r13
-	cmp rax, 7
-	jbe .LBB0_3
+	cmp rax, 8
+	jb .LBB0_3
 .LBB0_0:
 	call rdx
 	mov dword ptr [r13], eax
 	mov dword ptr [r13 + 4], edx
-	test eax, eax
+	test al, 1
 	je .LBB0_1
 	mov ebp, edx
 	mov rdi, r15

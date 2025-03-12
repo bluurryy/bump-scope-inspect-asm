@@ -6,7 +6,7 @@ inspect_asm::vec_map::try_shrink:
 	mov r8, qword ptr [rsi + 16]
 	mov rsi, qword ptr [rsi + 24]
 	test rdi, rdi
-	jle .LBB0_3
+	je .LBB0_3
 	push r15
 	push r14
 	push rbx

@@ -13,9 +13,9 @@ inspect_asm::grow::up:
 	or r11, r10
 	jne .LBB0_0
 	sub rdx, rsi
-	cmp rdx, rbx
-	jb .LBB0_6
-	lea rcx, [rsi + rbx]
+	cmp rbx, rdx
+	ja .LBB0_6
+	lea rcx, [rbx + rsi]
 	mov qword ptr [rax], rcx
 	jmp .LBB0_3
 .LBB0_0:

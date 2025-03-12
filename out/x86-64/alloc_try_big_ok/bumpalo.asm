@@ -29,8 +29,8 @@ inspect_asm::alloc_try_big_ok::bumpalo:
 	mov rdi, r14
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	test byte ptr [r14], 1
-	je .LBB0_3
+	cmp dword ptr [r14], 1
+	jne .LBB0_3
 	mov rax, qword ptr [rsp + 504]
 	mov rax, qword ptr [rax + 16]
 	cmp qword ptr [rax + 32], r14

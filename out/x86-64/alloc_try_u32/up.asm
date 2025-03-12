@@ -14,8 +14,8 @@ inspect_asm::alloc_try_u32::up:
 	lea r13, [r12 + 3]
 	and r13, -4
 	sub rax, r13
-	cmp rax, 7
-	jbe .LBB0_5
+	cmp rax, 8
+	jb .LBB0_5
 	lea rax, [r13 + 8]
 	mov qword ptr [r15], rax
 .LBB0_0:
@@ -26,7 +26,7 @@ inspect_asm::alloc_try_u32::up:
 	mov dword ptr [r13 + 4], edx
 	mov rcx, qword ptr [r14]
 	mov rsi, qword ptr [rcx]
-	test eax, eax
+	test al, 1
 	je .LBB0_2
 	cmp rbp, rsi
 	jne .LBB0_1

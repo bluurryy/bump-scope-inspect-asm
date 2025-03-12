@@ -19,7 +19,7 @@ inspect_asm::alloc_iter_u32::try_down_a:
 	mov eax, 4
 	xor ebx, ebx
 	mov rcx, qword ptr [rdi]
-	cmp qword ptr [rcx], rax
+	cmp rax, qword ptr [rcx]
 	jne .LBB0_11
 	jmp .LBB0_8
 .LBB0_2:
@@ -68,7 +68,7 @@ inspect_asm::alloc_iter_u32::try_down_a:
 	mov rax, qword ptr [rsp + 8]
 	mov rdi, qword ptr [rsp + 32]
 	mov rcx, qword ptr [rdi]
-	cmp qword ptr [rcx], rax
+	cmp rax, qword ptr [rcx]
 	jne .LBB0_11
 .LBB0_8:
 	mov r15, rdi
@@ -119,18 +119,19 @@ inspect_asm::alloc_iter_u32::try_down_a:
 	mov rcx, qword ptr [rsp + 8]
 	mov rax, qword ptr [rsp + 32]
 	mov rax, qword ptr [rax]
-	cmp qword ptr [rax], rcx
+	cmp rcx, qword ptr [rax]
 	jne .LBB0_0
 	mov rdx, qword ptr [rsp + 24]
 	lea rcx, [rcx + 4*rdx]
 	add rcx, 3
 	and rcx, -4
 	mov qword ptr [rax], rcx
-	jmp .LBB0_0
+	xor eax, eax
+	jmp .LBB0_11
 	mov rdx, qword ptr [rsp + 8]
 	mov rcx, qword ptr [rsp + 32]
 	mov rcx, qword ptr [rcx]
-	cmp qword ptr [rcx], rdx
+	cmp rdx, qword ptr [rcx]
 	jne .LBB0_14
 	mov rsi, qword ptr [rsp + 24]
 	lea rdx, [rdx + 4*rsi]
