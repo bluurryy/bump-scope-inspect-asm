@@ -4,8 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-bump-scope = { version = "0.16.0" }
-bumpalo = { version = "3.16.0", features = ["allocator-api2"] }
+bump-scope = { version = "0.16.5" }
+bumpalo = { version = "3.17.0", features = ["allocator-api2"] }
 
 # [patch.crates-io]
-# noise-functions = { path = "../noise-functions" }
+# bump-scope = { path = "../bump-scope" }
