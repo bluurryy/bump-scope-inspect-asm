@@ -9,18 +9,18 @@ inspect_asm::alloc_fmt::try_mut_down:
 	mov qword ptr [rsp + 48], rax
 	lea rax, [rip + <&T as core::fmt::Display>::fmt]
 	mov qword ptr [rsp + 56], rax
-	lea rax, [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.25]
+	lea rax, [rip + .Lanon.facade.0]
 	mov qword ptr [rsp + 64], rax
 	mov qword ptr [rsp + 72], 2
 	mov qword ptr [rsp + 96], 0
 	lea rax, [rsp + 48]
 	mov qword ptr [rsp + 80], rax
 	mov qword ptr [rsp + 88], 1
-	movups xmm0, xmmword ptr [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.0]
+	movups xmm0, xmmword ptr [rip + .Lanon.facade.1]
 	movaps xmmword ptr [rsp], xmm0
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdi
-	lea rsi, [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.10]
+	lea rsi, [rip + .Lanon.facade.2]
 	mov rdi, rsp
 	lea rdx, [rsp + 64]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]

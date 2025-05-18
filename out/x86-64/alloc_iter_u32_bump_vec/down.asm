@@ -6,7 +6,7 @@ inspect_asm::alloc_iter_u32_bump_vec::down:
 	push r12
 	push rbx
 	sub rsp, 40
-	movups xmm0, xmmword ptr [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.1]
+	movups xmm0, xmmword ptr [rip + .Lanon.facade.0]
 	movaps xmmword ptr [rsp], xmm0
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdi

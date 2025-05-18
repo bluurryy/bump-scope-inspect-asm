@@ -80,7 +80,7 @@ inspect_asm::alloc_iter_u32::bumpalo:
 .LBB0_7:
 	call qword ptr [rip + bumpalo::oom@GOTPCREL]
 .LBB0_8:
-	lea rdi, [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.18]
-	lea rdx, [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.20]
+	lea rdi, [rip + .Lanon.facade.0]
+	lea rdx, [rip + .Lanon.facade.1]
 	mov esi, 34
 	call qword ptr [rip + core::option::expect_failed@GOTPCREL]

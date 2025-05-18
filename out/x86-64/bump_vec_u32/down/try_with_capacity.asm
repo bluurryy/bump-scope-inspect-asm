@@ -15,7 +15,7 @@ inspect_asm::bump_vec_u32::down::try_with_capacity:
 	pop r14
 	ret
 .LBB0_1:
-	movups xmm0, xmmword ptr [rip + .Lanon.f7b4eb168cdedf3ee8fbb41abeb83042.1]
+	movups xmm0, xmmword ptr [rip + .Lanon.facade.0]
 	movups xmmword ptr [rax], xmm0
 	mov qword ptr [rax + 16], 0
 	mov qword ptr [rax + 24], rdx

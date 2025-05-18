@@ -1,6 +1,7 @@
 # This was written for nushell version 0.100.0 and cargo-show-asm version 0.2.30
 
 let MARKER_UNDERSCORE = "XXXXX"
+let MARKER_DOT = "YYYYY"
 
 def map-to-index [] {
     uniq
@@ -39,15 +40,19 @@ def replace-label-with-function-index [function_map, map, prefix: string] {
     $content
 }
 
-def replace-label [map, prefix: string] {
+def replace-anons [] {
     mut content = $in
 
-    for $item in ($map | transpose old_index new_index) {
-        let old_index = $item.old_index
-        let new_index = $item.new_index | into string
-        let old_re = '\.' + $prefix + '_' + $old_index + '\b'
-        let new_re = "." + $prefix + $MARKER_UNDERSCORE + $new_index
-        $content = ($content | str replace -a --regex $old_re $new_re)
+    let anons = $content | parse --regex '(?<full>\.Lanon\.(?:[a-z0-9]+)\.(?<i>[0-9]+))'
+    let map_to_index = $anons | get i | map-to-index
+
+    for anon in $anons {
+        let i = $map_to_index | get $anon.i
+
+        let old = $anon.full
+        let new = $'.Lanon.facade.($i)' | str replace '.' $MARKER_DOT
+
+        $content = ($content | str replace -a $old $new)
     }
 
     $content
@@ -65,18 +70,14 @@ def simplify [] {
     | flatten
     | map-to-index
 
-    let unnameds = $content
-    | parse --regex '\.L__unnamed_(?<i>[0-9]+)'
-    | get i
-    | map-to-index
-
     return (
         $content
         | replace-label-with-function-index $function_map $lbbs "LBB"
         | replace-label-with-function-index $function_map $ljtis "LJTI"
         | replace-label-with-function-index $function_map $lcpis "LCPI"
-        | replace-label $unnameds "L__unnamed"
+        | replace-anons
         | str replace -a $MARKER_UNDERSCORE "_"
+        | str replace -a $MARKER_DOT "."
     )
 }
 
