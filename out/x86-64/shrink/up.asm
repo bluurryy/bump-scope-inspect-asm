@@ -17,4 +17,4 @@ inspect_asm::shrink::up:
 	mov rdx, rcx
 	ret
 .LBB0_1:
-	jmp qword ptr [rip + bump_scope::allocator::shrink::shrink_unfit@GOTPCREL]
+	jmp qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit@GOTPCREL]

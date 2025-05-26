@@ -1,13 +1,13 @@
-#![allow(non_camel_case_types)]
-#![allow(clippy::missing_safety_doc)]
-#![allow(unused_imports)]
+#![allow(
+    non_camel_case_types,
+    unused_imports,
+    clippy::mut_from_ref,
+    clippy::missing_safety_doc
+)]
 
 use std::{alloc::Layout, ptr::NonNull};
 
-use bump_scope::{
-    allocator_api2::alloc::{AllocError, Allocator, Global},
-    BumpBox,
-};
+use bump_scope::BumpBox;
 
 #[derive(Clone, Copy)]
 #[repr(align(512))]
@@ -25,7 +25,8 @@ trait BumpaloExt {
     fn try_alloc_slice_clone<T: Clone>(&self, value: &[T]) -> Result<&mut [T], bumpalo::AllocErr>;
 }
 
-type Bump<const MIN_ALIGN: usize, const UP: bool> = bump_scope::Bump<Global, MIN_ALIGN, UP>;
+type Bump<const MIN_ALIGN: usize, const UP: bool> =
+    bump_scope::Bump<bump_scope::alloc::Global, MIN_ALIGN, UP>;
 type MutBumpVec<'a, T, const MIN_ALIGN: usize, const UP: bool> =
     bump_scope::MutBumpVec<T, &'a mut Bump<MIN_ALIGN, UP>>;
 type MutBumpVecRev<'a, T, const MIN_ALIGN: usize, const UP: bool> =
@@ -304,16 +305,25 @@ pub mod alloc_with_drop {
 pub mod allocate {
     use super::*;
 
-    pub fn up(bump: &Bump<1, true>, layout: Layout) -> Result<NonNull<[u8]>, AllocError> {
-        bump.allocate(layout)
+    pub fn up(
+        bump: &Bump<1, true>,
+        layout: Layout,
+    ) -> Result<NonNull<[u8]>, bump_scope::alloc::AllocError> {
+        bump_scope::alloc::Allocator::allocate(bump, layout)
     }
 
-    pub fn down(bump: &Bump<1, false>, layout: Layout) -> Result<NonNull<[u8]>, AllocError> {
-        bump.allocate(layout)
+    pub fn down(
+        bump: &Bump<1, false>,
+        layout: Layout,
+    ) -> Result<NonNull<[u8]>, bump_scope::alloc::AllocError> {
+        bump_scope::alloc::Allocator::allocate(bump, layout)
     }
 
-    pub fn bumpalo(bump: &bumpalo::Bump, layout: Layout) -> Result<NonNull<[u8]>, AllocError> {
-        bump.allocate(layout)
+    pub fn bumpalo(
+        bump: &bumpalo::Bump,
+        layout: Layout,
+    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
+        allocator_api2::alloc::Allocator::allocate(&bump, layout)
     }
 }
 
@@ -321,15 +331,15 @@ pub mod deallocate {
     use super::*;
 
     pub unsafe fn up(bump: &Bump<1, true>, ptr: NonNull<u8>, layout: Layout) {
-        bump.deallocate(ptr, layout)
+        bump_scope::alloc::Allocator::deallocate(bump, ptr, layout)
     }
 
     pub unsafe fn down(bump: &Bump<1, false>, ptr: NonNull<u8>, layout: Layout) {
-        bump.deallocate(ptr, layout)
+        bump_scope::alloc::Allocator::deallocate(bump, ptr, layout)
     }
 
     pub unsafe fn bumpalo(bump: &bumpalo::Bump, ptr: NonNull<u8>, layout: Layout) {
-        bump.deallocate(ptr, layout)
+        allocator_api2::alloc::Allocator::deallocate(&bump, ptr, layout)
     }
 }
 
@@ -341,8 +351,8 @@ pub mod grow {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, AllocError> {
-        bump.grow(ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, bump_scope::alloc::AllocError> {
+        bump_scope::alloc::Allocator::grow(bump, ptr, old_layout, new_layout)
     }
 
     pub unsafe fn down(
@@ -350,8 +360,8 @@ pub mod grow {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, AllocError> {
-        bump.grow(ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, bump_scope::alloc::AllocError> {
+        bump_scope::alloc::Allocator::grow(bump, ptr, old_layout, new_layout)
     }
 
     pub unsafe fn bumpalo(
@@ -359,8 +369,8 @@ pub mod grow {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, AllocError> {
-        bump.grow(ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
+        allocator_api2::alloc::Allocator::grow(&bump, ptr, old_layout, new_layout)
     }
 }
 
@@ -372,8 +382,8 @@ pub mod shrink {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, AllocError> {
-        bump.shrink(ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, bump_scope::alloc::AllocError> {
+        bump_scope::alloc::Allocator::shrink(bump, ptr, old_layout, new_layout)
     }
 
     pub unsafe fn down(
@@ -381,8 +391,8 @@ pub mod shrink {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, AllocError> {
-        bump.shrink(ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, bump_scope::alloc::AllocError> {
+        bump_scope::alloc::Allocator::shrink(bump, ptr, old_layout, new_layout)
     }
 
     pub unsafe fn bumpalo(
@@ -390,8 +400,8 @@ pub mod shrink {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, AllocError> {
-        bump.shrink(ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
+        allocator_api2::alloc::Allocator::shrink(&bump, ptr, old_layout, new_layout)
     }
 }
 
@@ -407,11 +417,11 @@ macro_rules! cases_bump_vec {
             bump.push(value)
         }
 
-        pub fn try_with_capacity(capacity: usize, bump: &mut Bump<1, {$up}>) -> Result<$vec<$ty, 1, {$up}>, AllocError> {
+        pub fn try_with_capacity(capacity: usize, bump: &mut Bump<1, {$up}>) -> Result<$vec<$ty, 1, {$up}>, bump_scope::alloc::AllocError> {
             $vec::try_with_capacity_in(capacity, bump)
         }
 
-        pub fn try_push(bump: &mut $vec<$ty, 1, {$up}>, value: $ty) -> Result<(), AllocError> {
+        pub fn try_push(bump: &mut $vec<$ty, 1, {$up}>, value: $ty) -> Result<(), bump_scope::alloc::AllocError> {
             bump.try_push(value)
         }
     };
@@ -753,7 +763,7 @@ pub mod alloc_fmt {
 }
 
 pub mod vec_map {
-    use bump_scope::{allocator_api2::alloc::AllocError, Bump};
+    use bump_scope::{alloc::AllocError, Bump};
     use std::num::NonZeroU32;
 
     type BumpVec<'a, T> = bump_scope::BumpVec<T, &'a Bump>;
