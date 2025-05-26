@@ -19,55 +19,12 @@ type vec3 = [u32; 3];
 #[derive(Clone, Copy)]
 pub struct zst;
 
-trait BumpaloExt {
-    fn try_alloc_str(&self, value: &str) -> Result<&mut str, bumpalo::AllocErr>;
-    fn try_alloc_slice_copy<T: Copy>(&self, value: &[T]) -> Result<&mut [T], bumpalo::AllocErr>;
-    fn try_alloc_slice_clone<T: Clone>(&self, value: &[T]) -> Result<&mut [T], bumpalo::AllocErr>;
-}
-
 type Bump<const MIN_ALIGN: usize, const UP: bool> =
     bump_scope::Bump<bump_scope::alloc::Global, MIN_ALIGN, UP>;
 type MutBumpVec<'a, T, const MIN_ALIGN: usize, const UP: bool> =
     bump_scope::MutBumpVec<T, &'a mut Bump<MIN_ALIGN, UP>>;
 type MutBumpVecRev<'a, T, const MIN_ALIGN: usize, const UP: bool> =
     bump_scope::MutBumpVecRev<T, &'a mut Bump<MIN_ALIGN, UP>>;
-
-impl BumpaloExt for bumpalo::Bump {
-    fn try_alloc_str(&self, value: &str) -> Result<&mut str, bumpalo::AllocErr> {
-        let slice = self.try_alloc_slice_copy(value.as_bytes())?;
-        unsafe { Ok(core::str::from_utf8_unchecked_mut(slice)) }
-    }
-
-    fn try_alloc_slice_copy<T: Copy>(&self, value: &[T]) -> Result<&mut [T], bumpalo::AllocErr> {
-        let layout = Layout::for_value(value);
-        let ptr = self.try_alloc_layout(layout)?;
-        let len = value.len();
-
-        unsafe {
-            let src = value.as_ptr();
-            let dst = ptr.cast::<T>().as_ptr();
-
-            core::ptr::copy_nonoverlapping(src, dst, len);
-            Ok(core::slice::from_raw_parts_mut(dst, len))
-        }
-    }
-
-    fn try_alloc_slice_clone<T: Clone>(&self, value: &[T]) -> Result<&mut [T], bumpalo::AllocErr> {
-        let layout = Layout::for_value(value);
-        let ptr = self.try_alloc_layout(layout)?;
-        let len = value.len();
-
-        unsafe {
-            let dst = ptr.cast::<T>().as_ptr();
-
-            for (i, val) in value.iter().enumerate() {
-                dst.add(i).write(val.clone());
-            }
-
-            Ok(core::slice::from_raw_parts_mut(dst, len))
-        }
-    }
-}
 
 macro_rules! alloc {
     (
