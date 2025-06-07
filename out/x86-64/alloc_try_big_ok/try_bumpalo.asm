@@ -8,20 +8,22 @@ inspect_asm::alloc_try_big_ok::try_bumpalo:
 	push rbx
 	and rsp, -512
 	sub rsp, 2048
+	mov r15, rsi
 	mov rbx, rdi
-	mov r15, qword ptr [rsi + 16]
-	mov r13, qword ptr [r15 + 32]
-	cmp r13, 1024
-	jb .LBB0_5
-	lea r14, [r13 - 1024]
+	mov r13, qword ptr [rsi + 16]
+	mov r12, qword ptr [r13 + 32]
+	mov r14, r12
 	and r14, -512
-	cmp r14, qword ptr [r15]
+	mov rax, r14
+	sub rax, qword ptr [r13]
 	jb .LBB0_5
-	mov qword ptr [r15 + 32], r14
-	test r14, r14
+	cmp rax, 1024
+	jb .LBB0_5
+	add r14, -1024
+	mov qword ptr [r13 + 32], r14
 	je .LBB0_5
 .LBB0_0:
-	mov qword ptr [rsp + 504], rsi
+	mov qword ptr [rsp + 504], r12
 	lea r12, [rsp + 512]
 	mov rdi, r12
 	call rdx
@@ -31,15 +33,15 @@ inspect_asm::alloc_try_big_ok::try_bumpalo:
 	call qword ptr [rip + memcpy@GOTPCREL]
 	cmp dword ptr [r14], 1
 	jne .LBB0_3
-	mov rax, qword ptr [rsp + 504]
-	mov rax, qword ptr [rax + 16]
+	mov rax, qword ptr [r15 + 16]
 	cmp qword ptr [rax + 32], r14
 	jne .LBB0_2
-	cmp rax, r15
+	cmp rax, r13
+	mov rcx, qword ptr [rsp + 504]
 	je .LBB0_1
-	mov r13, qword ptr [rax]
+	mov rcx, qword ptr [rax]
 .LBB0_1:
-	mov qword ptr [rax + 32], r13
+	mov qword ptr [rax + 32], rcx
 .LBB0_2:
 	mov eax, dword ptr [r14 + 4]
 	mov dword ptr [rbx], 1
@@ -60,13 +62,11 @@ inspect_asm::alloc_try_big_ok::try_bumpalo:
 	pop rbp
 	ret
 .LBB0_5:
-	mov r12, rsi
 	mov esi, 512
 	mov r14, rdx
 	mov edx, 1024
-	mov rdi, r12
-	call qword ptr [rip + bumpalo::Bump::alloc_layout_slow@GOTPCREL]
-	mov rsi, r12
+	mov rdi, r15
+	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
 	mov rdx, r14
 	mov r14, rax
 	test rax, rax

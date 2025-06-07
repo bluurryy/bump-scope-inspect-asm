@@ -5,13 +5,12 @@ inspect_asm::alloc_str::try_bumpalo:
 	mov rbx, rdx
 	mov rax, qword ptr [rdi + 16]
 	mov r14, qword ptr [rax + 32]
-	cmp rdx, r14
+	mov rcx, r14
+	sub rcx, qword ptr [rax]
+	cmp rdx, rcx
 	ja .LBB0_2
 	sub r14, rbx
-	cmp r14, qword ptr [rax]
-	jb .LBB0_2
 	mov qword ptr [rax + 32], r14
-	test r14, r14
 	je .LBB0_2
 .LBB0_0:
 	mov rdi, r14
@@ -28,7 +27,7 @@ inspect_asm::alloc_str::try_bumpalo:
 	mov r14, rsi
 	mov esi, 1
 	mov rdx, rbx
-	call qword ptr [rip + bumpalo::Bump::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
 	mov rsi, r14
 	mov r14, rax
 	test rax, rax

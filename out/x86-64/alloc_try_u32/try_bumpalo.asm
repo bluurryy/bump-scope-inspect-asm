@@ -8,14 +8,15 @@ inspect_asm::alloc_try_u32::try_bumpalo:
 	mov rbx, rdi
 	mov r13, qword ptr [rsi + 16]
 	mov r12, qword ptr [r13 + 32]
-	cmp r12, 8
-	jb .LBB0_5
-	lea r15, [r12 - 8]
+	mov r15, r12
 	and r15, -4
-	cmp r15, qword ptr [r13]
+	mov rax, r15
+	sub rax, qword ptr [r13]
 	jb .LBB0_5
+	cmp rax, 8
+	jb .LBB0_5
+	add r15, -8
 	mov qword ptr [r13 + 32], r15
-	test r15, r15
 	je .LBB0_5
 .LBB0_0:
 	call rdx
@@ -53,7 +54,7 @@ inspect_asm::alloc_try_u32::try_bumpalo:
 	mov r15, rdx
 	mov edx, 8
 	mov rdi, r14
-	call qword ptr [rip + bumpalo::Bump::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	test rax, rax

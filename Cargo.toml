@@ -4,6 +4,6 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-allocator-api2 = "0.2"
+allocator-api2 = "0.2.21"
 bump-scope = "0.17.0"
-bumpalo = { version = "3.17.0", features = ["allocator-api2"] }
+bumpalo = { version = "3.18.1", features = ["allocator-api2"] }
