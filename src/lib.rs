@@ -29,7 +29,9 @@ type MutBumpVecRev<'a, T, const MIN_ALIGN: usize, const UP: bool> =
 macro_rules! alloc {
     (
         $(
-            mod $mod:ident fn($bump:ident, $value:ident: $value_ty:ty) -> &$($lifetime:lifetime)? mut $ty:ty { $body:expr } try { $try_body:expr }
+            mod $mod:ident fn($bump:ident, $value:ident: $value_ty:ty) -> &$($lifetime:lifetime)? mut $ty:ty
+            { $body:expr } try { $try_body:expr }
+            else { $blink_body:expr } try { $try_blink_body:expr }
         )*
     ) => {
 
@@ -75,6 +77,16 @@ macro_rules! alloc {
 
                 pub fn try_bumpalo$(<$lifetime>)?($bump: &$($lifetime)? bumpalo::Bump, $value: $value_ty) -> Option<&$($lifetime)? mut $ty> {
                     $try_body.ok()
+                }
+
+                #[allow(unreachable_code, unused_variables)]
+                pub fn blink_alloc$(<$lifetime>)?($bump: &$($lifetime)? blink_alloc::Blink, $value: $value_ty) -> &$($lifetime)? mut $ty {
+                    $blink_body
+                }
+
+                #[allow(unreachable_code, unused_variables)]
+                pub fn try_blink_alloc$(<$lifetime>)?($bump: &$($lifetime)? blink_alloc::Blink, $value: $value_ty) -> Option<&$($lifetime)? mut $ty> {
+                    $try_blink_body
                 }
             }
         )*
@@ -157,6 +169,13 @@ pub mod alloc_layout {
         bump.alloc_layout(layout)
     }
 
+    pub fn blink_alloc(bump: &blink_alloc::Blink, layout: Layout) -> NonNull<u8> {
+        bump.allocator()
+            .allocate(layout)
+            .map(|ptr| ptr.cast())
+            .unwrap()
+    }
+
     pub fn try_up(bump: &Bump<1, true>, layout: Layout) -> Option<NonNull<u8>> {
         bump.try_alloc_layout(layout).ok()
     }
@@ -168,18 +187,22 @@ pub mod alloc_layout {
     pub fn try_bumpalo(bump: &bumpalo::Bump, layout: Layout) -> Option<NonNull<u8>> {
         bump.try_alloc_layout(layout).ok()
     }
+
+    pub fn try_blink_alloc(bump: &blink_alloc::Blink, layout: Layout) -> Option<NonNull<u8>> {
+        bump.allocator().allocate(layout).map(|ptr| ptr.cast()).ok()
+    }
 }
 
 alloc! {
-    mod alloc_zst fn(bump, value: zst) -> &mut zst { bump.alloc(value) } try { bump.try_alloc(value) }
-    mod alloc_u8 fn(bump, value: u8) -> &mut u8 { bump.alloc(value) } try { bump.try_alloc(value) }
-    mod alloc_u32 fn(bump, value: u32) -> &mut u32 { bump.alloc(value) } try { bump.try_alloc(value) }
-    mod alloc_vec3 fn(bump, value: vec3) -> &mut vec3 { bump.alloc(value) } try { bump.try_alloc(value) }
-    mod alloc_12_u32 fn(bump, value: [u32;12]) -> &mut [u32;12] { bump.alloc(value) } try { bump.try_alloc(value) }
-    mod alloc_big fn(bump, value: &big) -> &'a mut big { bump.alloc_with(|| *value) } try { bump.try_alloc_with(|| *value) }
-    mod alloc_str fn(bump, value: &str) -> &'a mut str { bump.alloc_str(value) } try { bump.try_alloc_str(value) }
-    mod alloc_u32_slice fn(bump, value: &[u32]) -> &'a mut [u32] { bump.alloc_slice_copy(value) } try { bump.try_alloc_slice_copy(value) }
-    mod alloc_u32_slice_clone fn(bump, value: &[u32]) -> &'a mut [u32] { bump.alloc_slice_clone(value) } try { bump.try_alloc_slice_clone(value) }
+    mod alloc_zst fn(bump, value: zst) -> &mut zst { bump.alloc(value) } try { bump.try_alloc(value) } else { bump.emplace().value(value) } try { bump.emplace().try_value(value).ok() }
+    mod alloc_u8 fn(bump, value: u8) -> &mut u8 { bump.alloc(value) } try { bump.try_alloc(value) } else { bump.emplace().value(value) } try { bump.emplace().try_value(value).ok() }
+    mod alloc_u32 fn(bump, value: u32) -> &mut u32 { bump.alloc(value) } try { bump.try_alloc(value) } else { bump.emplace().value(value) } try { bump.emplace().try_value(value).ok() }
+    mod alloc_vec3 fn(bump, value: vec3) -> &mut vec3 { bump.alloc(value) } try { bump.try_alloc(value) } else { bump.emplace().value(value) } try { bump.emplace().try_value(value).ok() }
+    mod alloc_12_u32 fn(bump, value: [u32;12]) -> &mut [u32;12] { bump.alloc(value) } try { bump.try_alloc(value) } else { bump.emplace().value(value) } try { bump.emplace().try_value(value).ok() }
+    mod alloc_big fn(bump, value: &big) -> &'a mut big { bump.alloc_with(|| *value) } try { bump.try_alloc_with(|| *value) } else { bump.emplace().value(*value) } try { bump.emplace().try_value(*value).ok() }
+    mod alloc_str fn(bump, value: &str) -> &'a mut str { bump.alloc_str(value) } try { bump.try_alloc_str(value) } else { bump.copy_str(value) } try { bump.try_copy_str(value) }
+    mod alloc_u32_slice fn(bump, value: &[u32]) -> &'a mut [u32] { bump.alloc_slice_copy(value) } try { bump.try_alloc_slice_copy(value) } else { bump.copy_slice(value) } try { bump.try_copy_slice(value) }
+    mod alloc_u32_slice_clone fn(bump, value: &[u32]) -> &'a mut [u32] { bump.alloc_slice_clone(value) } try { bump.try_alloc_slice_clone(value) } else { unimplemented!() } try { unimplemented!() }
 }
 
 alloc_try_with! {
@@ -282,6 +305,13 @@ pub mod allocate {
     ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
         allocator_api2::alloc::Allocator::allocate(&bump, layout)
     }
+
+    pub fn blink_alloc(
+        bump: &blink_alloc::BlinkAlloc,
+        layout: Layout,
+    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
+        allocator_api2::alloc::Allocator::allocate(bump, layout)
+    }
 }
 
 pub mod deallocate {
@@ -297,6 +327,10 @@ pub mod deallocate {
 
     pub unsafe fn bumpalo(bump: &bumpalo::Bump, ptr: NonNull<u8>, layout: Layout) {
         allocator_api2::alloc::Allocator::deallocate(&bump, ptr, layout)
+    }
+
+    pub unsafe fn blink_alloc(bump: &blink_alloc::BlinkAlloc, ptr: NonNull<u8>, layout: Layout) {
+        allocator_api2::alloc::Allocator::deallocate(bump, ptr, layout)
     }
 }
 
@@ -329,6 +363,15 @@ pub mod grow {
     ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
         allocator_api2::alloc::Allocator::grow(&bump, ptr, old_layout, new_layout)
     }
+
+    pub unsafe fn blink_alloc(
+        bump: &blink_alloc::Blink,
+        ptr: NonNull<u8>,
+        old_layout: Layout,
+        new_layout: Layout,
+    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
+        allocator_api2::alloc::Allocator::grow(bump.allocator(), ptr, old_layout, new_layout)
+    }
 }
 
 pub mod shrink {
@@ -359,6 +402,15 @@ pub mod shrink {
         new_layout: Layout,
     ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
         allocator_api2::alloc::Allocator::shrink(&bump, ptr, old_layout, new_layout)
+    }
+
+    pub unsafe fn blink_alloc(
+        bump: &blink_alloc::BlinkAlloc,
+        ptr: NonNull<u8>,
+        old_layout: Layout,
+        new_layout: Layout,
+    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
+        allocator_api2::alloc::Allocator::shrink(bump, ptr, old_layout, new_layout)
     }
 }
 

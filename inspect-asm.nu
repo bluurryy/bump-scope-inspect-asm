@@ -160,12 +160,14 @@ def --wrapped main [
         $names ++= $"($name)::up"
         $names ++= $"($name)::down"
         $names ++= $"($name)::bumpalo"
+        $names ++= $"($name)::blink_alloc"
     }
 
     for try in ["", try_] {
         $names ++= $"alloc_layout::($try)up"
         $names ++= $"alloc_layout::($try)down"
         $names ++= $"alloc_layout::($try)bumpalo"
+        $names ++= $"alloc_layout::($try)blink_alloc"
     }
 
     for ty in [zst, u8, u32, vec3, 12_u32, big, str, u32_slice, u32_slice_clone] {
@@ -175,6 +177,7 @@ def --wrapped main [
             $names ++= $"alloc_($ty)::($prefix)down"
             $names ++= $"alloc_($ty)::($prefix)down_a"
             $names ++= $"alloc_($ty)::($prefix)bumpalo"
+            $names ++= $"alloc_($ty)::($prefix)blink_alloc"
         }
     }
 
