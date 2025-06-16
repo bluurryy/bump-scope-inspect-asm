@@ -242,46 +242,6 @@ impl Drop for foo {
     }
 }
 
-#[cfg(any())]
-pub mod alloc_with_drop {
-    use super::*;
-
-    type WithDrop<const MIN_ALIGN: usize, const UP: bool> =
-        bump_scope::WithDrop<Global, MIN_ALIGN, UP, Bump<Global, MIN_ALIGN, UP>>;
-
-    pub fn up(bump: &WithDrop<1, true>, value: foo) -> &mut foo {
-        bump.alloc(value)
-    }
-
-    pub fn down(bump: &WithDrop<1, false>, value: foo) -> &mut foo {
-        bump.alloc(value)
-    }
-
-    pub fn up_a(bump: &WithDrop<8, true>, value: foo) -> &mut foo {
-        bump.alloc(value)
-    }
-
-    pub fn down_a(bump: &WithDrop<8, false>, value: foo) -> &mut foo {
-        bump.alloc(value)
-    }
-
-    pub fn try_up(bump: &WithDrop<1, true>, value: foo) -> Option<&mut foo> {
-        bump.try_alloc(value).ok()
-    }
-
-    pub fn try_down(bump: &WithDrop<1, false>, value: foo) -> Option<&mut foo> {
-        bump.try_alloc(value).ok()
-    }
-
-    pub fn try_up_a(bump: &WithDrop<8, true>, value: foo) -> Option<&mut foo> {
-        bump.try_alloc(value).ok()
-    }
-
-    pub fn try_down_a(bump: &WithDrop<8, false>, value: foo) -> Option<&mut foo> {
-        bump.try_alloc(value).ok()
-    }
-}
-
 pub mod allocate {
     use super::*;
 
