@@ -1,6 +1,7 @@
 #![allow(
     non_camel_case_types,
     unused_imports,
+    mismatched_lifetime_syntaxes,
     clippy::mut_from_ref,
     clippy::missing_safety_doc
 )]
