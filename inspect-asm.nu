@@ -177,6 +177,7 @@ def --wrapped main [
             $names ++= $"alloc_($ty)::($prefix)down"
             $names ++= $"alloc_($ty)::($prefix)down_a"
             $names ++= $"alloc_($ty)::($prefix)bumpalo"
+            $names ++= $"alloc_($ty)::($prefix)bumpalo_a"
             $names ++= $"alloc_($ty)::($prefix)blink_alloc"
         }
     }

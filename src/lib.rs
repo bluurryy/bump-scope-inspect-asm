@@ -56,6 +56,14 @@ macro_rules! alloc {
                     $body.into_mut()
                 }
 
+                pub fn bumpalo$(<$lifetime>)?($bump: &$($lifetime)? bumpalo::Bump, $value: $value_ty) -> &$($lifetime)? mut $ty {
+                    $body
+                }
+
+                pub fn bumpalo_a$(<$lifetime>)?($bump: &$($lifetime)? bumpalo::Bump<4>, $value: $value_ty) -> &$($lifetime)? mut $ty {
+                    $body
+                }
+
                 pub fn try_up$(<$lifetime>)?($bump: &$($lifetime)? Bump<1, true>, $value: $value_ty) -> Option<&$($lifetime)? mut $ty> {
                     $try_body.ok().map(|x| x.into_mut())
                 }
@@ -72,11 +80,11 @@ macro_rules! alloc {
                     $try_body.ok().map(|x| x.into_mut())
                 }
 
-                pub fn bumpalo$(<$lifetime>)?($bump: &$($lifetime)? bumpalo::Bump, $value: $value_ty) -> &$($lifetime)? mut $ty {
-                    $body
+                pub fn try_bumpalo$(<$lifetime>)?($bump: &$($lifetime)? bumpalo::Bump, $value: $value_ty) -> Option<&$($lifetime)? mut $ty> {
+                    $try_body.ok()
                 }
 
-                pub fn try_bumpalo$(<$lifetime>)?($bump: &$($lifetime)? bumpalo::Bump, $value: $value_ty) -> Option<&$($lifetime)? mut $ty> {
+                pub fn try_bumpalo_a$(<$lifetime>)?($bump: &$($lifetime)? bumpalo::Bump<4>, $value: $value_ty) -> Option<&$($lifetime)? mut $ty> {
                     $try_body.ok()
                 }
 
