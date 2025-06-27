@@ -1,4 +1,6 @@
 Last run was using: 
+
+<!-- rust version start -->
 ```
 rustc 1.88.0 (6b00bc388 2025-06-23)
 binary: rustc
@@ -8,13 +10,14 @@ host: x86_64-unknown-linux-gnu
 release: 1.88.0
 LLVM version: 20.1.5
 ```
+<!-- rust version end -->
 
 ## Reproducing
 
 Install 
-- `just` version 1.40
-- `nushell` version 0.105.1
-- `cargo-show-asm` version 0.2.43.
+* **just** —  <!-- just version start -->1.40.0<!-- just version end -->
+* **nushell** —  <!-- nu version start -->0.105.1<!-- nu version end -->
+* **cargo-show-asm** —  <!-- cargo-show-asm version start -->0.2.43<!-- cargo-show-asm version end -->
 
 Run
 ```bash

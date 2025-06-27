@@ -161,6 +161,21 @@ def update-diffable [] {
     }
 }
 
+def replace-section [section_name: string, new_content: string]: string -> string {
+    let readme = $in
+
+    let start_marker = $"<!-- ($section_name) start -->"
+    let end_marker = $"<!-- ($section_name) end -->"
+
+    let start_index = ($readme | str index-of $start_marker) + ($start_marker | str length)
+    let end_index = $readme | str index-of $end_marker --range $start_index..
+
+    let before = $readme | str substring ..<$start_index
+    let after = $readme | str substring $end_index..
+
+    $before ++ $new_content ++ $after
+}
+
 def --wrapped main [
   target: string # Target directory under './out'.
   --filter: string # Only check functions whose path contains this string.
@@ -286,6 +301,9 @@ def --wrapped main [
     }
 
     open README.md
-    | str replace --regex --no-expand '```[\s\S]*?```' $"```\n(rustc -vV)\n```"
+    | replace-section "rust version" $"\n```\n(rustc -vV)\n```\n"
+    | replace-section "just version" (just --version | str replace just '' | str trim)
+    | replace-section "nu version" (nu --version)
+    | replace-section "cargo-show-asm version" (cargo asm --version | str replace "Version:" '' | str trim)
     | save -f README.md
 }
