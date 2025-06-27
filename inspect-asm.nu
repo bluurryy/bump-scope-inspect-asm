@@ -1,14 +1,39 @@
-# This was written for nushell version 0.100.0 and cargo-show-asm version 0.2.30
+# This was written for nushell version 0.105.1 and cargo-show-asm version 0.2.43
 
 let MARKER_UNDERSCORE = "XXXXX"
 let MARKER_DOT = "YYYYY"
 
+def table-into-record [key_column: cell-path, value_column: cell-path]: table -> record {
+    reduce --fold {} { |it, acc| $acc | upsert ($it | get $key_column) ($it | get $value_column) }
+}
+
+# `group-by --to-table foo?` returns a record on non-match instead of a table
+# This function returns a table instead as expected.
+# TODO: report issue / send pr
+def group-by-to-table [path: cell-path]: table -> table {
+    let result = $in | group-by --to-table $path
+
+    if $result == {} {
+        []
+    } else {
+        $result
+    }
+}
+
+def try-update [field: string, replacement:any] { 
+    let table = $in
+
+    if $field not-in ($table | columns) {
+        return $table
+    }
+
+    $table | update $field $replacement
+}
+
 def map-to-index [] {
     uniq
     | enumerate
-    | group-by item
-    | update cells { get 0 | get index }
-    | get 0
+    | reduce --fold {} { |it, acc| $acc | upsert $"($it.item)" $it.index }
 }
 
 def parse-label-with-function-index [name: string] {
@@ -16,9 +41,9 @@ def parse-label-with-function-index [name: string] {
 
     $content
     | parse --regex ($name + '(?<f>[0-9]+)_(?<i>[0-9]+)')
-    | group-by f?
-    | update cells { get i | each { into int } | map-to-index }
-    | get 0
+    | group-by-to-table f? 
+    | try-update items { get i | map-to-index } 
+    | table-into-record f items
 }
 
 def replace-label-with-function-index [function_map, map, prefix: string] {
@@ -157,43 +182,43 @@ def --wrapped main [
     mut names = []
 
     for name in [allocate, deallocate, grow, shrink] {
-        $names ++= $"($name)::up"
-        $names ++= $"($name)::down"
-        $names ++= $"($name)::bumpalo"
-        $names ++= $"($name)::blink_alloc"
+        $names ++= [$"($name)::up"]
+        $names ++= [$"($name)::down"]
+        $names ++= [$"($name)::bumpalo"]
+        $names ++= [$"($name)::blink_alloc"]
     }
 
     for try in ["", try_] {
-        $names ++= $"alloc_layout::($try)up"
-        $names ++= $"alloc_layout::($try)down"
-        $names ++= $"alloc_layout::($try)bumpalo"
-        $names ++= $"alloc_layout::($try)blink_alloc"
+        $names ++= [$"alloc_layout::($try)up"]
+        $names ++= [$"alloc_layout::($try)down"]
+        $names ++= [$"alloc_layout::($try)bumpalo"]
+        $names ++= [$"alloc_layout::($try)blink_alloc"]
     }
 
     for ty in [zst, u8, u32, vec3, 12_u32, big, str, u32_slice, u32_slice_clone] {
         for prefix in ["", try_] {
-            $names ++= $"alloc_($ty)::($prefix)up"
-            $names ++= $"alloc_($ty)::($prefix)up_a"
-            $names ++= $"alloc_($ty)::($prefix)down"
-            $names ++= $"alloc_($ty)::($prefix)down_a"
-            $names ++= $"alloc_($ty)::($prefix)bumpalo"
-            $names ++= $"alloc_($ty)::($prefix)bumpalo_a"
-            $names ++= $"alloc_($ty)::($prefix)blink_alloc"
+            $names ++= [$"alloc_($ty)::($prefix)up"]
+            $names ++= [$"alloc_($ty)::($prefix)up_a"]
+            $names ++= [$"alloc_($ty)::($prefix)down"]
+            $names ++= [$"alloc_($ty)::($prefix)down_a"]
+            $names ++= [$"alloc_($ty)::($prefix)bumpalo"]
+            $names ++= [$"alloc_($ty)::($prefix)bumpalo_a"]
+            $names ++= [$"alloc_($ty)::($prefix)blink_alloc"]
         }
     }
 
     for ty in [u32, big_ok] {
         for prefix in ["", try_] {
-            $names ++= $"alloc_try_($ty)::($prefix)up"
-            $names ++= $"alloc_try_($ty)::($prefix)up_mut"
-            $names ++= $"alloc_try_($ty)::($prefix)down"
-            $names ++= $"alloc_try_($ty)::($prefix)down_mut"
-            $names ++= $"alloc_try_($ty)::($prefix)bumpalo"
+            $names ++= [$"alloc_try_($ty)::($prefix)up"]
+            $names ++= [$"alloc_try_($ty)::($prefix)up_mut"]
+            $names ++= [$"alloc_try_($ty)::($prefix)down"]
+            $names ++= [$"alloc_try_($ty)::($prefix)down_mut"]
+            $names ++= [$"alloc_try_($ty)::($prefix)bumpalo"]
         }
     }
 
     for dir in [up, down, down_big] {
-        $names ++= $"alloc_overaligned_but_size_matches::($dir)"
+        $names ++= [$"alloc_overaligned_but_size_matches::($dir)"]
     }
 
     # for prefix in ["", try_] {
@@ -206,8 +231,8 @@ def --wrapped main [
     for ty in [u32] {
         for dir in [up, down] {
             for try in ["", try_] {
-                $names ++= $"bump_vec_($ty)::($dir)::($try)with_capacity"
-                $names ++= $"bump_vec_($ty)::($dir)::($try)push"
+                $names ++= [$"bump_vec_($ty)::($dir)::($try)with_capacity"]
+                $names ++= [$"bump_vec_($ty)::($dir)::($try)push"]
             }
         }
     }
@@ -227,35 +252,35 @@ def --wrapped main [
 
         for try in $tries {
             for prefix in $prefixes {
-                $names ++= $"alloc_iter_($ty)::($try)($prefix)up"
-                $names ++= $"alloc_iter_($ty)::($try)($prefix)up_a"
-                $names ++= $"alloc_iter_($ty)::($try)($prefix)down"
-                $names ++= $"alloc_iter_($ty)::($try)($prefix)down_a"
+                $names ++= [$"alloc_iter_($ty)::($try)($prefix)up"]
+                $names ++= [$"alloc_iter_($ty)::($try)($prefix)up_a"]
+                $names ++= [$"alloc_iter_($ty)::($try)($prefix)down"]
+                $names ++= [$"alloc_iter_($ty)::($try)($prefix)down_a"]
             }
         }
 
         if $ty == "u32" {
-            $names ++= $"alloc_iter_($ty)::bumpalo"
+            $names ++= [$"alloc_iter_($ty)::bumpalo"]
         }
     }
 
     for try in ["", try_] {
         for $mut in ["", mut_] {
-            $names ++= $"alloc_fmt::($try)($mut)up"
-            $names ++= $"alloc_fmt::($try)($mut)up_a"
-            $names ++= $"alloc_fmt::($try)($mut)down"
-            $names ++= $"alloc_fmt::($try)($mut)down_a"
+            $names ++= [$"alloc_fmt::($try)($mut)up"]
+            $names ++= [$"alloc_fmt::($try)($mut)up_a"]
+            $names ++= [$"alloc_fmt::($try)($mut)down"]
+            $names ++= [$"alloc_fmt::($try)($mut)down_a"]
         }
     }
 
     for try in ["", try_] {
         for which in [same, grow, shrink] {
-            $names ++= $"vec_map::($try)($which)"
+            $names ++= [$"vec_map::($try)($which)"]
         }
     }
 
     if $filter != null {
-        $names = ($names | filter { str contains $filter })
+        $names = ($names | where { str contains $filter })
     }
 
     for $name in $names {
