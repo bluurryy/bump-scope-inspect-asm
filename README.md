@@ -15,9 +15,9 @@ LLVM version: 20.1.5
 ## Reproducing
 
 Install 
-* **just** —  <!-- just version start -->1.40.0<!-- just version end -->
-* **nushell** —  <!-- nu version start -->0.105.1<!-- nu version end -->
-* **cargo-show-asm** —  <!-- cargo-show-asm version start -->0.2.43<!-- cargo-show-asm version end -->
+* **just** <!-- just version start -->1.40.0<!-- just version end -->
+* **nushell** <!-- nu version start -->0.105.1<!-- nu version end -->
+* **cargo-show-asm** <!-- cargo-show-asm version start -->0.2.43<!-- cargo-show-asm version end -->
 
 Run
 ```bash
