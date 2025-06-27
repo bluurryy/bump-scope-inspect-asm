@@ -1,11 +1,5 @@
-set shell := ["nu", "-c"]
-
 default:
-  cargo fmt
-  cargo clippy
-
-asm *args:
-  ^cargo asm --color --simplify --target-cpu x86-64 {{args}} | lines | filter { ($in | str length) > 0 } | str join "\n"
+  @just --list
 
 @inspect-asm *args:
   nu inspect-asm.nu x86-64 {{args}} --target-cpu x86-64
