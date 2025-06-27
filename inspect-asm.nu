@@ -286,4 +286,8 @@ def --wrapped main [
     for $name in $names {
         asm-save $name $target $args
     }
+
+    open README.md
+    | str replace --regex --no-expand '```[\s\S]*?```' $"```\n(rustc -vV)\n```"
+    | save -f README.md
 }
