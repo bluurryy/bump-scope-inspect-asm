@@ -1,4 +1,3 @@
-# This was written for nushell version 0.100.0
 set shell := ["nu", "-c"]
 
 default:

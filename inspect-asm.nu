@@ -1,5 +1,3 @@
-# This was written for nushell version 0.105.1 and cargo-show-asm version 0.2.43
-
 let MARKER_UNDERSCORE = "XXXXX"
 let MARKER_DOT = "YYYYY"
 
