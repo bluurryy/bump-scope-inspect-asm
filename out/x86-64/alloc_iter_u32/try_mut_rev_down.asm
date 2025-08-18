@@ -64,7 +64,7 @@ inspect_asm::alloc_iter_u32::try_mut_rev_down:
 	mov rdi, rbx
 	call r14
 	test al, al
-	jne .LBB0_11
+	jne .LBB0_10
 	mov rcx, qword ptr [rsp + 8]
 	mov rdi, qword ptr [rsp + 24]
 	mov eax, 4
@@ -100,7 +100,7 @@ inspect_asm::alloc_iter_u32::try_mut_rev_down:
 	mov r15, rdx
 	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::prepare_allocation_range_in_another_chunk@GOTPCREL]
 	test rax, rax
-	je .LBB0_10
+	je .LBB0_11
 	mov r8, rax
 	mov rcx, rdx
 	mov eax, 4

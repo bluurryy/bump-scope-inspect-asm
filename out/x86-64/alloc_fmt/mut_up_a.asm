@@ -28,10 +28,10 @@ inspect_asm::alloc_fmt::mut_up_a:
 	mov rcx, qword ptr [rsp + 24]
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
-	mov rcx, qword ptr [rcx]
 	lea rsi, [rax + rdx]
 	add rsi, 3
 	and rsi, -4
+	mov rcx, qword ptr [rcx]
 	mov qword ptr [rcx], rsi
 	add rsp, 120
 	ret

@@ -120,7 +120,6 @@ inspect_asm::alloc_iter_u32::try_down_a:
 	jne .LBB0_0
 	mov rdx, qword ptr [rsp + 24]
 	lea r14, [rax + 4*rdx]
-	add r14, 3
 	and r14, -4
 	xor eax, eax
 	jmp .LBB0_11
@@ -131,7 +130,6 @@ inspect_asm::alloc_iter_u32::try_down_a:
 	jne .LBB0_15
 	mov rsi, qword ptr [rsp + 24]
 	lea rdx, [rdx + 4*rsi]
-	add rdx, 3
 	and rdx, -4
 	mov qword ptr [rcx], rdx
 .LBB0_15:

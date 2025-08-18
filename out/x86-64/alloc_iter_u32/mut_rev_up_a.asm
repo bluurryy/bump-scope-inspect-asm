@@ -22,9 +22,11 @@ inspect_asm::alloc_iter_u32::mut_rev_up_a:
 	ja .LBB0_7
 	and rcx, -4
 .LBB0_0:
+	sub rcx, rax
 	mov r8, rcx
-	sub r8, rax
 	shr r8, 2
+	and rcx, -4
+	add rcx, rax
 	mov qword ptr [rsp], rcx
 	mov qword ptr [rsp + 8], rdi
 	mov qword ptr [rsp + 16], 0
@@ -64,8 +66,8 @@ inspect_asm::alloc_iter_u32::mut_rev_up_a:
 	je .LBB0_5
 	mov rbx, qword ptr [rsp]
 	mov r15, qword ptr [rsp + 8]
-	lea rsi, [rbx + 4*rax]
 	shl rcx, 2
+	lea rsi, [rbx + 4*rax]
 	sub rbx, rcx
 	lea r12, [rbx + 4*r14]
 	lea rdx, [4*r14]

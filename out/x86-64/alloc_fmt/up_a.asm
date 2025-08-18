@@ -26,9 +26,9 @@ inspect_asm::alloc_fmt::up_a:
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
 	mov rcx, qword ptr [rsp + 24]
+	mov rcx, qword ptr [rcx]
 	mov rsi, qword ptr [rsp + 16]
 	add rsi, rax
-	mov rcx, qword ptr [rcx]
 	cmp rsi, qword ptr [rcx]
 	je .LBB0_0
 	add rsp, 120
@@ -50,6 +50,8 @@ inspect_asm::alloc_fmt::up_a:
 	mov rdx, qword ptr [rdx]
 	cmp rsi, qword ptr [rdx]
 	jne .LBB0_2
+	add rcx, 3
+	and rcx, -4
 	mov qword ptr [rdx], rcx
 .LBB0_2:
 	mov rdi, rax

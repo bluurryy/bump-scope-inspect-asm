@@ -24,9 +24,9 @@ inspect_asm::alloc_try_big_ok::try_up:
 	mov qword ptr [r15], rax
 .LBB0_0:
 	mov qword ptr [rsp + 504], r12
+	mov qword ptr [rsp + 496], rbx
 	mov rax, qword ptr [r14]
-	mov rax, qword ptr [rax]
-	mov qword ptr [rsp + 496], rax
+	mov rbx, qword ptr [rax]
 	lea r12, [rsp + 512]
 	mov rdi, r12
 	call rdx
@@ -40,7 +40,7 @@ inspect_asm::alloc_try_big_ok::try_up:
 	jne .LBB0_2
 	mov r13d, dword ptr [r13 + 4]
 	mov r12d, 1
-	cmp qword ptr [rsp + 496], rdx
+	cmp rbx, rdx
 	jne .LBB0_1
 	mov rdi, r15
 	mov rsi, qword ptr [rsp + 504]
@@ -51,12 +51,13 @@ inspect_asm::alloc_try_big_ok::try_up:
 .LBB0_2:
 	lea rax, [r13 + 512]
 	xor r12d, r12d
-	cmp qword ptr [rsp + 496], rdx
+	cmp rbx, rdx
 	jne .LBB0_3
 	add r13, 1024
 	mov qword ptr [rcx], r13
 .LBB0_3:
 .LBB0_4:
+	mov rbx, qword ptr [rsp + 496]
 	mov dword ptr [rbx], r12d
 	mov dword ptr [rbx + 4], r13d
 	mov qword ptr [rbx + 8], rax

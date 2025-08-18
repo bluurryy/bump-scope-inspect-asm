@@ -37,10 +37,10 @@ inspect_asm::alloc_fmt::mut_down_a:
 	mov rdi, rbx
 	mov rdx, r14
 	call qword ptr [rip + memmove@GOTPCREL]
-	mov rax, qword ptr [r15]
-	mov rcx, rbx
-	and rcx, -4
-	mov qword ptr [rax], rcx
+	mov rax, rbx
+	and rax, -4
+	mov rcx, qword ptr [r15]
+	mov qword ptr [rcx], rax
 	jmp .LBB0_1
 .LBB0_0:
 	mov ebx, 1

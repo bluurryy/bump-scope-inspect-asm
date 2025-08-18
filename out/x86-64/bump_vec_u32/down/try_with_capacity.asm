@@ -34,11 +34,15 @@ inspect_asm::bump_vec_u32::down::try_with_capacity:
 	add rsi, 3
 	and rsi, -4
 .LBB0_3:
-	sub rcx, rsi
-	shr rcx, 2
-	mov qword ptr [rax], rsi
+	mov rdi, rcx
+	sub rdi, rsi
+	mov rsi, rdi
+	shr rsi, 2
+	and rdi, -4
+	sub rcx, rdi
+	mov qword ptr [rax], rcx
 	mov qword ptr [rax + 8], 0
-	mov qword ptr [rax + 16], rcx
+	mov qword ptr [rax + 16], rsi
 	mov qword ptr [rax + 24], rdx
 	add rsp, 8
 	pop rbx

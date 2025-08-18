@@ -10,7 +10,7 @@ inspect_asm::vec_map::grow:
 	mov r15, qword ptr [rsi + 8]
 	mov r13, qword ptr [rsi + 16]
 	test r15, r15
-	je .LBB0_0
+	je .LBB0_4
 	mov rax, r15
 	shr rax, 60
 	jne .LBB0_10
@@ -22,19 +22,10 @@ inspect_asm::vec_map::grow:
 	and rax, -8
 	sub rsi, rax
 	cmp rcx, rsi
-	jbe .LBB0_1
-	mov rdi, rbx
-	mov rsi, r15
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
-	jmp .LBB0_2
-.LBB0_0:
-	mov eax, 8
-	xor edx, edx
-	jmp .LBB0_8
-.LBB0_1:
+	ja .LBB0_9
 	add rcx, rax
 	mov qword ptr [rdx], rcx
-.LBB0_2:
+.LBB0_0:
 	movabs rdx, 4611686018427387903
 	lea rcx, [r15 - 1]
 	mov rdi, rcx
@@ -42,7 +33,7 @@ inspect_asm::vec_map::grow:
 	cmp rdi, rcx
 	cmovae rdi, rcx
 	cmp rdi, 19
-	jb .LBB0_3
+	jb .LBB0_1
 	lea rsi, [r15 + rdx]
 	and rsi, rdx
 	cmp rsi, rcx
@@ -50,53 +41,37 @@ inspect_asm::vec_map::grow:
 	lea rdx, [r12 + 4*rsi]
 	add rdx, 4
 	cmp rax, rdx
-	jae .LBB0_6
+	jae .LBB0_7
 	lea rdx, [rax + 8*rsi]
 	add rdx, 8
 	cmp r12, rdx
-	jae .LBB0_6
-.LBB0_3:
+	jae .LBB0_7
+.LBB0_1:
 	xor edx, edx
 	mov rsi, r12
-.LBB0_4:
+.LBB0_2:
 	lea rdi, [r12 + 4*r15]
-.LBB0_5:
+.LBB0_3:
 	mov r8, rdx
 	mov edx, dword ptr [rsi]
 	mov qword ptr [rax + 8*r8], rdx
 	lea rdx, [r8 + 1]
 	cmp rcx, r8
-	je .LBB0_8
+	je .LBB0_5
 	add rsi, 4
 	cmp rsi, rdi
-	jne .LBB0_5
-	jmp .LBB0_8
-.LBB0_6:
-	inc rdi
-	movabs rdx, 9223372036854775804
-	and rdx, rdi
-	lea rsi, [r12 + 4*rdx]
-	xor r8d, r8d
-	xorps xmm0, xmm0
-.LBB0_7:
-	movsd xmm1, qword ptr [r12 + 4*r8]
-	movsd xmm2, qword ptr [r12 + 4*r8 + 8]
-	unpcklps xmm1, xmm0
-	unpcklps xmm2, xmm0
-	movups xmmword ptr [rax + 8*r8], xmm1
-	movups xmmword ptr [rax + 8*r8 + 16], xmm2
-	add r8, 4
-	cmp rdx, r8
-	jne .LBB0_7
-	cmp rdi, rdx
-	jne .LBB0_4
-.LBB0_8:
+	jne .LBB0_3
+	jmp .LBB0_5
+.LBB0_4:
+	mov eax, 8
+	xor edx, edx
+.LBB0_5:
 	lea rsi, [r12 + 4*r13]
 	mov rcx, qword ptr [rbx]
 	cmp rsi, qword ptr [rcx]
-	jne .LBB0_9
+	jne .LBB0_6
 	mov qword ptr [rcx], r12
-.LBB0_9:
+.LBB0_6:
 	mov qword ptr [r14], rax
 	mov qword ptr [r14 + 8], rdx
 	mov qword ptr [r14 + 16], r15
@@ -108,6 +83,31 @@ inspect_asm::vec_map::grow:
 	pop r14
 	pop r15
 	ret
+.LBB0_7:
+	inc rdi
+	movabs rdx, 9223372036854775804
+	and rdx, rdi
+	lea rsi, [r12 + 4*rdx]
+	xor r8d, r8d
+	xorps xmm0, xmm0
+.LBB0_8:
+	movsd xmm1, qword ptr [r12 + 4*r8]
+	movsd xmm2, qword ptr [r12 + 4*r8 + 8]
+	unpcklps xmm1, xmm0
+	unpcklps xmm2, xmm0
+	movups xmmword ptr [rax + 8*r8], xmm1
+	movups xmmword ptr [rax + 8*r8 + 16], xmm2
+	add r8, 4
+	cmp rdx, r8
+	jne .LBB0_8
+	cmp rdi, rdx
+	jne .LBB0_2
+	jmp .LBB0_5
+.LBB0_9:
+	mov rdi, rbx
+	mov rsi, r15
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
+	jmp .LBB0_0
 .LBB0_10:
 	call qword ptr [rip + bump_scope::private::capacity_overflow@GOTPCREL]
 	ud2

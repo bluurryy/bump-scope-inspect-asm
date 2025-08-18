@@ -19,16 +19,20 @@ inspect_asm::bump_vec_u32::down::with_capacity:
 	add rax, 3
 	and rax, -4
 .LBB0_0:
-	sub rcx, rax
-	shr rcx, 2
+	mov rsi, rcx
+	sub rsi, rax
+	mov rax, rsi
+	shr rax, 2
+	and rsi, -4
+	sub rcx, rsi
 	jmp .LBB0_2
 .LBB0_1:
-	mov eax, 4
-	xor ecx, ecx
+	mov ecx, 4
+	xor eax, eax
 .LBB0_2:
-	mov qword ptr [rdi], rax
+	mov qword ptr [rdi], rcx
 	mov qword ptr [rdi + 8], 0
-	mov qword ptr [rdi + 16], rcx
+	mov qword ptr [rdi + 16], rax
 	mov qword ptr [rdi + 24], rdx
 	mov rax, rdi
 	add rsp, 8

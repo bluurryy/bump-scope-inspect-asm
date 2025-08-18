@@ -113,7 +113,6 @@ inspect_asm::alloc_iter_u32::down_a:
 	jne .LBB0_13
 	mov rsi, qword ptr [rsp + 24]
 	lea rdx, [rdx + 4*rsi]
-	add rdx, 3
 	and rdx, -4
 	mov qword ptr [rcx], rdx
 .LBB0_13:

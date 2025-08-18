@@ -65,8 +65,8 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_up_a:
 	test rcx, rcx
 	je .LBB0_6
 	mov r15, qword ptr [rsp + 16]
-	lea rsi, [r14 + 4*rsi]
 	shl rcx, 2
+	lea rsi, [r14 + 4*rsi]
 	sub r14, rcx
 	lea r12, [r14 + 4*rax]
 	lea rdx, [4*rax]

@@ -4,6 +4,6 @@ inspect_asm::deallocate::down:
 	je .LBB0_0
 	ret
 .LBB0_0:
-	add rsi, rcx
-	mov qword ptr [rax], rsi
+	add rcx, rsi
+	mov qword ptr [rax], rcx
 	ret
