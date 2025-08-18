@@ -176,6 +176,12 @@ def replace-section [section_name: string, new_content: string]: string -> strin
     $before ++ $new_content ++ $after
 }
 
+let cargo_lock = open Cargo.lock | from toml
+
+def package-version [name: string] {
+    $cargo_lock | get package | where name == $name | get 0.version
+}
+
 def --wrapped main [
   target: string # Target directory under './out'.
   --filter: string # Only check functions whose path contains this string.
@@ -300,10 +306,14 @@ def --wrapped main [
         asm-save $name $target $args
     }
 
+    
     open README.md
     | replace-section "rust version" $"\n```\n(rustc -vV)\n```\n"
     | replace-section "just version" (just --version | str replace just '' | str trim)
     | replace-section "nu version" (nu --version)
     | replace-section "cargo-show-asm version" (cargo asm --version | str replace "Version:" '' | str trim)
+    | replace-section "bump-scope version" (package-version "bump-scope")
+    | replace-section "bumpalo version" (package-version "bumpalo")
+    | replace-section "blink-alloc version" (package-version "blink-alloc")
     | save -f README.md
 }
