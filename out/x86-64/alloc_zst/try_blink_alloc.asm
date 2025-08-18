@@ -3,8 +3,6 @@ inspect_asm::alloc_zst::try_blink_alloc:
 	test rcx, rcx
 	je .LBB0_0
 	mov rax, qword ptr [rcx]
-	test rax, rax
-	je .LBB0_0
 	cmp rax, qword ptr [rcx + 8]
 	ja .LBB0_0
 	ret

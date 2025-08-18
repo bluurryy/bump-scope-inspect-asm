@@ -10,8 +10,6 @@ inspect_asm::alloc_u8::blink_alloc:
 	jae .LBB0_1
 	lea rdx, [rax + 1]
 	mov qword ptr [rcx], rdx
-	test rax, rax
-	je .LBB0_1
 .LBB0_0:
 	mov byte ptr [rax], sil
 	pop rbx

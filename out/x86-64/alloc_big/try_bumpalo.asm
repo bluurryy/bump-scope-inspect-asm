@@ -11,7 +11,6 @@ inspect_asm::alloc_big::try_bumpalo:
 	jb .LBB0_1
 	add rdi, -512
 	mov qword ptr [rcx + 32], rdi
-	je .LBB0_1
 .LBB0_0:
 	mov edx, 512
 	pop rbx

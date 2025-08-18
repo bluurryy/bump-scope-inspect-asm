@@ -15,8 +15,6 @@ inspect_asm::alloc_try_u32::try_down_mut:
 	add r14, -8
 	cmp r14, qword ptr [r12 + 8]
 	jb .LBB0_4
-	test r14, r14
-	je .LBB0_4
 .LBB0_0:
 	call rdx
 	mov dword ptr [r14], eax

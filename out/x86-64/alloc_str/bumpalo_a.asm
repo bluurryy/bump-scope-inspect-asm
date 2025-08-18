@@ -14,7 +14,6 @@ inspect_asm::alloc_str::bumpalo_a:
 	ja .LBB0_1
 	sub rbx, rcx
 	mov qword ptr [rax + 32], rbx
-	je .LBB0_1
 .LBB0_0:
 	mov rdi, rbx
 	mov r14, rdx

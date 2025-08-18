@@ -16,8 +16,6 @@ inspect_asm::alloc_try_u32::try_down:
 	cmp r13, qword ptr [r15 + 8]
 	jb .LBB0_5
 	mov qword ptr [r15], r13
-	test r13, r13
-	je .LBB0_5
 .LBB0_0:
 	call rdx
 	mov ebp, edx

@@ -13,8 +13,6 @@ inspect_asm::alloc_str::try_blink_alloc:
 	cmp rcx, qword ptr [rax + 8]
 	ja .LBB0_2
 	mov qword ptr [rax], rcx
-	test r14, r14
-	je .LBB0_2
 .LBB0_0:
 	mov rdi, r14
 	mov rdx, rbx

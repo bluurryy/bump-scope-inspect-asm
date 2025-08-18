@@ -18,8 +18,6 @@ inspect_asm::alloc_try_u32::try_up:
 	jb .LBB0_5
 	lea rax, [r13 + 8]
 	mov qword ptr [r15], rax
-	test r13, r13
-	je .LBB0_5
 .LBB0_0:
 	mov qword ptr [rsp], rbp
 	mov rax, qword ptr [r14]

@@ -21,7 +21,6 @@ inspect_asm::alloc_try_big_ok::bumpalo:
 	jb .LBB0_5
 	add r14, -1024
 	mov qword ptr [r13 + 32], r14
-	je .LBB0_5
 .LBB0_0:
 	lea r12, [rsp + 512]
 	mov rdi, r12

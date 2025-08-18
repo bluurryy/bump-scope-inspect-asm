@@ -23,7 +23,6 @@ inspect_asm::alloc_iter_u32::mut_rev_down:
 	ja .LBB0_7
 	add r8, 3
 	and r8, -4
-	je .LBB0_7
 .LBB0_0:
 	mov r9, rcx
 	sub r9, r8

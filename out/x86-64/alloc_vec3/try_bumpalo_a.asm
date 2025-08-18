@@ -8,7 +8,6 @@ inspect_asm::alloc_vec3::try_bumpalo_a:
 	jb .LBB0_1
 	add rax, -12
 	mov qword ptr [rcx + 32], rax
-	je .LBB0_1
 .LBB0_0:
 	mov ecx, dword ptr [rsi + 8]
 	mov dword ptr [rax + 8], ecx

@@ -11,9 +11,8 @@ inspect_asm::allocate::up:
 	cmovae r8, r9
 	cmp r8, qword ptr [rcx + 8]
 	ja .LBB0_0
-	mov qword ptr [rcx], r8
 	add rax, rsi
-	je .LBB0_0
+	mov qword ptr [rcx], r8
 	ret
 .LBB0_0:
 	push rbx

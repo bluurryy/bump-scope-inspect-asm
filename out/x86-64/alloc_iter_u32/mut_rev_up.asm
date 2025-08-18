@@ -22,8 +22,6 @@ inspect_asm::alloc_iter_u32::mut_rev_up:
 	sub r8, rax
 	cmp rdx, r8
 	ja .LBB0_7
-	test rax, rax
-	je .LBB0_7
 	and rcx, -4
 .LBB0_0:
 	mov r8, rcx

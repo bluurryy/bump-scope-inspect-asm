@@ -21,7 +21,6 @@ inspect_asm::alloc_try_big_ok::try_up_mut:
 	cmp rcx, qword ptr [r15 + 8]
 	ja .LBB0_4
 	add r13, 512
-	je .LBB0_4
 .LBB0_0:
 	mov qword ptr [rsp + 504], r12
 	lea r12, [rsp + 512]

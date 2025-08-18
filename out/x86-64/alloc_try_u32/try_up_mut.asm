@@ -16,8 +16,6 @@ inspect_asm::alloc_try_u32::try_up_mut:
 	sub rax, r13
 	cmp rax, 8
 	jb .LBB0_4
-	test r13, r13
-	je .LBB0_4
 .LBB0_0:
 	call rdx
 	mov dword ptr [r13], eax

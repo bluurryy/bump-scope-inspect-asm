@@ -17,7 +17,6 @@ inspect_asm::alloc_try_u32::bumpalo:
 	jb .LBB0_5
 	add r15, -8
 	mov qword ptr [r13 + 32], r15
-	je .LBB0_5
 .LBB0_0:
 	call rdx
 	mov dword ptr [r15], eax

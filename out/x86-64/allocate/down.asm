@@ -10,8 +10,6 @@ inspect_asm::allocate::down:
 	cmp rax, qword ptr [rcx + 8]
 	jb .LBB0_0
 	mov qword ptr [rcx], rax
-	test rax, rax
-	je .LBB0_0
 	ret
 .LBB0_0:
 	push rbx

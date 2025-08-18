@@ -11,7 +11,6 @@ inspect_asm::alloc_u32_slice_clone::try_bumpalo_a:
 	ja .LBB0_6
 	sub rax, rbx
 	mov qword ptr [rcx + 32], rax
-	je .LBB0_6
 .LBB0_0:
 	test rdx, rdx
 	je .LBB0_2

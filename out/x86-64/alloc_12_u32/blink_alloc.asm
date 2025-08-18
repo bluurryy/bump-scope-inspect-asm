@@ -3,17 +3,15 @@ inspect_asm::alloc_12_u32::blink_alloc:
 	mov rcx, qword ptr [rdi]
 	test rcx, rcx
 	je .LBB0_1
-	mov rdx, qword ptr [rcx]
-	cmp rdx, -52
+	mov rax, qword ptr [rcx]
+	cmp rax, -52
 	ja .LBB0_1
-	lea rax, [rdx + 3]
+	add rax, 3
 	and rax, -4
-	lea r8, [rax + 48]
-	cmp r8, qword ptr [rcx + 8]
+	lea rdx, [rax + 48]
+	cmp rdx, qword ptr [rcx + 8]
 	ja .LBB0_1
-	mov qword ptr [rcx], r8
-	test rdx, rdx
-	je .LBB0_1
+	mov qword ptr [rcx], rdx
 .LBB0_0:
 	movups xmm0, xmmword ptr [rsi]
 	movups xmm1, xmmword ptr [rsi + 16]

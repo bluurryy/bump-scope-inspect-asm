@@ -6,7 +6,6 @@ inspect_asm::alloc_u8::try_bumpalo:
 	je .LBB0_1
 	dec rax
 	mov qword ptr [rcx + 32], rax
-	je .LBB0_1
 .LBB0_0:
 	mov byte ptr [rax], sil
 	pop rbx

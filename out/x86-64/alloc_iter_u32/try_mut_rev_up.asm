@@ -26,8 +26,6 @@ inspect_asm::alloc_iter_u32::try_mut_rev_up:
 	sub r9, r8
 	cmp rdx, r9
 	ja .LBB0_9
-	test r8, r8
-	je .LBB0_9
 	and rcx, -4
 .LBB0_2:
 	mov r9, rcx

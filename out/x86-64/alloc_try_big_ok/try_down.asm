@@ -20,8 +20,6 @@ inspect_asm::alloc_try_big_ok::try_down:
 	cmp r13, qword ptr [r15 + 8]
 	jb .LBB0_6
 	mov qword ptr [r15], r13
-	test r13, r13
-	je .LBB0_6
 .LBB0_0:
 	mov qword ptr [rsp + 504], r12
 	lea r12, [rsp + 512]

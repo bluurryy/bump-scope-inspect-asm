@@ -4,7 +4,7 @@ inspect_asm::shrink::bumpalo:
 	push rax
 	mov rbx, r9
 	cmp rdx, r8
-	jae .LBB0_1
+	jae .LBB0_0
 	lea rcx, [r8 - 1]
 	test rcx, rsi
 	je .LBB0_3
@@ -14,28 +14,16 @@ inspect_asm::shrink::bumpalo:
 	and r14, qword ptr [rax + 32]
 	mov rdx, r14
 	sub rdx, qword ptr [rax]
-	jb .LBB0_0
+	jb .LBB0_4
 	add rcx, rbx
 	mov r9, r8
 	neg r9
 	and r9, rcx
 	cmp r9, rdx
-	ja .LBB0_0
+	ja .LBB0_4
 	sub r14, r9
-	mov qword ptr [rax + 32], r14
-	jne .LBB0_2
+	jmp .LBB0_1
 .LBB0_0:
-	mov r14, rsi
-	mov rsi, r8
-	mov rdx, rbx
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
-	mov rsi, r14
-	mov r14, rax
-	test rax, rax
-	jne .LBB0_2
-	xor esi, esi
-	jmp .LBB0_3
-.LBB0_1:
 	mov rax, qword ptr [rdi + 16]
 	mov r14, qword ptr [rax + 32]
 	cmp r14, rsi
@@ -49,6 +37,7 @@ inspect_asm::shrink::bumpalo:
 	cmp r8, rcx
 	jb .LBB0_3
 	add r14, r8
+.LBB0_1:
 	mov qword ptr [rax + 32], r14
 .LBB0_2:
 	mov rdi, r14
@@ -62,3 +51,14 @@ inspect_asm::shrink::bumpalo:
 	pop rbx
 	pop r14
 	ret
+.LBB0_4:
+	mov r14, rsi
+	mov rsi, r8
+	mov rdx, rbx
+	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	mov rsi, r14
+	mov r14, rax
+	test rax, rax
+	jne .LBB0_2
+	xor esi, esi
+	jmp .LBB0_3

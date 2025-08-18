@@ -26,12 +26,10 @@ inspect_asm::grow::blink_alloc:
 	mov r14, r8
 	neg r14
 	and r14, r9
-	lea r9, [r14 + rbx]
-	cmp r9, qword ptr [rax + 8]
+	lea rdx, [r14 + rbx]
+	cmp rdx, qword ptr [rax + 8]
 	ja .LBB0_6
-	mov qword ptr [rax], r9
-	test rdx, rdx
-	je .LBB0_6
+	mov qword ptr [rax], rdx
 	cmp rcx, rbx
 	cmovae rcx, rbx
 	mov rdi, r14

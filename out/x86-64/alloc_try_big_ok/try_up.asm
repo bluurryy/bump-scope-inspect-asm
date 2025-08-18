@@ -20,9 +20,8 @@ inspect_asm::alloc_try_big_ok::try_up:
 	cmovae rax, rcx
 	cmp rax, qword ptr [r15 + 8]
 	ja .LBB0_6
-	mov qword ptr [r15], rax
 	add r13, 512
-	je .LBB0_6
+	mov qword ptr [r15], rax
 .LBB0_0:
 	mov qword ptr [rsp + 504], r12
 	mov rax, qword ptr [r14]

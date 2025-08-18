@@ -7,17 +7,15 @@ inspect_asm::alloc_vec3::try_blink_alloc:
 	mov rcx, qword ptr [rdi]
 	test rcx, rcx
 	je .LBB0_1
-	mov rdx, qword ptr [rcx]
-	cmp rdx, -16
+	mov rax, qword ptr [rcx]
+	cmp rax, -16
 	ja .LBB0_1
-	lea rax, [rdx + 3]
+	add rax, 3
 	and rax, -4
-	lea rsi, [rax + 12]
-	cmp rsi, qword ptr [rcx + 8]
+	lea rdx, [rax + 12]
+	cmp rdx, qword ptr [rcx + 8]
 	ja .LBB0_1
-	mov qword ptr [rcx], rsi
-	test rdx, rdx
-	je .LBB0_1
+	mov qword ptr [rcx], rdx
 .LBB0_0:
 	mov dword ptr [rax], ebx
 	mov qword ptr [rax + 4], r14

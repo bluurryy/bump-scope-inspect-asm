@@ -29,9 +29,8 @@ inspect_asm::grow::up:
 	cmovae r9, r10
 	cmp r9, rdx
 	ja .LBB0_4
-	mov qword ptr [rax], r9
 	add r14, r8
-	je .LBB0_4
+	mov qword ptr [rax], r9
 .LBB0_1:
 	mov rdi, r14
 	mov rdx, rcx

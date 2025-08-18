@@ -30,11 +30,8 @@ inspect_asm::bump_vec_u32::up::try_with_capacity:
 	and rcx, -4
 	mov rdi, rsi
 	sub rdi, rcx
-	mov r8, r9
 	cmp r9, rdi
 	ja .LBB0_4
-	test rcx, rcx
-	je .LBB0_4
 	and rsi, -4
 .LBB0_3:
 	sub rsi, rcx
@@ -51,7 +48,7 @@ inspect_asm::bump_vec_u32::up::try_with_capacity:
 	mov esi, 4
 	mov rdi, rdx
 	mov rbx, rdx
-	mov rdx, r8
+	mov rdx, r9
 	mov r14, rax
 	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::prepare_allocation_range_in_another_chunk@GOTPCREL]
 	mov rcx, rax

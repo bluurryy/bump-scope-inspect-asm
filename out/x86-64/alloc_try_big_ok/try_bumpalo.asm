@@ -11,8 +11,8 @@ inspect_asm::alloc_try_big_ok::try_bumpalo:
 	mov r15, rsi
 	mov rbx, rdi
 	mov r13, qword ptr [rsi + 16]
-	mov r12, qword ptr [r13 + 32]
-	mov r14, r12
+	mov r14, qword ptr [r13 + 32]
+	mov qword ptr [rsp + 504], r14
 	and r14, -512
 	mov rax, r14
 	sub rax, qword ptr [r13]
@@ -21,9 +21,7 @@ inspect_asm::alloc_try_big_ok::try_bumpalo:
 	jb .LBB0_5
 	add r14, -1024
 	mov qword ptr [r13 + 32], r14
-	je .LBB0_5
 .LBB0_0:
-	mov qword ptr [rsp + 504], r12
 	lea r12, [rsp + 512]
 	mov rdi, r12
 	call rdx

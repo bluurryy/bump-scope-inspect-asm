@@ -8,7 +8,6 @@ inspect_asm::alloc_12_u32::bumpalo_a:
 	jb .LBB0_1
 	add rax, -48
 	mov qword ptr [rcx + 32], rax
-	je .LBB0_1
 .LBB0_0:
 	movups xmm0, xmmword ptr [rsi]
 	movups xmm1, xmmword ptr [rsi + 16]

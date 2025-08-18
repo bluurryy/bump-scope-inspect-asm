@@ -16,7 +16,6 @@ inspect_asm::alloc_iter_u32::bumpalo:
 	ja .LBB0_6
 	sub rax, rcx
 	mov qword ptr [r8 + 32], rax
-	je .LBB0_6
 .LBB0_0:
 	test rdx, rdx
 	je .LBB0_5

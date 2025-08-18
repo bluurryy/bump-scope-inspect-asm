@@ -18,12 +18,10 @@ inspect_asm::alloc_u32_slice::blink_alloc:
 	sub r14, rdx
 	add r14, rcx
 	and r14, -4
-	lea r8, [r14 + rdx]
-	cmp r8, qword ptr [rax + 8]
+	lea rcx, [r14 + rdx]
+	cmp rcx, qword ptr [rax + 8]
 	ja .LBB0_1
-	mov qword ptr [rax], r8
-	test rcx, rcx
-	je .LBB0_1
+	mov qword ptr [rax], rcx
 .LBB0_0:
 	mov rdi, r14
 	call qword ptr [rip + memcpy@GOTPCREL]

@@ -13,7 +13,6 @@ inspect_asm::alloc_u32_slice::try_down:
 	sub r14, rdx
 	and r14, -4
 	mov qword ptr [rax], r14
-	je .LBB0_2
 .LBB0_0:
 	mov rdi, r14
 	call qword ptr [rip + memcpy@GOTPCREL]
