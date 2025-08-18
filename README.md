@@ -1,3 +1,7 @@
+Inspects the produced assembly of `bump-scope` and similar bump allocators.
+
+## Results
+
 Last run was using: 
 
 <!-- rust version start -->
@@ -20,9 +24,9 @@ with
 ## Reproducing
 
 Install 
-- **just** <!-- just version start -->1.40.0<!-- just version end -->
-- **nushell** <!-- nu version start -->0.106.1<!-- nu version end -->
-- **cargo-show-asm** <!-- cargo-show-asm version start -->0.2.43<!-- cargo-show-asm version end -->
+- just <!-- just version start -->1.40.0<!-- just version end -->
+- nushell <!-- nu version start -->0.106.1<!-- nu version end -->
+- cargo-show-asm <!-- cargo-show-asm version start -->0.2.43<!-- cargo-show-asm version end -->
 
 Run
 ```bash
