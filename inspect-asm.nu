@@ -5,19 +5,6 @@ def table-into-record [key_column: cell-path, value_column: cell-path]: table ->
     reduce --fold {} { |it, acc| $acc | upsert ($it | get $key_column) ($it | get $value_column) }
 }
 
-# `group-by --to-table foo?` returns a record on non-match instead of a table
-# This function returns a table instead as expected.
-# TODO: report issue / send pr
-def group-by-to-table [path: cell-path]: table -> table {
-    let result = $in | group-by --to-table $path
-
-    if $result == {} {
-        []
-    } else {
-        $result
-    }
-}
-
 def try-update [field: string, replacement:any] { 
     let table = $in
 
@@ -39,7 +26,7 @@ def parse-label-with-function-index [name: string] {
 
     $content
     | parse --regex ($name + '(?<f>[0-9]+)_(?<i>[0-9]+)')
-    | group-by-to-table f? 
+    | group-by --to-table f? 
     | try-update items { get i | map-to-index } 
     | table-into-record f items
 }
