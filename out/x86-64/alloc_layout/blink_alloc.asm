@@ -5,13 +5,11 @@ inspect_asm::alloc_layout::blink_alloc:
 	mov rsi, qword ptr [rdi]
 	test rsi, rsi
 	je .LBB0_0
-	mov rax, qword ptr [rsi]
 	lea r8, [rdx + rcx]
 	dec r8
-	add r8, rax
+	add r8, qword ptr [rsi]
 	jb .LBB0_0
-	lea r8, [rdx - 1]
-	add r8, rax
+	sub r8, rcx
 	mov rax, rdx
 	neg rax
 	and rax, r8
@@ -31,7 +29,7 @@ inspect_asm::alloc_layout::blink_alloc:
 .LBB0_1:
 	lea rdi, [rip + .Lanon.facade.0]
 	lea rcx, [rip + .Lanon.facade.1]
-	lea r8, [rip + .Lanon.facade.15]
+	lea r8, [rip + .Lanon.facade.2]
 	lea rdx, [rsp + 7]
 	mov esi, 43
 	call qword ptr [rip + core::result::unwrap_failed@GOTPCREL]

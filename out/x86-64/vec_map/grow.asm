@@ -26,37 +26,35 @@ inspect_asm::vec_map::grow:
 	add rcx, rax
 	mov qword ptr [rdx], rcx
 .LBB0_0:
-	movabs rdx, 4611686018427387903
-	lea rcx, [r15 - 1]
-	mov rdi, rcx
-	and rdi, rdx
-	cmp rdi, rcx
-	cmovae rdi, rcx
+	lea rcx, [4*r15]
+	add rcx, -4
+	shr rcx, 2
+	lea rdx, [r15 - 1]
+	cmp rcx, rdx
+	mov rdi, rdx
+	cmovb rdi, rcx
 	cmp rdi, 19
 	jb .LBB0_1
-	lea rsi, [r15 + rdx]
-	and rsi, rdx
-	cmp rsi, rcx
-	cmovae rsi, rcx
-	lea rdx, [r12 + 4*rsi]
-	add rdx, 4
-	cmp rax, rdx
+	cmp rcx, rdx
+	cmovae rcx, rdx
+	lea rsi, [r12 + 4*rcx]
+	add rsi, 4
+	cmp rax, rsi
 	jae .LBB0_7
-	lea rdx, [rax + 8*rsi]
-	add rdx, 8
-	cmp r12, rdx
+	lea rcx, [rax + 8*rcx]
+	add rcx, 8
+	cmp r12, rcx
 	jae .LBB0_7
 .LBB0_1:
-	xor edx, edx
+	xor ecx, ecx
 	mov rsi, r12
 .LBB0_2:
 	lea rdi, [r12 + 4*r15]
 .LBB0_3:
-	mov r8, rdx
-	mov edx, dword ptr [rsi]
-	mov qword ptr [rax + 8*r8], rdx
-	lea rdx, [r8 + 1]
-	cmp rcx, r8
+	mov r8d, dword ptr [rsi]
+	mov qword ptr [rax + 8*rcx], r8
+	cmp rdx, rcx
+	lea rcx, [rcx + 1]
 	je .LBB0_5
 	add rsi, 4
 	cmp rsi, rdi
@@ -64,16 +62,16 @@ inspect_asm::vec_map::grow:
 	jmp .LBB0_5
 .LBB0_4:
 	mov eax, 8
-	xor edx, edx
+	xor ecx, ecx
 .LBB0_5:
 	lea rsi, [r12 + 4*r13]
-	mov rcx, qword ptr [rbx]
-	cmp rsi, qword ptr [rcx]
+	mov rdx, qword ptr [rbx]
+	cmp rsi, qword ptr [rdx]
 	jne .LBB0_6
-	mov qword ptr [rcx], r12
+	mov qword ptr [rdx], r12
 .LBB0_6:
 	mov qword ptr [r14], rax
-	mov qword ptr [r14 + 8], rdx
+	mov qword ptr [r14 + 8], rcx
 	mov qword ptr [r14 + 16], r15
 	mov qword ptr [r14 + 24], rbx
 	mov rax, r14
@@ -85,9 +83,9 @@ inspect_asm::vec_map::grow:
 	ret
 .LBB0_7:
 	inc rdi
-	movabs rdx, 9223372036854775804
-	and rdx, rdi
-	lea rsi, [r12 + 4*rdx]
+	movabs rcx, 9223372036854775804
+	and rcx, rdi
+	lea rsi, [r12 + 4*rcx]
 	xor r8d, r8d
 	xorps xmm0, xmm0
 .LBB0_8:
@@ -98,9 +96,9 @@ inspect_asm::vec_map::grow:
 	movups xmmword ptr [rax + 8*r8], xmm1
 	movups xmmword ptr [rax + 8*r8 + 16], xmm2
 	add r8, 4
-	cmp rdx, r8
+	cmp rcx, r8
 	jne .LBB0_8
-	cmp rdi, rdx
+	cmp rdi, rcx
 	jne .LBB0_2
 	jmp .LBB0_5
 .LBB0_9:

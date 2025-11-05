@@ -38,23 +38,22 @@ inspect_asm::vec_map::try_grow:
 	add rcx, rax
 	mov qword ptr [rdx], rcx
 .LBB0_3:
-	movabs rcx, 4611686018427387903
+	lea rcx, [4*r15]
+	add rcx, -4
+	shr rcx, 2
 	lea rdx, [r15 - 1]
+	cmp rcx, rdx
 	mov rdi, rdx
-	and rdi, rcx
-	cmp rdi, rdx
-	cmovae rdi, rdx
+	cmovb rdi, rcx
 	cmp rdi, 19
 	jb .LBB0_4
-	lea rsi, [r15 + rcx]
-	and rsi, rcx
-	cmp rsi, rdx
-	cmovae rsi, rdx
-	lea rcx, [r12 + 4*rsi]
-	add rcx, 4
-	cmp rax, rcx
+	cmp rcx, rdx
+	cmovae rcx, rdx
+	lea rsi, [r12 + 4*rcx]
+	add rsi, 4
+	cmp rax, rsi
 	jae .LBB0_7
-	lea rcx, [rax + 8*rsi]
+	lea rcx, [rax + 8*rcx]
 	add rcx, 8
 	cmp r12, rcx
 	jae .LBB0_7
@@ -64,11 +63,10 @@ inspect_asm::vec_map::try_grow:
 .LBB0_5:
 	lea rdi, [r12 + 4*r15]
 .LBB0_6:
-	mov r8, rcx
-	mov ecx, dword ptr [rsi]
-	mov qword ptr [rax + 8*r8], rcx
-	lea rcx, [r8 + 1]
-	cmp rdx, r8
+	mov r8d, dword ptr [rsi]
+	mov qword ptr [rax + 8*rcx], r8
+	cmp rdx, rcx
+	lea rcx, [rcx + 1]
 	je .LBB0_9
 	add rsi, 4
 	cmp rsi, rdi

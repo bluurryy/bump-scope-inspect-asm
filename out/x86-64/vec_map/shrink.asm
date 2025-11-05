@@ -6,52 +6,53 @@ inspect_asm::vec_map::shrink:
 	mov r8, qword ptr [rsi + 16]
 	mov rsi, qword ptr [rsi + 24]
 	test rdi, rdi
-	je .LBB0_3
-	push r15
+	je .LBB0_4
 	push r14
 	push rbx
-	lea r9, [rdx + 8*rdi]
+	lea r9, [8*rdi]
+	add r9, rdx
 	lea r10, [rdx + 8]
 	cmp r9, r10
-	cmova r10, r9
-	mov rbx, rdx
-	not rbx
-	add rbx, r10
-	mov r10, rdx
+	cmovbe r9, r10
 	mov r11, rdx
-	cmp rbx, 24
+	not r11
+	add r11, r9
+	mov r9, rdx
+	mov r10, rdx
+	cmp r11, 24
 	jb .LBB0_1
-	shr rbx, 3
-	inc rbx
-	mov r14, rbx
-	and r14, rcx
-	lea r10, [rdx + 4*r14]
-	lea r11, [rdx + 8*r14]
-	xor r15d, r15d
+	shr r11, 3
+	inc r11
+	mov rbx, r11
+	and rbx, rcx
+	lea r9, [rdx + 4*rbx]
+	lea r10, [rdx + 8*rbx]
+	xor r14d, r14d
 .LBB0_0:
-	movdqu xmm0, xmmword ptr [rdx + 8*r15]
-	movdqu xmm1, xmmword ptr [rdx + 8*r15 + 16]
+	movdqu xmm0, xmmword ptr [rdx + 8*r14]
+	movdqu xmm1, xmmword ptr [rdx + 8*r14 + 16]
 	pshufd xmm0, xmm0, 232
 	pshufd xmm1, xmm1, 232
 	punpcklqdq xmm0, xmm1
-	movdqu xmmword ptr [rdx + 4*r15], xmm0
-	add r15, 4
-	cmp r14, r15
-	jne .LBB0_0
+	movdqu xmmword ptr [rdx + 4*r14], xmm0
+	add r14, 4
 	cmp rbx, r14
-	je .LBB0_2
+	jne .LBB0_0
+	cmp r11, rbx
+	je .LBB0_3
 .LBB0_1:
-	mov ebx, dword ptr [r11]
-	mov dword ptr [r10], ebx
-	add r11, 8
-	add r10, 4
-	cmp r11, r9
-	jb .LBB0_1
+	lea r11, [rdx + 8*rdi]
 .LBB0_2:
+	mov ebx, dword ptr [r10]
+	mov dword ptr [r9], ebx
+	add r10, 8
+	add r9, 4
+	cmp r10, r11
+	jb .LBB0_2
+.LBB0_3:
 	pop rbx
 	pop r14
-	pop r15
-.LBB0_3:
+.LBB0_4:
 	add r8, r8
 	add rcx, 2
 	and rcx, r8

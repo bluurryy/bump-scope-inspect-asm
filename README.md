@@ -6,13 +6,13 @@ Last run was using:
 
 <!-- rust version start -->
 ```
-rustc 1.89.0 (29483883e 2025-08-04)
+rustc 1.91.0 (f8297e351 2025-10-28)
 binary: rustc
-commit-hash: 29483883eed69d5fb4db01964cdf2af4d86e9cb2
-commit-date: 2025-08-04
+commit-hash: f8297e351a40c1439a467bbbb6879088047f50b3
+commit-date: 2025-10-28
 host: x86_64-unknown-linux-gnu
-release: 1.89.0
-LLVM version: 20.1.7
+release: 1.91.0
+LLVM version: 21.1.2
 ```
 <!-- rust version end -->
 

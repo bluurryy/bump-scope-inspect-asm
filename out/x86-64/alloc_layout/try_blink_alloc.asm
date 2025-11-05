@@ -4,13 +4,11 @@ inspect_asm::alloc_layout::try_blink_alloc:
 	mov rsi, qword ptr [rdi]
 	test rsi, rsi
 	je .LBB0_0
-	mov rax, qword ptr [rsi]
 	lea r8, [rdx + rcx]
 	dec r8
-	add r8, rax
+	add r8, qword ptr [rsi]
 	jb .LBB0_0
-	lea r8, [rdx - 1]
-	add r8, rax
+	sub r8, rcx
 	mov rax, rdx
 	neg rax
 	and rax, r8

@@ -6,9 +6,9 @@ inspect_asm::alloc_u8::try_blink_alloc:
 	mov rax, qword ptr [rcx]
 	cmp rax, -1
 	je .LBB0_1
-	cmp rax, qword ptr [rcx + 8]
-	jae .LBB0_1
 	lea rdx, [rax + 1]
+	cmp rdx, qword ptr [rcx + 8]
+	ja .LBB0_1
 	mov qword ptr [rcx], rdx
 .LBB0_0:
 	mov byte ptr [rax], sil

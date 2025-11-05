@@ -7,27 +7,25 @@ inspect_asm::alloc_layout::bumpalo:
 	setae r9b
 	cmp rsi, 1
 	sbb r9b, 0
-	je .LBB0_1
+	je .LBB0_0
 	movzx r9d, r9b
 	cmp r9d, 1
-	jne .LBB0_2
-	mov r10, rsi
-	neg r10
-	and rax, r10
-	mov r11, rax
-	sub r11, r8
-	jb .LBB0_3
-	lea r9, [rsi + rdx]
-	dec r9
-	and r9, r10
-	cmp r9, r11
-	ja .LBB0_3
+	jne .LBB0_1
+	lea r9, [rsi - 1]
+	not r9
+	and rax, r9
+	mov r10, rax
+	sub r10, r8
+	jb .LBB0_4
+	lea r8, [rdx + rsi]
+	dec r8
+	mov r9, rsi
+	neg r9
+	and r9, r8
+	cmp r9, r10
+	jbe .LBB0_2
+	jmp .LBB0_4
 .LBB0_0:
-	sub rax, r9
-	mov qword ptr [rcx + 32], rax
-	pop rcx
-	ret
-.LBB0_1:
 	lea r10, [rsi + rdx]
 	dec r10
 	mov r9, rsi
@@ -36,23 +34,22 @@ inspect_asm::alloc_layout::bumpalo:
 	mov r10, rax
 	sub r10, r8
 	cmp r9, r10
-	jbe .LBB0_0
-	jmp .LBB0_3
-.LBB0_2:
+	jbe .LBB0_2
+	jmp .LBB0_4
+.LBB0_1:
 	mov r9, rax
 	sub r9, r8
 	cmp rdx, r9
-	ja .LBB0_3
+	ja .LBB0_4
 	mov r9, rdx
+.LBB0_2:
 	sub rax, r9
 	mov qword ptr [rcx + 32], rax
-	pop rcx
-	ret
 .LBB0_3:
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
-	test rax, rax
-	je .LBB0_4
 	pop rcx
 	ret
 .LBB0_4:
+	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	test rax, rax
+	jne .LBB0_3
 	call qword ptr [rip + bumpalo::oom@GOTPCREL]

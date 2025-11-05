@@ -21,8 +21,7 @@ inspect_asm::grow::blink_alloc:
 	add r9, rdx
 	jb .LBB0_6
 .LBB0_0:
-	lea r9, [r8 - 1]
-	add r9, rdx
+	sub r9, rbx
 	mov r14, r8
 	neg r14
 	and r14, r9
@@ -42,8 +41,8 @@ inspect_asm::grow::blink_alloc:
 	mov rbx, rcx
 	jmp .LBB0_4
 .LBB0_3:
-	mov rdx, rsi
-	add rdx, rbx
+	mov rdx, rbx
+	add rdx, rsi
 	jb .LBB0_6
 	cmp rdx, qword ptr [rax + 8]
 	ja .LBB0_6

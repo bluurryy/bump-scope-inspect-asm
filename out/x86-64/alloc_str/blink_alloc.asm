@@ -7,8 +7,8 @@ inspect_asm::alloc_str::blink_alloc:
 	test rax, rax
 	je .LBB0_1
 	mov rbx, qword ptr [rax]
-	mov rcx, rbx
-	add rcx, r14
+	mov rcx, r14
+	add rcx, rbx
 	jb .LBB0_1
 	cmp rcx, qword ptr [rax + 8]
 	ja .LBB0_1

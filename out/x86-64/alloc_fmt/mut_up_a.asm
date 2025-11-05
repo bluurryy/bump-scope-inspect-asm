@@ -6,17 +6,17 @@ inspect_asm::alloc_fmt::mut_up_a:
 	mov qword ptr [rsp + 56], rax
 	lea rax, [rip + <&T as core::fmt::Display>::fmt]
 	mov qword ptr [rsp + 64], rax
-	lea rax, [rip + .Lanon.facade.0]
-	mov qword ptr [rsp + 72], rax
-	mov qword ptr [rsp + 80], 2
-	mov qword ptr [rsp + 104], 0
-	lea rax, [rsp + 56]
-	mov qword ptr [rsp + 88], rax
-	mov qword ptr [rsp + 96], 1
-	movups xmm0, xmmword ptr [rip + .Lanon.facade.1]
+	movups xmm0, xmmword ptr [rip + .Lanon.facade.0]
 	movaps xmmword ptr [rsp], xmm0
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdi
+	lea rax, [rip + .Lanon.facade.1]
+	mov qword ptr [rsp + 72], rax
+	mov qword ptr [rsp + 80], 2
+	lea rax, [rsp + 56]
+	mov qword ptr [rsp + 88], rax
+	mov qword ptr [rsp + 96], 1
+	mov qword ptr [rsp + 104], 0
 	lea rsi, [rip + .Lanon.facade.2]
 	mov rdi, rsp
 	lea rdx, [rsp + 72]

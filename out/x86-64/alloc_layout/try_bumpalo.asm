@@ -10,16 +10,18 @@ inspect_asm::alloc_layout::try_bumpalo:
 	movzx r9d, r9b
 	cmp r9d, 1
 	jne .LBB0_2
-	mov r10, rsi
-	neg r10
-	and rax, r10
-	mov r11, rax
-	sub r11, r8
+	lea r9, [rsi - 1]
+	not r9
+	and rax, r9
+	mov r10, rax
+	sub r10, r8
 	jb .LBB0_3
-	lea r9, [rsi + rdx]
-	dec r9
-	and r9, r10
-	cmp r9, r11
+	lea r8, [rdx + rsi]
+	dec r8
+	mov r9, rsi
+	neg r9
+	and r9, r8
+	cmp r9, r10
 	ja .LBB0_3
 .LBB0_0:
 	sub rax, r9
