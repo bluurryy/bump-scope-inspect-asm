@@ -106,11 +106,11 @@ def asm-save [name: string, target: string, extra_args: list<string>] {
     } | complete
 
     if $result.exit_code != 0 {
-        if "You asked to display item #0 (zero based), but there's only 0 matching items" in $result.stdout {
-        report $file_stem "?"
-        mkdir $out_dir
-        "" | save -f $file_path
-        return
+        if "You asked to display item #0 (zero based), but there's only 0 matching items" in $result.stderr {
+            report $file_stem "?"
+            mkdir $out_dir
+            "" | save -f $file_path
+            return
         }
 
         print -e $result.stderr
