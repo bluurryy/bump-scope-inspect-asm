@@ -60,7 +60,7 @@ inspect_asm::grow::down:
 	mov rsi, r8
 	mov rdx, rbx
 	mov r15, rcx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::alloc_in_another_chunk@GOTPCREL]
 	mov rsi, r14
 	mov rcx, r15
 	mov r14, rax
@@ -72,7 +72,7 @@ inspect_asm::grow::down:
 	mov r15, rcx
 	mov rsi, r8
 	mov rdx, rbx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::alloc_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::alloc_in_another_chunk@GOTPCREL]
 	test rax, rax
 	je .LBB0_7
 	mov r14, rax

@@ -19,7 +19,7 @@ inspect_asm::alloc_big::up:
 .LBB0_0:
 	mov rdi, rax
 	mov rbx, rsi
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov rsi, rbx
 	mov rdi, rax
 	mov edx, 512

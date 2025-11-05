@@ -20,6 +20,6 @@ inspect_asm::alloc_12_u32::down:
 	ret
 .LBB0_1:
 	mov rbx, rsi
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov rsi, rbx
 	jmp .LBB0_0

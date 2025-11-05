@@ -101,7 +101,7 @@ inspect_asm::alloc_iter_u32::down_a:
 	mov rdi, rbx
 	mov rsi, rdx
 	mov r12, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
 	mov rdx, r12
 	jmp .LBB0_0
 .LBB0_12:
