@@ -15,6 +15,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "78200ac3468a57d333cd0ea5dd398e25111194dcacd49208afca95c629a6311d"
 
 [[package]]
+name = "allocator-api2"
+version = "0.4.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c880a97d28a3681c0267bd29cff89621202715b065127cd445fa0f0fe0aa2880"
+
+[[package]]
 name = "blink-alloc"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -25,26 +31,27 @@ dependencies = [
 
 [[package]]
 name = "bump-scope"
-version = "1.4.0"
+version = "1.5.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ec80611b7c55f8a770c3a6f7556f829dbb54d88f8fab0a4926e433d647ad1d8f"
+checksum = "a117a0e80c453511760a08c607060a778967a8dec5415c1d1a75e20630825824"
 dependencies = [
  "allocator-api2 0.2.21",
  "allocator-api2 0.3.0",
+ "allocator-api2 0.4.0",
 ]
 
 [[package]]
 name = "bumpalo"
-version = "3.19.0"
+version = "3.19.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "46c5e41b57b8bba42a04676d81cb89e9ee8e859a1a66f80a5a72e1cb76b34d43"
+checksum = "5dd9dc738b7a8311c7ade152424974d8115f2cdad61e8dab8dac9f2362298510"
 dependencies = [
  "allocator-api2 0.2.21",
 ]
 
 [[package]]
 name = "inspect-asm"
-version = "0.1.0"
+version = "0.0.0"
 dependencies = [
  "allocator-api2 0.2.21",
  "blink-alloc",
