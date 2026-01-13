@@ -56,6 +56,9 @@ def replace-anons [] {
     let anons = $content | parse --regex '(?<full>\.Lanon\.(?:[a-z0-9]+)\.(?<i>[0-9]+))'
     let map_to_index = $anons | get i | map-to-index
 
+    # fixes `.Lanon.abcdef.1` to not replace a substring of `.Lanon.abcdef.15`
+    let anons = $anons | sort-by -r { get full | str length }
+
     for anon in $anons {
         let i = $map_to_index | get $anon.i
 
