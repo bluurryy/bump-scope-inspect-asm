@@ -19,7 +19,7 @@ inspect_asm::alloc_iter_u32::mut_rev_up_a:
 	mov r8, rcx
 	sub r8, rax
 	cmp rdx, r8
-	ja .LBB0_7
+	jg .LBB0_7
 	and rcx, -4
 .LBB0_0:
 	sub rcx, rax
@@ -94,7 +94,7 @@ inspect_asm::alloc_iter_u32::mut_rev_up_a:
 	mov esi, 4
 	mov r15, rdi
 	mov r14, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::prepare_allocation_range_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,S>::prepare_allocation_range_in_another_chunk@GOTPCREL]
 	mov rdi, r15
 	mov rsi, r12
 	mov rcx, rdx

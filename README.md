@@ -17,7 +17,7 @@ LLVM version: 21.1.2
 <!-- rust version end -->
 
 with 
-- bump-scope <!-- bump-scope version start -->1.5.1<!-- bump-scope version end -->
+- bump-scope <!-- bump-scope version start -->2.0.0-dev<!-- bump-scope version end -->
 - bumpalo <!-- bumpalo version start -->3.19.1<!-- bumpalo version end -->
 - blink-alloc <!-- blink-alloc version start -->0.3.1<!-- blink-alloc version end -->
 

@@ -13,7 +13,7 @@ inspect_asm::alloc_try_u32::up_mut:
 	and r15, -4
 	sub rax, r15
 	cmp rax, 8
-	jb .LBB0_3
+	jl .LBB0_3
 .LBB0_0:
 	call rdx
 	mov dword ptr [r15], eax
@@ -44,7 +44,7 @@ inspect_asm::alloc_try_u32::up_mut:
 .LBB0_3:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::prepare_allocation_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,S>::prepare_allocation_in_another_chunk@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

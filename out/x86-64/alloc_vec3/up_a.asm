@@ -5,7 +5,7 @@ inspect_asm::alloc_vec3::up_a:
 	mov rdx, qword ptr [rcx + 8]
 	sub rdx, rax
 	cmp rdx, 12
-	jb .LBB0_1
+	jl .LBB0_1
 	lea rdx, [rax + 12]
 	mov qword ptr [rcx], rdx
 .LBB0_0:
@@ -17,6 +17,6 @@ inspect_asm::alloc_vec3::up_a:
 	ret
 .LBB0_1:
 	mov rbx, rsi
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,S>::do_alloc_sized_in_another_chunk@GOTPCREL]
 	mov rsi, rbx
 	jmp .LBB0_0

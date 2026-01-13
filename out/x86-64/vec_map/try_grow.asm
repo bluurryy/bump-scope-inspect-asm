@@ -34,7 +34,7 @@ inspect_asm::vec_map::try_grow:
 	and rax, -8
 	sub rsi, rax
 	cmp rcx, rsi
-	ja .LBB0_14
+	jg .LBB0_14
 	add rcx, rax
 	mov qword ptr [rdx], rcx
 .LBB0_3:
@@ -121,7 +121,7 @@ inspect_asm::vec_map::try_grow:
 .LBB0_14:
 	mov rdi, r14
 	mov rsi, r15
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,S>::do_alloc_slice_in_another_chunk@GOTPCREL]
 	test rax, rax
 	jne .LBB0_3
 	jmp .LBB0_0

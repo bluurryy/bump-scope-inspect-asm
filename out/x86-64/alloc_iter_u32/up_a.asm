@@ -18,7 +18,7 @@ inspect_asm::alloc_iter_u32::up_a:
 	mov rsi, qword ptr [rcx + 8]
 	sub rsi, rax
 	cmp r15, rsi
-	ja .LBB0_8
+	jg .LBB0_8
 	lea rsi, [r15 + rax]
 	mov qword ptr [rcx], rsi
 .LBB0_0:
@@ -85,7 +85,7 @@ inspect_asm::alloc_iter_u32::up_a:
 	mov r14, rdi
 	mov rsi, rdx
 	mov r12, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,S>::do_alloc_slice_in_another_chunk@GOTPCREL]
 	mov rdx, r12
 	mov rdi, r14
 	jmp .LBB0_0
