@@ -15,7 +15,7 @@ inspect_asm::bump_vec_u32::down::with_capacity:
 	mov r8, rcx
 	sub r8, rax
 	cmp rsi, r8
-	ja .LBB0_3
+	jg .LBB0_3
 	add rax, 3
 	and rax, -4
 .LBB0_0:
@@ -46,7 +46,7 @@ inspect_asm::bump_vec_u32::down::with_capacity:
 	mov rdi, rdx
 	mov rbx, rdx
 	mov rdx, rax
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::prepare_allocation_range_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::prepare_allocation_range_in_another_chunk@GOTPCREL]
 	mov rdi, r14
 	mov rcx, rdx
 	mov rdx, rbx

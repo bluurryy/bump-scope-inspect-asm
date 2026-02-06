@@ -21,7 +21,7 @@ inspect_asm::alloc_iter_u32::mut_up:
 	mov r9, r8
 	sub r9, rcx
 	cmp rdx, r9
-	ja .LBB0_7
+	jg .LBB0_7
 	and r8, -4
 .LBB0_0:
 	sub r8, rcx
@@ -63,8 +63,8 @@ inspect_asm::alloc_iter_u32::mut_up:
 	je .LBB0_5
 	mov rax, qword ptr [rsp + 8]
 	mov rcx, qword ptr [rsp + 32]
-	lea rdx, [rax + 4*rdi]
 	mov rcx, qword ptr [rcx]
+	lea rdx, [rax + 4*rdi]
 	mov qword ptr [rcx], rdx
 	jmp .LBB0_6
 .LBB0_5:
@@ -84,7 +84,7 @@ inspect_asm::alloc_iter_u32::mut_up:
 	mov esi, 4
 	mov r14, rdi
 	mov rbx, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::prepare_allocation_range_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::prepare_allocation_range_in_another_chunk@GOTPCREL]
 	mov rdi, r14
 	mov rsi, r15
 	mov rcx, rax

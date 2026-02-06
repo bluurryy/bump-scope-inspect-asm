@@ -60,7 +60,7 @@ inspect_asm::alloc_try_big_ok::up_mut:
 .LBB0_3:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::prepare_allocation_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::prepare_allocation_in_another_chunk@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

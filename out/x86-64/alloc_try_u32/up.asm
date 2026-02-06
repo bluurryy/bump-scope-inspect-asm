@@ -10,13 +10,11 @@ inspect_asm::alloc_try_u32::up:
 	mov rbx, rdi
 	mov r12, qword ptr [rsi]
 	mov r13, qword ptr [r12]
-	mov rax, qword ptr [r12 + 8]
 	lea r15, [r13 + 3]
 	and r15, -4
-	sub rax, r15
-	cmp rax, 8
-	jb .LBB0_5
 	lea rax, [r15 + 8]
+	cmp rax, qword ptr [r12 + 8]
+	ja .LBB0_5
 	mov qword ptr [r12], rax
 .LBB0_0:
 	mov rax, qword ptr [r14]
@@ -59,7 +57,7 @@ inspect_asm::alloc_try_u32::up:
 .LBB0_5:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_sized_in_another_chunk@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

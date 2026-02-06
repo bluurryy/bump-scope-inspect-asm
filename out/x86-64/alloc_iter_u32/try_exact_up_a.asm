@@ -21,7 +21,7 @@ inspect_asm::alloc_iter_u32::try_exact_up_a:
 	mov r8, qword ptr [rcx + 8]
 	sub r8, rdi
 	cmp rbx, r8
-	ja .LBB0_3
+	jg .LBB0_3
 	lea rax, [rbx + rdi]
 	mov qword ptr [rcx], rax
 .LBB0_2:
@@ -47,7 +47,7 @@ inspect_asm::alloc_iter_u32::try_exact_up_a:
 	mov r14, rsi
 	mov rsi, rdx
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
 	mov rsi, r14
 	mov rdx, r15
 	mov rdi, rax

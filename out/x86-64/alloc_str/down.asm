@@ -8,7 +8,7 @@ inspect_asm::alloc_str::down:
 	mov rcx, rbx
 	sub rcx, qword ptr [rax + 8]
 	cmp rdx, rcx
-	ja .LBB0_1
+	jg .LBB0_1
 	sub rbx, r14
 	mov qword ptr [rax], rbx
 .LBB0_0:
@@ -24,7 +24,7 @@ inspect_asm::alloc_str::down:
 .LBB0_1:
 	mov rbx, rsi
 	mov rsi, r14
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
 	mov rsi, rbx
 	mov rbx, rax
 	jmp .LBB0_0

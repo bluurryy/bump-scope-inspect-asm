@@ -18,8 +18,8 @@ inspect_asm::alloc_iter_u32_bump_vec::up:
 	mov rcx, qword ptr [rsp + 24]
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
-	lea rsi, [rax + 4*rdx]
 	mov rcx, qword ptr [rcx]
+	lea rsi, [rax + 4*rdx]
 	mov qword ptr [rcx], rsi
 	jmp .LBB0_2
 .LBB0_1:

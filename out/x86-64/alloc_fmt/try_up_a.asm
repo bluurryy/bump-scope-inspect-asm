@@ -23,36 +23,39 @@ inspect_asm::alloc_fmt::try_up_a:
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
 	je .LBB0_0
-	mov rsi, qword ptr [rsp]
-	mov rax, qword ptr [rsp + 24]
+	mov rax, qword ptr [rsp]
+	mov rcx, qword ptr [rsp + 24]
 	mov rdx, qword ptr [rsp + 16]
-	add rdx, rsi
-	mov rcx, qword ptr [rax]
+	add rdx, rax
+	mov rcx, qword ptr [rcx]
 	cmp rdx, qword ptr [rcx]
-	je .LBB0_1
+	je .LBB0_2
 	xor eax, eax
 	add rsp, 120
 	ret
 .LBB0_0:
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
+	mov rsi, qword ptr [rsp + 16]
+	test rsi, rsi
+	je .LBB0_1
 	mov rcx, qword ptr [rsp + 24]
 	mov rcx, qword ptr [rcx]
-	mov rsi, qword ptr [rsp + 16]
 	add rsi, rax
 	cmp rsi, qword ptr [rcx]
-	je .LBB0_2
-	add rsp, 120
-	ret
+	je .LBB0_3
 .LBB0_1:
-	add rsi, 3
-	xor eax, eax
-	and rsi, -4
-	mov qword ptr [rcx], rsi
 	add rsp, 120
 	ret
 .LBB0_2:
-	lea rsi, [rax + rdx]
+	add rax, 3
+	and rax, -4
+	mov qword ptr [rcx], rax
+	xor eax, eax
+	add rsp, 120
+	ret
+.LBB0_3:
+	lea rsi, [rdx + rax]
 	add rsi, 3
 	and rsi, -4
 	mov qword ptr [rcx], rsi
@@ -64,10 +67,10 @@ inspect_asm::alloc_fmt::try_up_a:
 	add rsi, rcx
 	mov rdx, qword ptr [rdx]
 	cmp rsi, qword ptr [rdx]
-	jne .LBB0_3
+	jne .LBB0_4
 	add rcx, 3
 	and rcx, -4
 	mov qword ptr [rdx], rcx
-.LBB0_3:
+.LBB0_4:
 	mov rdi, rax
 	call _Unwind_Resume@PLT

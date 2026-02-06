@@ -22,23 +22,26 @@ inspect_asm::alloc_fmt::up:
 	lea rdx, [rsp + 72]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
-	jne .LBB0_1
+	jne .LBB0_2
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
-	mov rcx, qword ptr [rsp + 24]
-	mov rcx, qword ptr [rcx]
-	mov rsi, qword ptr [rsp + 16]
-	add rsi, rax
-	cmp rsi, qword ptr [rcx]
+	mov rcx, qword ptr [rsp + 16]
+	test rcx, rcx
 	je .LBB0_0
-	add rsp, 120
-	ret
+	mov rsi, qword ptr [rsp + 24]
+	mov rsi, qword ptr [rsi]
+	add rcx, rax
+	cmp rcx, qword ptr [rsi]
+	je .LBB0_1
 .LBB0_0:
-	lea rsi, [rdx + rax]
-	mov qword ptr [rcx], rsi
 	add rsp, 120
 	ret
 .LBB0_1:
+	lea rcx, [rdx + rax]
+	mov qword ptr [rsi], rcx
+	add rsp, 120
+	ret
+.LBB0_2:
 	call qword ptr [rip + bump_scope::private::format_trait_error@GOTPCREL]
 	ud2
 	mov rcx, qword ptr [rsp]
@@ -47,8 +50,8 @@ inspect_asm::alloc_fmt::up:
 	add rsi, rcx
 	mov rdx, qword ptr [rdx]
 	cmp rsi, qword ptr [rdx]
-	jne .LBB0_2
+	jne .LBB0_3
 	mov qword ptr [rdx], rcx
-.LBB0_2:
+.LBB0_3:
 	mov rdi, rax
 	call _Unwind_Resume@PLT

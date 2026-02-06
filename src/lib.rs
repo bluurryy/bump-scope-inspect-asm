@@ -8,7 +8,7 @@
 
 use std::{alloc::Layout, ptr::NonNull};
 
-use bump_scope::BumpBox;
+use bump_scope::{traits::BumpAllocatorTyped as _, BumpBox};
 
 #[derive(Clone, Copy)]
 #[repr(align(512))]
@@ -21,7 +21,7 @@ type vec3 = [u32; 3];
 pub struct zst;
 
 type Bump<const MIN_ALIGN: usize, const UP: bool> =
-    bump_scope::Bump<bump_scope::alloc::Global, MIN_ALIGN, UP>;
+    bump_scope::Bump<bump_scope::alloc::Global, bump_scope::settings::BumpSettings<MIN_ALIGN, UP>>;
 type MutBumpVec<'a, T, const MIN_ALIGN: usize, const UP: bool> =
     bump_scope::MutBumpVec<T, &'a mut Bump<MIN_ALIGN, UP>>;
 type MutBumpVecRev<'a, T, const MIN_ALIGN: usize, const UP: bool> =
@@ -167,11 +167,11 @@ pub mod alloc_layout {
     use super::*;
 
     pub fn up(bump: &Bump<1, true>, layout: Layout) -> NonNull<u8> {
-        bump.alloc_layout(layout)
+        bump.allocate_layout(layout)
     }
 
     pub fn down(bump: &Bump<1, false>, layout: Layout) -> NonNull<u8> {
-        bump.alloc_layout(layout)
+        bump.allocate_layout(layout)
     }
 
     pub fn bumpalo(bump: &bumpalo::Bump, layout: Layout) -> NonNull<u8> {
@@ -186,11 +186,11 @@ pub mod alloc_layout {
     }
 
     pub fn try_up(bump: &Bump<1, true>, layout: Layout) -> Option<NonNull<u8>> {
-        bump.try_alloc_layout(layout).ok()
+        bump.try_allocate_layout(layout).ok()
     }
 
     pub fn try_down(bump: &Bump<1, false>, layout: Layout) -> Option<NonNull<u8>> {
-        bump.try_alloc_layout(layout).ok()
+        bump.try_allocate_layout(layout).ok()
     }
 
     pub fn try_bumpalo(bump: &bumpalo::Bump, layout: Layout) -> Option<NonNull<u8>> {

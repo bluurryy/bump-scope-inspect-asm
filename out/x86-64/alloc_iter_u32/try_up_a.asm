@@ -13,15 +13,10 @@ inspect_asm::alloc_iter_u32::try_up_a:
 	je .LBB0_2
 .LBB0_0:
 	xor eax, eax
-	jmp .LBB0_10
+	jmp .LBB0_8
 .LBB0_1:
 	mov eax, 4
-	xor esi, esi
 	xor edx, edx
-	mov rcx, qword ptr [rdi]
-	add rsi, rax
-	cmp rsi, qword ptr [rcx]
-	jne .LBB0_10
 	jmp .LBB0_8
 .LBB0_2:
 	mov rbx, rsi
@@ -31,7 +26,7 @@ inspect_asm::alloc_iter_u32::try_up_a:
 	mov rsi, qword ptr [rcx + 8]
 	sub rsi, rax
 	cmp r15, rsi
-	ja .LBB0_11
+	jg .LBB0_9
 	lea rsi, [r15 + rax]
 	mov qword ptr [rcx], rsi
 .LBB0_3:
@@ -60,26 +55,25 @@ inspect_asm::alloc_iter_u32::try_up_a:
 	mov rdi, r14
 	call r13
 	test al, al
-	jne .LBB0_12
+	jne .LBB0_10
 	mov rax, qword ptr [rsp + 8]
 	mov rdx, qword ptr [rsp + 16]
 	jmp .LBB0_5
 .LBB0_7:
 	mov rax, qword ptr [rsp + 8]
 	mov rsi, qword ptr [rsp + 24]
-	mov rdi, qword ptr [rsp + 32]
-	shl rsi, 2
-	mov rcx, qword ptr [rdi]
-	add rsi, rax
+	test rsi, rsi
+	je .LBB0_8
+	mov rcx, qword ptr [rsp + 32]
+	mov rcx, qword ptr [rcx]
+	lea rsi, [rax + 4*rsi]
 	cmp rsi, qword ptr [rcx]
-	jne .LBB0_10
-.LBB0_8:
+	jne .LBB0_8
 	lea rsi, [rax + 4*rdx]
 	add rsi, 3
-.LBB0_9:
 	and rsi, -4
 	mov qword ptr [rcx], rsi
-.LBB0_10:
+.LBB0_8:
 	add rsp, 40
 	pop rbx
 	pop r12
@@ -88,37 +82,43 @@ inspect_asm::alloc_iter_u32::try_up_a:
 	pop r15
 	pop rbp
 	ret
-.LBB0_11:
+.LBB0_9:
 	mov r14, rdi
 	mov rsi, rdx
 	mov r12, rdx
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
-	mov rdx, r12
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
 	mov rdi, r14
+	mov rdx, r12
 	test rax, rax
 	jne .LBB0_3
 	jmp .LBB0_0
-.LBB0_12:
-	mov rsi, qword ptr [rsp + 8]
-	mov rax, qword ptr [rsp + 24]
-	mov rcx, qword ptr [rsp + 32]
-	lea rax, [rsi + 4*rax]
-	mov rcx, qword ptr [rcx]
-	cmp rax, qword ptr [rcx]
+.LBB0_10:
+	mov rcx, qword ptr [rsp + 24]
+	test rcx, rcx
+	je .LBB0_0
+	mov rax, qword ptr [rsp + 8]
+	mov rdx, qword ptr [rsp + 32]
+	lea rsi, [rax + 4*rcx]
+	mov rcx, qword ptr [rdx]
+	cmp rsi, qword ptr [rcx]
 	jne .LBB0_0
-	add rsi, 3
+	add rax, 3
+	and rax, -4
+	mov qword ptr [rcx], rax
 	xor eax, eax
-	jmp .LBB0_9
-	mov rcx, qword ptr [rsp + 8]
+	jmp .LBB0_8
 	mov rdx, qword ptr [rsp + 24]
+	test rdx, rdx
+	je .LBB0_11
+	mov rcx, qword ptr [rsp + 8]
 	mov rsi, qword ptr [rsp + 32]
 	lea rdi, [rcx + 4*rdx]
 	mov rdx, qword ptr [rsi]
 	cmp rdi, qword ptr [rdx]
-	jne .LBB0_13
+	jne .LBB0_11
 	add rcx, 3
 	and rcx, -4
 	mov qword ptr [rdx], rcx
-.LBB0_13:
+.LBB0_11:
 	mov rdi, rax
 	call _Unwind_Resume@PLT

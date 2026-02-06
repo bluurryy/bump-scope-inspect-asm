@@ -29,29 +29,32 @@ inspect_asm::alloc_fmt::try_up:
 	add rdx, rax
 	mov rcx, qword ptr [rcx]
 	cmp rdx, qword ptr [rcx]
-	je .LBB0_1
+	je .LBB0_2
 	xor eax, eax
 	add rsp, 120
 	ret
 .LBB0_0:
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
-	mov rcx, qword ptr [rsp + 24]
-	mov rcx, qword ptr [rcx]
-	mov rsi, qword ptr [rsp + 16]
-	add rsi, rax
-	cmp rsi, qword ptr [rcx]
-	je .LBB0_2
+	mov rcx, qword ptr [rsp + 16]
+	test rcx, rcx
+	je .LBB0_1
+	mov rsi, qword ptr [rsp + 24]
+	mov rsi, qword ptr [rsi]
+	add rcx, rax
+	cmp rcx, qword ptr [rsi]
+	je .LBB0_3
+.LBB0_1:
 	add rsp, 120
 	ret
-.LBB0_1:
+.LBB0_2:
 	mov qword ptr [rcx], rax
 	xor eax, eax
 	add rsp, 120
 	ret
-.LBB0_2:
-	lea rsi, [rdx + rax]
-	mov qword ptr [rcx], rsi
+.LBB0_3:
+	lea rcx, [rdx + rax]
+	mov qword ptr [rsi], rcx
 	add rsp, 120
 	ret
 	mov rcx, qword ptr [rsp]
@@ -60,8 +63,8 @@ inspect_asm::alloc_fmt::try_up:
 	add rsi, rcx
 	mov rdx, qword ptr [rdx]
 	cmp rsi, qword ptr [rdx]
-	jne .LBB0_3
+	jne .LBB0_4
 	mov qword ptr [rdx], rcx
-.LBB0_3:
+.LBB0_4:
 	mov rdi, rax
 	call _Unwind_Resume@PLT

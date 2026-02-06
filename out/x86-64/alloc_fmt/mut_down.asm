@@ -29,16 +29,16 @@ inspect_asm::alloc_fmt::mut_down:
 	mov rbx, qword ptr [rsp + 16]
 	test rbx, rbx
 	je .LBB0_0
-	mov r15, qword ptr [rsp + 24]
+	mov rax, qword ptr [rsp + 24]
 	mov rsi, qword ptr [rsp]
 	mov r14, qword ptr [rsp + 8]
+	mov r15, qword ptr [rax]
 	add rbx, rsi
 	sub rbx, r14
 	mov rdi, rbx
 	mov rdx, r14
 	call qword ptr [rip + memmove@GOTPCREL]
-	mov rax, qword ptr [r15]
-	mov qword ptr [rax], rbx
+	mov qword ptr [r15], rbx
 	jmp .LBB0_1
 .LBB0_0:
 	mov ebx, 1

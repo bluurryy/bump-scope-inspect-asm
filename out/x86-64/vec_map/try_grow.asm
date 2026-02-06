@@ -4,8 +4,8 @@ inspect_asm::vec_map::try_grow:
 	push r13
 	push r12
 	push rbx
-	mov rbx, rdi
-	mov r14, qword ptr [rsi + 24]
+	mov r14, rdi
+	mov rbx, qword ptr [rsi + 24]
 	mov r12, qword ptr [rsi]
 	mov r15, qword ptr [rsi + 8]
 	mov r13, qword ptr [rsi + 16]
@@ -15,26 +15,28 @@ inspect_asm::vec_map::try_grow:
 	shr rax, 60
 	je .LBB0_2
 .LBB0_0:
+	test r13, r13
+	je .LBB0_13
 	lea rax, [r12 + 4*r13]
-	mov rdx, qword ptr [r14]
+	mov rdx, qword ptr [rbx]
 	cmp rax, qword ptr [rdx]
-	jne .LBB0_12
+	jne .LBB0_13
 	xor eax, eax
-	jmp .LBB0_11
+	jmp .LBB0_12
 .LBB0_1:
 	mov eax, 8
 	xor ecx, ecx
 	jmp .LBB0_9
 .LBB0_2:
 	lea rcx, [8*r15]
-	mov rdx, qword ptr [r14]
+	mov rdx, qword ptr [rbx]
 	mov rax, qword ptr [rdx]
 	mov rsi, qword ptr [rdx + 8]
 	add rax, 7
 	and rax, -8
 	sub rsi, rax
 	cmp rcx, rsi
-	ja .LBB0_14
+	jg .LBB0_15
 	add rcx, rax
 	mov qword ptr [rdx], rcx
 .LBB0_3:
@@ -92,44 +94,49 @@ inspect_asm::vec_map::try_grow:
 	cmp rdi, rcx
 	jne .LBB0_5
 .LBB0_9:
+	test r13, r13
+	je .LBB0_10
 	lea rsi, [r12 + 4*r13]
-	mov rdx, qword ptr [r14]
+	mov rdx, qword ptr [rbx]
 	cmp rsi, qword ptr [rdx]
-	je .LBB0_11
-	test rax, rax
 	je .LBB0_12
 .LBB0_10:
-	mov qword ptr [rbx], rax
-	mov qword ptr [rbx + 8], rcx
-	mov qword ptr [rbx + 16], r15
-	mov qword ptr [rbx + 24], r14
-	jmp .LBB0_13
+	test rax, rax
+	je .LBB0_13
 .LBB0_11:
+	mov qword ptr [r14], rax
+	mov qword ptr [r14 + 8], rcx
+	mov qword ptr [r14 + 16], r15
+	mov qword ptr [r14 + 24], rbx
+	jmp .LBB0_14
+.LBB0_12:
 	mov qword ptr [rdx], r12
 	test rax, rax
-	jne .LBB0_10
-.LBB0_12:
-	mov qword ptr [rbx], 0
+	jne .LBB0_11
 .LBB0_13:
-	mov rax, rbx
+	mov qword ptr [r14], 0
+.LBB0_14:
+	mov rax, r14
 	pop rbx
 	pop r12
 	pop r13
 	pop r14
 	pop r15
 	ret
-.LBB0_14:
-	mov rdi, r14
+.LBB0_15:
+	mov rdi, rbx
 	mov rsi, r15
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
 	test rax, rax
 	jne .LBB0_3
 	jmp .LBB0_0
+	test r13, r13
+	je .LBB0_16
 	lea rdx, [r12 + 4*r13]
-	mov rcx, qword ptr [r14]
+	mov rcx, qword ptr [rbx]
 	cmp rdx, qword ptr [rcx]
-	jne .LBB0_15
+	jne .LBB0_16
 	mov qword ptr [rcx], r12
-.LBB0_15:
+.LBB0_16:
 	mov rdi, rax
 	call _Unwind_Resume@PLT

@@ -62,7 +62,8 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_up:
 	mov rcx, qword ptr [rsp + 32]
 	test rcx, rcx
 	je .LBB0_6
-	mov r15, qword ptr [rsp + 16]
+	mov rsi, qword ptr [rsp + 16]
+	mov r15, qword ptr [rsi]
 	shl rcx, 2
 	lea rsi, [r14 + 4*rdx]
 	sub r14, rcx
@@ -72,8 +73,7 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_up:
 	mov rbx, rax
 	call qword ptr [rip + memmove@GOTPCREL]
 	mov rdx, rbx
-	mov rax, qword ptr [r15]
-	mov qword ptr [rax], r12
+	mov qword ptr [r15], r12
 	mov rax, r14
 	jmp .LBB0_0
 .LBB0_6:

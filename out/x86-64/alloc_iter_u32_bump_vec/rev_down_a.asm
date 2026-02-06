@@ -59,10 +59,10 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_down_a:
 .LBB0_5:
 	cmp qword ptr [rsp + 32], 0
 	je .LBB0_6
-	mov rdi, qword ptr [rsp + 16]
+	mov rax, qword ptr [rsp + 16]
+	mov rdi, qword ptr [rax]
 	lea rax, [rcx + 4*rsi]
-	mov rcx, qword ptr [rdi]
-	mov qword ptr [rcx], rax
+	mov qword ptr [rdi], rax
 	jmp .LBB0_0
 .LBB0_6:
 	xor edx, edx

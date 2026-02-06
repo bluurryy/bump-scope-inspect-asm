@@ -16,17 +16,17 @@ inspect_asm::alloc_iter_u32_bump_vec::down:
 	mov rax, qword ptr [rsp + 16]
 	test rax, rax
 	je .LBB0_1
-	mov r15, qword ptr [rsp + 24]
+	mov rcx, qword ptr [rsp + 24]
 	mov rsi, qword ptr [rsp]
 	mov rbx, qword ptr [rsp + 8]
+	mov r15, qword ptr [rcx]
 	lea r14, [rsi + 4*rax]
 	lea rdx, [4*rbx]
 	sub r14, rdx
 	mov rdi, r14
 	call qword ptr [rip + memmove@GOTPCREL]
 	mov rax, r14
-	mov rcx, qword ptr [r15]
-	mov qword ptr [rcx], r14
+	mov qword ptr [r15], r14
 	jmp .LBB0_2
 .LBB0_1:
 	mov eax, 4

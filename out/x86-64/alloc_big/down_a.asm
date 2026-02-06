@@ -16,7 +16,7 @@ inspect_asm::alloc_big::down_a:
 .LBB0_0:
 	mov rdi, rax
 	mov rbx, rsi
-	call qword ptr [rip + bump_scope::bump_scope::BumpScope<A,_,_,_,_>::do_alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_sized_in_another_chunk@GOTPCREL]
 	mov rsi, rbx
 	mov rdi, rax
 	mov edx, 512
