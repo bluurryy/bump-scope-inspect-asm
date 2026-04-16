@@ -278,8 +278,8 @@ pub mod allocate {
     pub fn blink_alloc(
         bump: &blink_alloc::BlinkAlloc,
         layout: Layout,
-    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
-        allocator_api2::alloc::Allocator::allocate(bump, layout)
+    ) -> Result<NonNull<[u8]>, allocator_api2_04::alloc::AllocError> {
+        allocator_api2_04::alloc::Allocator::allocate(bump, layout)
     }
 }
 
@@ -299,7 +299,7 @@ pub mod deallocate {
     }
 
     pub unsafe fn blink_alloc(bump: &blink_alloc::BlinkAlloc, ptr: NonNull<u8>, layout: Layout) {
-        allocator_api2::alloc::Allocator::deallocate(bump, ptr, layout)
+        allocator_api2_04::alloc::Allocator::deallocate(bump, ptr, layout)
     }
 }
 
@@ -338,8 +338,8 @@ pub mod grow {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
-        allocator_api2::alloc::Allocator::grow(bump.allocator(), ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, allocator_api2_04::alloc::AllocError> {
+        allocator_api2_04::alloc::Allocator::grow(bump.allocator(), ptr, old_layout, new_layout)
     }
 }
 
@@ -378,8 +378,8 @@ pub mod shrink {
         ptr: NonNull<u8>,
         old_layout: Layout,
         new_layout: Layout,
-    ) -> Result<NonNull<[u8]>, allocator_api2::alloc::AllocError> {
-        allocator_api2::alloc::Allocator::shrink(bump, ptr, old_layout, new_layout)
+    ) -> Result<NonNull<[u8]>, allocator_api2_04::alloc::AllocError> {
+        allocator_api2_04::alloc::Allocator::shrink(bump, ptr, old_layout, new_layout)
     }
 }
 
