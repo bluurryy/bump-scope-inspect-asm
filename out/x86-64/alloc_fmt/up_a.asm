@@ -20,8 +20,8 @@ inspect_asm::alloc_fmt::up_a:
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
 	mov rsi, qword ptr [rsp + 16]
-	test rsi, rsi
-	je .LBB0_0
+	cmp rsi, rdx
+	jbe .LBB0_0
 	mov rcx, qword ptr [rsp + 24]
 	mov rcx, qword ptr [rcx]
 	add rsi, rax

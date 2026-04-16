@@ -54,8 +54,8 @@ inspect_asm::alloc_iter_u32::try_up:
 .LBB0_4:
 	mov rax, qword ptr [rsp + 8]
 	mov rcx, qword ptr [rsp + 24]
-	test rcx, rcx
-	je .LBB0_6
+	cmp rcx, rdx
+	jbe .LBB0_6
 	mov rsi, qword ptr [rsp + 32]
 	mov rsi, qword ptr [rsi]
 	lea rcx, [rax + 4*rcx]

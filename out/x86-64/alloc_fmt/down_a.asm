@@ -23,16 +23,21 @@ inspect_asm::alloc_fmt::down_a:
 	mov rsi, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
 	mov rax, qword ptr [rsp + 16]
-	test rax, rax
-	je .LBB0_0
+	cmp rax, rdx
+	jbe .LBB0_0
 	mov rcx, qword ptr [rsp + 24]
 	mov rbx, qword ptr [rcx]
 	cmp rsi, qword ptr [rbx]
-	je .LBB0_1
+	je .LBB0_2
 .LBB0_0:
 	mov rax, rsi
-	jmp .LBB0_4
 .LBB0_1:
+	add rsp, 64
+	pop rbx
+	pop r14
+	pop r15
+	ret
+.LBB0_2:
 	add rax, rsi
 	xor edi, edi
 	sub rax, rdx
@@ -42,21 +47,16 @@ inspect_asm::alloc_fmt::down_a:
 	mov r14, rdi
 	mov r15, rdx
 	cmp rax, rdi
-	jbe .LBB0_2
+	jbe .LBB0_3
 	call qword ptr [rip + memmove@GOTPCREL]
-	jmp .LBB0_3
-.LBB0_2:
-	call qword ptr [rip + memcpy@GOTPCREL]
+	jmp .LBB0_4
 .LBB0_3:
+	call qword ptr [rip + memcpy@GOTPCREL]
+.LBB0_4:
 	mov rax, r14
 	mov qword ptr [rbx], r14
 	mov rdx, r15
-.LBB0_4:
-	add rsp, 64
-	pop rbx
-	pop r14
-	pop r15
-	ret
+	jmp .LBB0_1
 .LBB0_5:
 	call qword ptr [rip + bump_scope::private::format_trait_error@GOTPCREL]
 	ud2

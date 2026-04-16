@@ -33,8 +33,8 @@ inspect_asm::alloc_fmt::try_up:
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
 	mov rcx, qword ptr [rsp + 16]
-	test rcx, rcx
-	je .LBB0_2
+	cmp rcx, rdx
+	jbe .LBB0_2
 	mov rsi, qword ptr [rsp + 24]
 	mov rsi, qword ptr [rsi]
 	add rcx, rax
