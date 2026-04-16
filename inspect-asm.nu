@@ -297,7 +297,7 @@ def --wrapped main [
     }
 
     
-    open README.md
+    open --raw README.md
     | replace-section "rust version" $"\n```\n(rustc -vV)\n```\n"
     | replace-section "just version" (just --version | str replace just '' | str trim)
     | replace-section "nu version" (nu --version)
