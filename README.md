@@ -18,7 +18,7 @@ LLVM version: 21.1.2
 
 with 
 - bump-scope <!-- bump-scope version start -->2.2.0<!-- bump-scope version end -->
-- bumpalo <!-- bumpalo version start -->3.19.1<!-- bumpalo version end -->
+- bumpalo <!-- bumpalo version start -->3.20.2<!-- bumpalo version end -->
 - blink-alloc <!-- blink-alloc version start -->0.3.1<!-- blink-alloc version end -->
 
 ## Reproducing
