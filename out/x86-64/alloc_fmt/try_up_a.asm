@@ -1,5 +1,5 @@
 inspect_asm::alloc_fmt::try_up_a:
-	sub rsp, 120
+	sub rsp, 72
 	mov qword ptr [rsp + 40], rsi
 	mov qword ptr [rsp + 48], rdx
 	lea rax, [rsp + 40]
@@ -10,56 +10,47 @@ inspect_asm::alloc_fmt::try_up_a:
 	movaps xmmword ptr [rsp], xmm0
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdi
-	lea rax, [rip + .Lanon.facade.1]
-	mov qword ptr [rsp + 72], rax
-	mov qword ptr [rsp + 80], 2
-	lea rax, [rsp + 56]
-	mov qword ptr [rsp + 88], rax
-	mov qword ptr [rsp + 96], 1
-	mov qword ptr [rsp + 104], 0
-	lea rsi, [rip + .Lanon.facade.2]
+	lea rsi, [rip + .Lanon.facade.1]
+	lea rdx, [rip + .Lanon.facade.2]
 	mov rdi, rsp
-	lea rdx, [rsp + 72]
+	lea rcx, [rsp + 56]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
-	je .LBB0_0
+	je .LBB0_1
 	mov rax, qword ptr [rsp]
 	mov rcx, qword ptr [rsp + 24]
 	mov rdx, qword ptr [rsp + 16]
 	add rdx, rax
 	mov rcx, qword ptr [rcx]
 	cmp rdx, qword ptr [rcx]
-	je .LBB0_2
-	xor eax, eax
-	add rsp, 120
-	ret
+	jne .LBB0_0
+	add rax, 3
+	and rax, -4
+	mov qword ptr [rcx], rax
 .LBB0_0:
+	xor eax, eax
+	add rsp, 72
+	ret
+.LBB0_1:
 	mov rax, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 8]
 	mov rsi, qword ptr [rsp + 16]
 	test rsi, rsi
-	je .LBB0_1
+	je .LBB0_2
 	mov rcx, qword ptr [rsp + 24]
 	mov rcx, qword ptr [rcx]
 	add rsi, rax
 	cmp rsi, qword ptr [rcx]
 	je .LBB0_3
-.LBB0_1:
-	add rsp, 120
-	ret
 .LBB0_2:
-	add rax, 3
-	and rax, -4
-	mov qword ptr [rcx], rax
-	xor eax, eax
-	add rsp, 120
+	add rsp, 72
 	ret
 .LBB0_3:
 	lea rsi, [rdx + rax]
 	add rsi, 3
 	and rsi, -4
 	mov qword ptr [rcx], rsi
-	add rsp, 120
+	add rsp, 72
 	ret
 	mov rcx, qword ptr [rsp]
 	mov rdx, qword ptr [rsp + 24]

@@ -2,9 +2,6 @@ inspect_asm::alloc_iter_u32::bumpalo:
 	push r14
 	push rbx
 	push rax
-	mov rax, rdx
-	shr rax, 61
-	jne .LBB0_7
 	lea rcx, [4*rdx]
 	mov r8, qword ptr [rdi + 16]
 	mov rax, qword ptr [r8 + 32]
@@ -54,7 +51,7 @@ inspect_asm::alloc_iter_u32::bumpalo:
 	lea rsi, [rsi + 4*rdx]
 .LBB0_4:
 	cmp rdi, rsi
-	je .LBB0_8
+	je .LBB0_7
 	mov r8d, dword ptr [rdi]
 	add rdi, 4
 	mov dword ptr [rax + 4*rcx], r8d
@@ -76,9 +73,8 @@ inspect_asm::alloc_iter_u32::bumpalo:
 	mov rdx, r14
 	test rax, rax
 	jne .LBB0_0
-.LBB0_7:
 	call qword ptr [rip + bumpalo::oom@GOTPCREL]
-.LBB0_8:
+.LBB0_7:
 	lea rdi, [rip + .Lanon.facade.0]
 	lea rdx, [rip + .Lanon.facade.1]
 	mov esi, 34

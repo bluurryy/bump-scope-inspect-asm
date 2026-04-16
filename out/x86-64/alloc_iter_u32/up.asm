@@ -8,9 +8,6 @@ inspect_asm::alloc_iter_u32::up:
 	sub rsp, 40
 	test rdx, rdx
 	je .LBB0_5
-	mov rax, rdx
-	shr rax, 61
-	jne .LBB0_8
 	mov rbx, rsi
 	lea r15, [4*rdx]
 	mov rcx, qword ptr [rdi]
@@ -84,18 +81,16 @@ inspect_asm::alloc_iter_u32::up:
 	mov rdi, r14
 	mov rdx, r12
 	jmp .LBB0_0
-.LBB0_8:
-	call qword ptr [rip + bump_scope::private::capacity_overflow@GOTPCREL]
 	mov rdx, qword ptr [rsp + 24]
 	test rdx, rdx
-	je .LBB0_9
+	je .LBB0_8
 	mov rcx, qword ptr [rsp + 8]
 	mov rsi, qword ptr [rsp + 32]
 	lea rdi, [rcx + 4*rdx]
 	mov rdx, qword ptr [rsi]
 	cmp rdi, qword ptr [rdx]
-	jne .LBB0_9
+	jne .LBB0_8
 	mov qword ptr [rdx], rcx
-.LBB0_9:
+.LBB0_8:
 	mov rdi, rax
 	call _Unwind_Resume@PLT

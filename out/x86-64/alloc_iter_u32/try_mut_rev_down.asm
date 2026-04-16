@@ -1,16 +1,4 @@
 inspect_asm::alloc_iter_u32::try_mut_rev_down:
-	mov eax, 4
-	test rdx, rdx
-	je .LBB0_0
-	mov rcx, rdx
-	shr rcx, 61
-	je .LBB0_1
-	xor eax, eax
-	ret
-.LBB0_0:
-	xor edx, edx
-	ret
-.LBB0_1:
 	push rbp
 	push r15
 	push r14
@@ -18,6 +6,9 @@ inspect_asm::alloc_iter_u32::try_mut_rev_down:
 	push r12
 	push rbx
 	sub rsp, 40
+	mov eax, 4
+	test rdx, rdx
+	je .LBB0_5
 	shl rdx, 2
 	mov r8, qword ptr [rdi]
 	mov rcx, qword ptr [r8]
@@ -26,10 +17,10 @@ inspect_asm::alloc_iter_u32::try_mut_rev_down:
 	mov r9, rcx
 	sub r9, r8
 	cmp rdx, r9
-	jg .LBB0_9
+	jg .LBB0_7
 	add r8, 3
 	and r8, -4
-.LBB0_2:
+.LBB0_0:
 	mov r9, rcx
 	sub r9, r8
 	shr r9, 2
@@ -37,41 +28,41 @@ inspect_asm::alloc_iter_u32::try_mut_rev_down:
 	mov qword ptr [rsp + 16], rdi
 	mov qword ptr [rsp + 24], 0
 	mov qword ptr [rsp + 32], r9
+	xor r14d, r14d
 	lea rbx, [rsp + 8]
-	mov r14, qword ptr [rip + bump_scope::mut_bump_vec_rev::MutBumpVecRev<T,A>::generic_grow_amortized@GOTPCREL]
-	xor r15d, r15d
+	mov r15, qword ptr [rip + bump_scope::mut_bump_vec_rev::MutBumpVecRev<T,A>::generic_grow_amortized@GOTPCREL]
 	xor edi, edi
-.LBB0_3:
-	mov ebp, dword ptr [rsi + r15]
+.LBB0_1:
+	mov ebp, dword ptr [rsi + r14]
 	cmp qword ptr [rsp + 32], rdi
-	je .LBB0_5
-.LBB0_4:
+	je .LBB0_3
+.LBB0_2:
 	lea r8, [rdi + 1]
 	mov qword ptr [rsp + 24], r8
 	not rdi
 	mov dword ptr [rcx + 4*rdi], ebp
-	add r15, 4
+	add r14, 4
 	mov rdi, r8
-	cmp rdx, r15
-	jne .LBB0_3
-	jmp .LBB0_6
-.LBB0_5:
+	cmp rdx, r14
+	jne .LBB0_1
+	jmp .LBB0_4
+.LBB0_3:
 	mov r12, rsi
 	mov r13, rdx
 	mov esi, 1
 	mov rdi, rbx
-	call r14
+	call r15
 	test al, al
-	jne .LBB0_10
+	jne .LBB0_8
 	mov rcx, qword ptr [rsp + 8]
 	mov rdi, qword ptr [rsp + 24]
 	mov eax, 4
 	mov rdx, r13
 	mov rsi, r12
-	jmp .LBB0_4
-.LBB0_6:
+	jmp .LBB0_2
+.LBB0_4:
 	cmp qword ptr [rsp + 32], 0
-	je .LBB0_7
+	je .LBB0_5
 	mov rax, qword ptr [rsp + 8]
 	mov rcx, qword ptr [rsp + 16]
 	mov rdx, qword ptr [rsp + 24]
@@ -79,10 +70,10 @@ inspect_asm::alloc_iter_u32::try_mut_rev_down:
 	lea rsi, [4*rdx]
 	sub rax, rsi
 	mov qword ptr [rcx], rax
-	jmp .LBB0_8
-.LBB0_7:
+	jmp .LBB0_6
+.LBB0_5:
 	xor edx, edx
-.LBB0_8:
+.LBB0_6:
 	add rsp, 40
 	pop rbx
 	pop r12
@@ -91,24 +82,21 @@ inspect_asm::alloc_iter_u32::try_mut_rev_down:
 	pop r15
 	pop rbp
 	ret
-.LBB0_9:
+.LBB0_7:
 	mov rbx, rsi
 	mov esi, 4
 	mov r14, rdi
 	mov r15, rdx
 	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::prepare_allocation_range_in_another_chunk@GOTPCREL]
 	test rax, rax
-	je .LBB0_11
+	je .LBB0_8
 	mov r8, rax
 	mov rcx, rdx
 	mov eax, 4
 	mov rdx, r15
 	mov rsi, rbx
 	mov rdi, r14
-	jmp .LBB0_2
-.LBB0_10:
+	jmp .LBB0_0
+.LBB0_8:
 	xor eax, eax
-	jmp .LBB0_8
-.LBB0_11:
-	xor eax, eax
-	jmp .LBB0_8
+	jmp .LBB0_6

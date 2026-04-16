@@ -9,9 +9,6 @@ inspect_asm::alloc_iter_u32::mut_down_a:
 	mov eax, 4
 	test rdx, rdx
 	je .LBB0_5
-	mov rcx, rdx
-	shr rcx, 61
-	jne .LBB0_8
 	shl rdx, 2
 	mov r8, qword ptr [rdi]
 	mov rcx, qword ptr [r8]
@@ -103,5 +100,3 @@ inspect_asm::alloc_iter_u32::mut_down_a:
 	mov rcx, rdx
 	mov rdx, rbx
 	jmp .LBB0_0
-.LBB0_8:
-	call qword ptr [rip + bump_scope::private::capacity_overflow@GOTPCREL]

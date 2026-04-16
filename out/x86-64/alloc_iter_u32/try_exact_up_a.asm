@@ -1,60 +1,50 @@
 inspect_asm::alloc_iter_u32::try_exact_up_a:
-	test rdx, rdx
-	je .LBB0_0
-	mov rax, rdx
-	shr rax, 61
-	je .LBB0_1
-	xor eax, eax
-	ret
-.LBB0_0:
-	mov eax, 4
-	xor edx, edx
-	ret
-.LBB0_1:
 	push r15
 	push r14
 	push rbx
-	lea rbx, [4*rdx]
-	mov rax, rdi
-	mov rcx, qword ptr [rdi]
-	mov rdi, qword ptr [rcx]
-	mov r8, qword ptr [rcx + 8]
-	sub r8, rdi
-	cmp rbx, r8
+	test rdx, rdx
+	je .LBB0_1
+	lea r14, [4*rdx]
+	mov rax, qword ptr [rdi]
+	mov rbx, qword ptr [rax]
+	mov rcx, qword ptr [rax + 8]
+	sub rcx, rbx
+	cmp r14, rcx
 	jg .LBB0_3
-	lea rax, [rbx + rdi]
-	mov qword ptr [rcx], rax
-.LBB0_2:
-	add rbx, -4
-	shr rbx, 2
+	lea rcx, [r14 + rbx]
+	mov qword ptr [rax], rcx
+.LBB0_0:
+	add r14, -4
+	shr r14, 2
 	dec rdx
-	cmp rbx, rdx
-	cmovb rdx, rbx
+	cmp r14, rdx
+	cmovb rdx, r14
 	lea rax, [4*rdx + 4]
-	mov rbx, rdx
+	mov rdi, rbx
+	mov r14, rdx
 	mov rdx, rax
-	mov r14, rdi
 	call qword ptr [rip + memcpy@GOTPCREL]
-	mov rax, r14
-	mov rdx, rbx
+	mov rdx, r14
 	inc rdx
+	jmp .LBB0_2
+.LBB0_1:
+	mov ebx, 4
+	xor edx, edx
+.LBB0_2:
+	mov rax, rbx
 	pop rbx
 	pop r14
 	pop r15
 	ret
 .LBB0_3:
-	mov rdi, rax
-	mov r14, rsi
+	mov rbx, rsi
 	mov rsi, rdx
 	mov r15, rdx
 	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
-	mov rsi, r14
+	mov rsi, rbx
 	mov rdx, r15
-	mov rdi, rax
+	mov rbx, rax
 	test rax, rax
-	jne .LBB0_2
-	xor eax, eax
-	pop rbx
-	pop r14
-	pop r15
-	ret
+	jne .LBB0_0
+	xor ebx, ebx
+	jmp .LBB0_2

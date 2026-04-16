@@ -4,9 +4,6 @@ inspect_asm::alloc_iter_u32::exact_down:
 	push rbx
 	test rdx, rdx
 	je .LBB0_1
-	mov rax, rdx
-	shr rax, 61
-	jne .LBB0_4
 	lea r14, [4*rdx]
 	mov rax, qword ptr [rdi]
 	mov rbx, qword ptr [rax]
@@ -49,5 +46,3 @@ inspect_asm::alloc_iter_u32::exact_down:
 	mov rdx, r15
 	mov rbx, rax
 	jmp .LBB0_0
-.LBB0_4:
-	call qword ptr [rip + bump_scope::private::capacity_overflow@GOTPCREL]

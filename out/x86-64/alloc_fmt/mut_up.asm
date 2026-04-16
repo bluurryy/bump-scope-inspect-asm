@@ -1,5 +1,5 @@
 inspect_asm::alloc_fmt::mut_up:
-	sub rsp, 120
+	sub rsp, 72
 	mov qword ptr [rsp + 40], rsi
 	mov qword ptr [rsp + 48], rdx
 	lea rax, [rsp + 40]
@@ -10,16 +10,10 @@ inspect_asm::alloc_fmt::mut_up:
 	movaps xmmword ptr [rsp], xmm0
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdi
-	lea rax, [rip + .Lanon.facade.1]
-	mov qword ptr [rsp + 72], rax
-	mov qword ptr [rsp + 80], 2
-	lea rax, [rsp + 56]
-	mov qword ptr [rsp + 88], rax
-	mov qword ptr [rsp + 96], 1
-	mov qword ptr [rsp + 104], 0
-	lea rsi, [rip + .Lanon.facade.2]
+	lea rsi, [rip + .Lanon.facade.1]
+	lea rdx, [rip + .Lanon.facade.2]
 	mov rdi, rsp
-	lea rdx, [rsp + 72]
+	lea rcx, [rsp + 56]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
 	jne .LBB0_1
@@ -31,12 +25,12 @@ inspect_asm::alloc_fmt::mut_up:
 	mov rcx, qword ptr [rcx]
 	lea rsi, [rax + rdx]
 	mov qword ptr [rcx], rsi
-	add rsp, 120
+	add rsp, 72
 	ret
 .LBB0_0:
 	mov eax, 1
 	xor edx, edx
-	add rsp, 120
+	add rsp, 72
 	ret
 .LBB0_1:
 	call qword ptr [rip + bump_scope::private::format_trait_error@GOTPCREL]
