@@ -39,12 +39,12 @@ inspect_asm::alloc_iter_u32::mut_rev_down_a:
 	cmp qword ptr [rsp + 32], rdi
 	je .LBB0_3
 .LBB0_2:
-	mov r8, rdi
-	not r8
-	mov dword ptr [rcx + 4*r8], ebp
-	inc rdi
-	mov qword ptr [rsp + 24], rdi
+	lea r8, [rdi + 1]
+	mov qword ptr [rsp + 24], r8
+	not rdi
+	mov dword ptr [rcx + 4*rdi], ebp
 	add r14, 4
+	mov rdi, r8
 	cmp rdx, r14
 	jne .LBB0_1
 	jmp .LBB0_4
@@ -63,17 +63,17 @@ inspect_asm::alloc_iter_u32::mut_rev_down_a:
 .LBB0_4:
 	cmp qword ptr [rsp + 32], 0
 	je .LBB0_5
-	mov rax, qword ptr [rsp + 16]
-	mov rax, qword ptr [rax]
-	shl r8, 2
-	add r8, qword ptr [rsp + 8]
-	mov qword ptr [rax], r8
-	mov rax, r8
+	mov rax, qword ptr [rsp + 8]
+	mov rcx, qword ptr [rsp + 16]
+	mov rdx, qword ptr [rsp + 24]
+	mov rcx, qword ptr [rcx]
+	lea rsi, [4*rdx]
+	sub rax, rsi
+	mov qword ptr [rcx], rax
 	jmp .LBB0_6
 .LBB0_5:
-	xor edi, edi
+	xor edx, edx
 .LBB0_6:
-	mov rdx, rdi
 	add rsp, 40
 	pop rbx
 	pop r12

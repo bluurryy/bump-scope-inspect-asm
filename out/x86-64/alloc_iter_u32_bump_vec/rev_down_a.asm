@@ -39,12 +39,12 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_down_a:
 	cmp qword ptr [rsp + 32], rdx
 	je .LBB0_4
 .LBB0_3:
-	mov rcx, qword ptr [rsp + 8]
-	mov rsi, rdx
-	not rsi
-	mov dword ptr [rcx + 4*rsi], ebp
+	mov rcx, rdx
 	inc rdx
 	mov qword ptr [rsp + 24], rdx
+	mov rsi, qword ptr [rsp + 8]
+	not rcx
+	mov dword ptr [rsi + 4*rcx], ebp
 	add r12, 4
 	cmp r14, r12
 	jne .LBB0_2
@@ -61,7 +61,7 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_down_a:
 	je .LBB0_6
 	mov rax, qword ptr [rsp + 16]
 	mov rdi, qword ptr [rax]
-	lea rax, [rcx + 4*rsi]
+	lea rax, [rsi + 4*rcx]
 	mov qword ptr [rdi], rax
 	jmp .LBB0_0
 .LBB0_6:
