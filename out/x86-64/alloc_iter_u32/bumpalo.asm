@@ -1,76 +1,83 @@
 inspect_asm::alloc_iter_u32::bumpalo:
+	push r15
 	push r14
+	push r13
+	push r12
 	push rbx
-	push rax
-	lea rcx, [4*rdx]
-	mov r8, qword ptr [rdi + 16]
-	mov rax, qword ptr [r8 + 32]
-	and rax, -4
-	mov r9, rax
-	sub r9, qword ptr [r8]
+	mov rbx, rdi
+	lea rax, [4*rdx]
+	mov r12, qword ptr [rdi + 16]
+	mov r15, qword ptr [r12 + 32]
+	mov r14, r15
+	and r14, -4
+	mov rcx, r14
+	sub rcx, qword ptr [r12]
 	jb .LBB0_6
-	cmp rcx, r9
+	cmp rax, rcx
 	ja .LBB0_6
-	sub rax, rcx
-	mov qword ptr [r8 + 32], rax
+	sub r14, rax
+	mov qword ptr [r12 + 32], r14
 .LBB0_0:
 	test rdx, rdx
 	je .LBB0_5
-	lea r8, [rdx - 1]
-	cmp rdx, r8
-	cmovb r8, rdx
-	xor ecx, ecx
-	cmp r8, 8
-	jb .LBB0_2
-	mov r9, rax
-	sub r9, rsi
-	mov rdi, rsi
-	cmp r9, 32
-	jb .LBB0_3
-	inc r8
-	mov ecx, r8d
-	and ecx, 7
-	mov edi, 8
-	cmovne rdi, rcx
-	mov rcx, r8
-	sub rcx, rdi
-	lea rdi, [rsi + 4*rcx]
-	xor r8d, r8d
+	lea rdi, [rdx - 1]
+	cmp rdx, rdi
+	cmovb rdi, rdx
+	cmp rdi, 8
+	jae .LBB0_1
+	xor edi, edi
+	mov rax, r14
+	mov rcx, rsi
+	jmp .LBB0_3
 .LBB0_1:
+	inc rdi
+	mov eax, edi
+	and eax, 7
+	mov ecx, 8
+	cmovne rcx, rax
+	sub rdi, rcx
+	lea rax, [r14 + 4*rdi]
+	lea rcx, [rsi + 4*rdi]
+	xor r8d, r8d
+.LBB0_2:
 	movups xmm0, xmmword ptr [rsi + 4*r8]
 	movups xmm1, xmmword ptr [rsi + 4*r8 + 16]
-	movups xmmword ptr [rax + 4*r8], xmm0
-	movups xmmword ptr [rax + 4*r8 + 16], xmm1
+	movups xmmword ptr [r14 + 4*r8], xmm0
+	movups xmmword ptr [r14 + 4*r8 + 16], xmm1
 	add r8, 8
-	cmp rcx, r8
-	jne .LBB0_1
-	jmp .LBB0_3
-.LBB0_2:
-	mov rdi, rsi
+	cmp rdi, r8
+	jne .LBB0_2
 .LBB0_3:
 	lea rsi, [rsi + 4*rdx]
+	mov r8, rdx
+	sub r8, rdi
 .LBB0_4:
-	cmp rdi, rsi
+	cmp rcx, rsi
 	je .LBB0_7
-	mov r8d, dword ptr [rdi]
-	add rdi, 4
-	mov dword ptr [rax + 4*rcx], r8d
-	inc rcx
-	cmp rdx, rcx
+	mov edi, dword ptr [rcx]
+	add rcx, 4
+	mov dword ptr [rax], edi
+	add rax, 4
+	dec r8
 	jne .LBB0_4
 .LBB0_5:
-	add rsp, 8
+	mov rax, r14
 	pop rbx
+	pop r12
+	pop r13
 	pop r14
+	pop r15
 	ret
 .LBB0_6:
-	mov rbx, rsi
+	mov r14, rsi
 	mov esi, 4
-	mov r14, rdx
-	mov rdx, rcx
+	mov rdi, rbx
+	mov r13, rdx
+	mov rdx, rax
 	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
-	mov rsi, rbx
-	mov rdx, r14
+	mov rsi, r14
+	mov rdx, r13
+	mov r14, rax
 	test rax, rax
 	jne .LBB0_0
 	call qword ptr [rip + bumpalo::oom@GOTPCREL]
@@ -79,3 +86,13 @@ inspect_asm::alloc_iter_u32::bumpalo:
 	lea rdx, [rip + .Lanon.facade.1]
 	mov esi, 34
 	call qword ptr [rip + core::option::expect_failed@GOTPCREL]
+	ud2
+	mov rcx, qword ptr [rbx + 16]
+	cmp qword ptr [rcx + 32], r14
+	jne .LBB0_8
+	cmp rcx, r12
+	cmovne r15, rcx
+	mov qword ptr [rcx + 32], r15
+.LBB0_8:
+	mov rdi, rax
+	call _Unwind_Resume@PLT

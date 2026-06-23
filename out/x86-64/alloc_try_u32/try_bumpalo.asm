@@ -12,35 +12,32 @@ inspect_asm::alloc_try_u32::try_bumpalo:
 	and r15, -4
 	mov rax, r15
 	sub rax, qword ptr [r13]
-	jb .LBB0_5
+	jb .LBB0_4
 	cmp rax, 8
-	jb .LBB0_5
+	jb .LBB0_4
 	add r15, -8
 	mov qword ptr [r13 + 32], r15
 .LBB0_0:
 	call rdx
 	mov dword ptr [r15], eax
-	lea rcx, [r15 + 4]
 	mov dword ptr [r15 + 4], edx
 	test al, 1
-	je .LBB0_3
+	je .LBB0_2
 	mov rax, qword ptr [r14 + 16]
 	cmp qword ptr [rax + 32], r15
-	jne .LBB0_2
+	jne .LBB0_1
 	cmp rax, r13
-	je .LBB0_1
-	mov r12, qword ptr [rax]
-.LBB0_1:
+	cmovne r12, rax
 	mov qword ptr [rax + 32], r12
-.LBB0_2:
-	mov eax, dword ptr [rcx]
+.LBB0_1:
 	mov dword ptr [rbx], 1
-	mov dword ptr [rbx + 4], eax
-	jmp .LBB0_4
-.LBB0_3:
+	mov dword ptr [rbx + 4], edx
+	jmp .LBB0_3
+.LBB0_2:
+	add r15, 4
 	mov dword ptr [rbx], 0
-	mov qword ptr [rbx + 8], rcx
-.LBB0_4:
+	mov qword ptr [rbx + 8], r15
+.LBB0_3:
 	mov rax, rbx
 	pop rbx
 	pop r12
@@ -48,7 +45,7 @@ inspect_asm::alloc_try_u32::try_bumpalo:
 	pop r14
 	pop r15
 	ret
-.LBB0_5:
+.LBB0_4:
 	mov esi, 4
 	mov r15, rdx
 	mov edx, 8
@@ -59,4 +56,4 @@ inspect_asm::alloc_try_u32::try_bumpalo:
 	test rax, rax
 	jne .LBB0_0
 	mov dword ptr [rbx], 2
-	jmp .LBB0_4
+	jmp .LBB0_3
