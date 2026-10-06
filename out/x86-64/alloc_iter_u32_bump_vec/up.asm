@@ -11,21 +11,50 @@ inspect_asm::alloc_iter_u32_bump_vec::up:
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdi
 	test rdx, rdx
-	jne .LBB0_3
-.LBB0_0:
-	cmp qword ptr [rsp + 16], 0
-	je .LBB0_1
-	mov rcx, qword ptr [rsp + 24]
-	mov rax, qword ptr [rsp]
-	mov rdx, qword ptr [rsp + 8]
-	mov rcx, qword ptr [rcx]
-	lea rsi, [rax + 4*rdx]
-	mov qword ptr [rcx], rsi
-	jmp .LBB0_2
-.LBB0_1:
+	je .LBB0_3
+	mov r14, rdx
+	mov r15, rsi
+	shl r14, 2
+	lea rbp, [r14 - 4]
+	neg r14
 	mov eax, 4
-	xor edx, edx
+	xor r13d, r13d
+	xor ebx, ebx
+	jmp .LBB0_1
+.LBB0_0:
+	mov dword ptr [rax + 4*rbx], r12d
+	inc rbx
+	mov qword ptr [rsp + 8], rbx
+	add r13, -4
+	cmp r14, r13
+	je .LBB0_2
+.LBB0_1:
+	mov r12d, dword ptr [r15 + 4*rbx]
+	cmp rbx, qword ptr [rsp + 16]
+	jne .LBB0_0
+	mov rsi, rbp
+	add rsi, r13
+	shr rsi, 2
+	inc rsi
+	mov rdi, rsp
+	call qword ptr [rip + bump_scope::mut_bump_vec::MutBumpVec<T,A>::generic_grow_amortized@GOTPCREL]
+	mov rax, qword ptr [rsp]
+	jmp .LBB0_0
 .LBB0_2:
+	cmp qword ptr [rsp + 16], 0
+	je .LBB0_3
+	mov rax, qword ptr [rsp]
+	mov rcx, qword ptr [rsp + 24]
+	mov rcx, qword ptr [rcx]
+	mov rdx, rax
+	sub rdx, r13
+	mov qword ptr [rcx], rdx
+	jmp .LBB0_4
+.LBB0_3:
+	mov eax, 4
+	xor ebx, ebx
+.LBB0_4:
+	mov rdx, rbx
 	add rsp, 40
 	pop rbx
 	pop r12
@@ -34,34 +63,3 @@ inspect_asm::alloc_iter_u32_bump_vec::up:
 	pop r15
 	pop rbp
 	ret
-.LBB0_3:
-	lea r14, [4*rdx]
-	mov rbx, rsp
-	mov rdi, rbx
-	mov r15, rsi
-	mov rsi, rdx
-	call qword ptr [rip + bump_scope::mut_bump_vec::MutBumpVec<T,A>::generic_grow_amortized@GOTPCREL]
-	mov rax, r15
-	xor r12d, r12d
-	mov rcx, qword ptr [rsp + 8]
-	mov r13, qword ptr [rip + bump_scope::mut_bump_vec::MutBumpVec<T,A>::generic_grow_amortized@GOTPCREL]
-.LBB0_4:
-	mov ebp, dword ptr [rax + r12]
-	cmp qword ptr [rsp + 16], rcx
-	je .LBB0_6
-.LBB0_5:
-	mov rdx, qword ptr [rsp]
-	mov dword ptr [rdx + 4*rcx], ebp
-	inc rcx
-	mov qword ptr [rsp + 8], rcx
-	add r12, 4
-	cmp r14, r12
-	jne .LBB0_4
-	jmp .LBB0_0
-.LBB0_6:
-	mov esi, 1
-	mov rdi, rbx
-	call r13
-	mov rax, r15
-	mov rcx, qword ptr [rsp + 8]
-	jmp .LBB0_5

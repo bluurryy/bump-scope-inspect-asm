@@ -9,62 +9,64 @@ inspect_asm::alloc_iter_u32::up:
 	test rdx, rdx
 	je .LBB0_5
 	mov rbx, rsi
-	lea r15, [4*rdx]
+	lea r12, [4*rdx]
 	mov rcx, qword ptr [rdi]
 	mov rax, qword ptr [rcx]
 	mov rsi, qword ptr [rcx + 8]
 	add rax, 3
 	and rax, -4
 	sub rsi, rax
-	cmp r15, rsi
+	cmp r12, rsi
 	jg .LBB0_7
-	lea rsi, [rax + r15]
+	lea rsi, [rax + r12]
 	mov qword ptr [rcx], rsi
 .LBB0_0:
 	mov qword ptr [rsp + 8], rax
 	mov qword ptr [rsp + 16], 0
 	mov qword ptr [rsp + 24], rdx
 	mov qword ptr [rsp + 32], rdi
-	xor r12d, r12d
-	lea r14, [rsp + 8]
-	mov r13, qword ptr [rip + bump_scope::bump_vec::BumpVec<T,A>::generic_grow_amortized@GOTPCREL]
-	xor edx, edx
+	neg r12
+	xor r13d, r13d
+	lea rdi, [rsp + 8]
+	mov rbp, qword ptr [rip + bump_scope::bump_vec::BumpVec<T,A>::generic_grow_amortized@GOTPCREL]
+	xor r14d, r14d
 .LBB0_1:
-	mov ebp, dword ptr [rbx + r12]
-	cmp qword ptr [rsp + 24], rdx
+	mov r15d, dword ptr [rbx + 4*r14]
+	cmp r14, qword ptr [rsp + 24]
 	je .LBB0_3
 .LBB0_2:
-	mov dword ptr [rax + 4*rdx], ebp
-	inc rdx
-	mov qword ptr [rsp + 16], rdx
-	add r12, 4
-	cmp r15, r12
+	mov dword ptr [rax + 4*r14], r15d
+	inc r14
+	mov qword ptr [rsp + 16], r14
+	add r13, -4
+	cmp r12, r13
 	jne .LBB0_1
 	jmp .LBB0_4
 .LBB0_3:
 	mov esi, 1
-	mov rdi, r14
-	call r13
+	call rbp
 	mov rax, qword ptr [rsp + 8]
-	mov rdx, qword ptr [rsp + 16]
+	lea rdi, [rsp + 8]
 	jmp .LBB0_2
 .LBB0_4:
 	mov rax, qword ptr [rsp + 8]
-	mov rcx, qword ptr [rsp + 24]
-	cmp rcx, rdx
+	mov rdx, qword ptr [rsp + 24]
+	cmp rdx, r14
 	jbe .LBB0_6
-	mov rsi, qword ptr [rsp + 32]
-	mov rsi, qword ptr [rsi]
-	lea rcx, [rax + 4*rcx]
-	cmp rcx, qword ptr [rsi]
+	mov rcx, qword ptr [rsp + 32]
+	mov rcx, qword ptr [rcx]
+	lea rdx, [rax + 4*rdx]
+	cmp rdx, qword ptr [rcx]
 	jne .LBB0_6
-	lea rcx, [rax + 4*rdx]
-	mov qword ptr [rsi], rcx
+	mov rdx, rax
+	sub rdx, r13
+	mov qword ptr [rcx], rdx
 	jmp .LBB0_6
 .LBB0_5:
 	mov eax, 4
-	xor edx, edx
+	xor r14d, r14d
 .LBB0_6:
+	mov rdx, r14
 	add rsp, 40
 	pop rbx
 	pop r12
@@ -76,10 +78,10 @@ inspect_asm::alloc_iter_u32::up:
 .LBB0_7:
 	mov r14, rdi
 	mov rsi, rdx
-	mov r12, rdx
+	mov r15, rdx
 	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
 	mov rdi, r14
-	mov rdx, r12
+	mov rdx, r15
 	jmp .LBB0_0
 	mov rdx, qword ptr [rsp + 24]
 	test rdx, rdx

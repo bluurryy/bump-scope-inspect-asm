@@ -20,49 +20,52 @@ inspect_asm::alloc_iter_u32::try_up:
 	lea r8, [rax + r14]
 	mov qword ptr [rcx], r8
 .LBB0_0:
-	mov qword ptr [rsp + 8], rax
-	mov qword ptr [rsp + 16], 0
-	mov qword ptr [rsp + 24], rdx
-	mov qword ptr [rsp + 32], rdi
+	mov qword ptr [rsp], rax
+	mov qword ptr [rsp + 8], 0
+	mov qword ptr [rsp + 16], rdx
+	mov qword ptr [rsp + 24], rdi
+	neg r14
 	xor r15d, r15d
-	lea rbx, [rsp + 8]
+	mov rbx, rsp
 	mov r12, qword ptr [rip + bump_scope::bump_vec::BumpVec<T,A>::generic_grow_amortized@GOTPCREL]
 	xor edx, edx
 .LBB0_1:
-	mov ebp, dword ptr [rsi + r15]
-	cmp qword ptr [rsp + 24], rdx
+	mov ebp, dword ptr [rsi + 4*rdx]
+	cmp rdx, qword ptr [rsp + 16]
 	je .LBB0_3
 .LBB0_2:
 	mov dword ptr [rax + 4*rdx], ebp
 	inc rdx
-	mov qword ptr [rsp + 16], rdx
-	add r15, 4
+	mov qword ptr [rsp + 8], rdx
+	add r15, -4
 	cmp r14, r15
 	jne .LBB0_1
 	jmp .LBB0_4
 .LBB0_3:
+	mov qword ptr [rsp + 32], rdx
 	mov r13, rsi
 	mov esi, 1
 	mov rdi, rbx
 	call r12
 	test al, al
 	jne .LBB0_8
-	mov rax, qword ptr [rsp + 8]
-	mov rdx, qword ptr [rsp + 16]
+	mov rax, qword ptr [rsp]
 	mov rsi, r13
+	mov rdx, qword ptr [rsp + 32]
 	jmp .LBB0_2
 .LBB0_4:
-	mov rax, qword ptr [rsp + 8]
-	mov rcx, qword ptr [rsp + 24]
-	cmp rcx, rdx
+	mov rax, qword ptr [rsp]
+	mov rsi, qword ptr [rsp + 16]
+	cmp rsi, rdx
 	jbe .LBB0_6
-	mov rsi, qword ptr [rsp + 32]
-	mov rsi, qword ptr [rsi]
-	lea rcx, [rax + 4*rcx]
-	cmp rcx, qword ptr [rsi]
+	mov rcx, qword ptr [rsp + 24]
+	mov rcx, qword ptr [rcx]
+	lea rsi, [rax + 4*rsi]
+	cmp rsi, qword ptr [rcx]
 	jne .LBB0_6
-	lea rcx, [rax + 4*rdx]
-	mov qword ptr [rsi], rcx
+	mov rsi, rax
+	sub rsi, r15
+	mov qword ptr [rcx], rsi
 	jmp .LBB0_6
 .LBB0_5:
 	mov eax, 4
@@ -89,11 +92,11 @@ inspect_asm::alloc_iter_u32::try_up:
 	jne .LBB0_0
 	jmp .LBB0_9
 .LBB0_8:
-	mov rcx, qword ptr [rsp + 24]
+	mov rcx, qword ptr [rsp + 16]
 	test rcx, rcx
 	je .LBB0_9
-	mov rax, qword ptr [rsp + 8]
-	mov rdx, qword ptr [rsp + 32]
+	mov rax, qword ptr [rsp]
+	mov rdx, qword ptr [rsp + 24]
 	lea rsi, [rax + 4*rcx]
 	mov rcx, qword ptr [rdx]
 	cmp rsi, qword ptr [rcx]

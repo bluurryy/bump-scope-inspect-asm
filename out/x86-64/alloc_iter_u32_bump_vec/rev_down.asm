@@ -10,11 +10,49 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_down:
 	xorps xmm0, xmm0
 	movups xmmword ptr [rsp + 24], xmm0
 	mov qword ptr [rsp + 16], rdi
-	mov eax, 4
 	test rdx, rdx
-	jne .LBB0_1
-	xor edx, edx
+	je .LBB0_3
+	mov r15, rdx
+	mov r12, rsi
+	shl r15, 2
+	lea rbp, [r15 - 4]
+	neg r15
+	mov eax, 4
+	xor ebx, ebx
+	xor r14d, r14d
+	jmp .LBB0_1
 .LBB0_0:
+	inc r14
+	mov dword ptr [rax + rbx - 4], r13d
+	mov qword ptr [rsp + 24], r14
+	add rbx, -4
+	cmp r15, rbx
+	je .LBB0_2
+.LBB0_1:
+	mov r13d, dword ptr [r12 + 4*r14]
+	cmp r14, qword ptr [rsp + 32]
+	jne .LBB0_0
+	lea rsi, [rbx + rbp]
+	shr rsi, 2
+	inc rsi
+	lea rdi, [rsp + 8]
+	call qword ptr [rip + bump_scope::mut_bump_vec_rev::MutBumpVecRev<T,A>::generic_grow_amortized@GOTPCREL]
+	mov rax, qword ptr [rsp + 8]
+	jmp .LBB0_0
+.LBB0_2:
+	cmp qword ptr [rsp + 32], 0
+	je .LBB0_3
+	mov rax, qword ptr [rsp + 16]
+	mov rax, qword ptr [rax]
+	add rbx, qword ptr [rsp + 8]
+	mov qword ptr [rax], rbx
+	jmp .LBB0_4
+.LBB0_3:
+	mov ebx, 4
+	xor r14d, r14d
+.LBB0_4:
+	mov rax, rbx
+	mov rdx, r14
 	add rsp, 40
 	pop rbx
 	pop r12
@@ -23,48 +61,3 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_down:
 	pop r15
 	pop rbp
 	ret
-.LBB0_1:
-	lea r14, [4*rdx]
-	lea rbx, [rsp + 8]
-	mov rdi, rbx
-	mov r15, rsi
-	mov rsi, rdx
-	call qword ptr [rip + bump_scope::mut_bump_vec_rev::MutBumpVecRev<T,A>::generic_grow_amortized@GOTPCREL]
-	mov rax, r15
-	xor r12d, r12d
-	mov rdx, qword ptr [rsp + 24]
-	mov r13, qword ptr [rip + bump_scope::mut_bump_vec_rev::MutBumpVecRev<T,A>::generic_grow_amortized@GOTPCREL]
-.LBB0_2:
-	mov ebp, dword ptr [rax + r12]
-	cmp qword ptr [rsp + 32], rdx
-	je .LBB0_4
-.LBB0_3:
-	mov rcx, rdx
-	inc rdx
-	mov qword ptr [rsp + 24], rdx
-	mov rsi, qword ptr [rsp + 8]
-	not rcx
-	mov dword ptr [rsi + 4*rcx], ebp
-	add r12, 4
-	cmp r14, r12
-	jne .LBB0_2
-	jmp .LBB0_5
-.LBB0_4:
-	mov esi, 1
-	mov rdi, rbx
-	call r13
-	mov rax, r15
-	mov rdx, qword ptr [rsp + 24]
-	jmp .LBB0_3
-.LBB0_5:
-	cmp qword ptr [rsp + 32], 0
-	je .LBB0_6
-	mov rax, qword ptr [rsp + 16]
-	mov rdi, qword ptr [rax]
-	lea rax, [rsi + 4*rcx]
-	mov qword ptr [rdi], rax
-	jmp .LBB0_0
-.LBB0_6:
-	xor edx, edx
-	mov eax, 4
-	jmp .LBB0_0

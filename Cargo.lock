@@ -31,9 +31,9 @@ dependencies = [
 
 [[package]]
 name = "bump-scope"
-version = "2.3.1"
+version = "2.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6e8c03724a9b879ab218fd0ef60b4cf6d5ecb2d6b210de406515e8c1e732d317"
+checksum = "7340c570810bfa0fbf46584cec9c39129fb814bff382c0bb36e08a478de84ac5"
 dependencies = [
  "allocator-api2 0.2.21",
  "allocator-api2 0.3.0",
