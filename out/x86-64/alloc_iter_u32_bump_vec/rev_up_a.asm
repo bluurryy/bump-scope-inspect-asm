@@ -17,7 +17,7 @@ inspect_asm::alloc_iter_u32_bump_vec::rev_up_a:
 	shl r14, 2
 	mov eax, 4
 	xor r13d, r13d
-	mov rbp, qword ptr [rip + bump_scope::mut_bump_vec_rev::MutBumpVecRev<T,A>::generic_grow_amortized@GOTPCREL]
+	mov rbp, qword ptr [rip + <bump_scope::mut_bump_vec_rev::MutBumpVecRev<u32, &mut bump_scope::bump_scope::BumpScope<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings<4>>>>::generic_grow_amortized::<core::convert::Infallible>@GOTPCREL]
 	xor ebx, ebx
 	jmp .LBB0_1
 .LBB0_0:

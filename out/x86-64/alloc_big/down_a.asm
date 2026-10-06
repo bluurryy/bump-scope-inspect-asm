@@ -16,7 +16,7 @@ inspect_asm::alloc_big::down_a:
 .LBB0_0:
 	mov rdi, rax
 	mov rbx, rsi
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings<4, false>>>::alloc_sized_in_another_chunk::<core::convert::Infallible, core::mem::maybe_uninit::MaybeUninit<inspect_asm::big>>@GOTPCREL]
 	mov rsi, rbx
 	mov rdi, rax
 	mov edx, 512

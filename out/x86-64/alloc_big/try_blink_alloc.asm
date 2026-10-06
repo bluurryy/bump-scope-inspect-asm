@@ -24,7 +24,7 @@ inspect_asm::alloc_big::try_blink_alloc:
 	mov rdi, rax
 	mov rbx, rsi
 	mov rsi, r8
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	mov rsi, rbx
 	mov rdi, rax
 	test rax, rax

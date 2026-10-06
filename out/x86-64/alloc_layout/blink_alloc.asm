@@ -21,7 +21,7 @@ inspect_asm::alloc_layout::blink_alloc:
 	ret
 .LBB0_0:
 	mov rsi, qword ptr [rdi + 8]
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	test rax, rax
 	je .LBB0_1
 	pop rcx

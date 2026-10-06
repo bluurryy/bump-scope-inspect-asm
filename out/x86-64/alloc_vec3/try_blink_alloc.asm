@@ -25,7 +25,7 @@ inspect_asm::alloc_vec3::try_blink_alloc:
 	mov ecx, 12
 	mov rbx, rsi
 	mov rsi, rax
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	mov rsi, rbx
 	test rax, rax
 	jne .LBB0_0

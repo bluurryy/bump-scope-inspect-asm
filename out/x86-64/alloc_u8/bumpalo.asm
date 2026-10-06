@@ -14,7 +14,7 @@ inspect_asm::alloc_u8::bumpalo:
 	mov ebx, esi
 	mov esi, 1
 	mov edx, 1
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + <bumpalo::Bump>::alloc_layout_slow@GOTPCREL]
 	mov esi, ebx
 	test rax, rax
 	jne .LBB0_0

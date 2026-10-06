@@ -13,7 +13,7 @@ inspect_asm::alloc_zst::blink_alloc:
 	mov rsi, qword ptr [rdi + 8]
 	mov edx, 1
 	xor ecx, ecx
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	test rax, rax
 	jne .LBB0_0
-	call blink_alloc::blink::Emplace<A,T,R,S>::value::{{closure}}
+	call <blink_alloc::blink::Emplace<blink_alloc::local::BlinkAlloc, inspect_asm::zst>>::value::{closure#1}

@@ -18,8 +18,8 @@ inspect_asm::alloc_iter_u32_bump_vec::up:
 	lea rbp, [r14 - 4]
 	neg r14
 	mov eax, 4
-	xor r13d, r13d
 	xor ebx, ebx
+	xor r13d, r13d
 	jmp .LBB0_1
 .LBB0_0:
 	mov dword ptr [rax + 4*rbx], r12d
@@ -37,7 +37,7 @@ inspect_asm::alloc_iter_u32_bump_vec::up:
 	shr rsi, 2
 	inc rsi
 	mov rdi, rsp
-	call qword ptr [rip + bump_scope::mut_bump_vec::MutBumpVec<T,A>::generic_grow_amortized@GOTPCREL]
+	call qword ptr [rip + <bump_scope::mut_bump_vec::MutBumpVec<u32, &mut bump_scope::bump_scope::BumpScope>>::generic_grow_amortized::<core::convert::Infallible>@GOTPCREL]
 	mov rax, qword ptr [rsp]
 	jmp .LBB0_0
 .LBB0_2:

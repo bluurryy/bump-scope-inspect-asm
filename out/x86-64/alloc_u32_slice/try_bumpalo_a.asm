@@ -26,7 +26,7 @@ inspect_asm::alloc_u32_slice::try_bumpalo_a:
 	mov r15, rsi
 	mov esi, 4
 	mov r14, rdx
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + <bumpalo::Bump<4>>::alloc_layout_slow@GOTPCREL]
 	mov rdx, r14
 	mov rsi, r15
 	mov r14, rax

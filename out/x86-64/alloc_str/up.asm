@@ -24,7 +24,7 @@ inspect_asm::alloc_str::up:
 .LBB0_1:
 	mov rbx, rsi
 	mov rsi, r14
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<core::convert::Infallible, u8>@GOTPCREL]
 	mov rsi, rbx
 	mov rbx, rax
 	jmp .LBB0_0

@@ -25,10 +25,10 @@ inspect_asm::alloc_iter_u32::try_up:
 	mov qword ptr [rsp + 16], rdx
 	mov qword ptr [rsp + 24], rdi
 	neg r14
-	xor r15d, r15d
-	mov rbx, rsp
-	mov r12, qword ptr [rip + bump_scope::bump_vec::BumpVec<T,A>::generic_grow_amortized@GOTPCREL]
 	xor edx, edx
+	mov rbx, rsp
+	mov r12, qword ptr [rip + <bump_scope::bump_vec::BumpVec<u32, &bump_scope::bump_scope::BumpScope>>::generic_grow_amortized::<bump_scope::alloc::AllocError>@GOTPCREL]
+	xor r15d, r15d
 .LBB0_1:
 	mov ebp, dword ptr [rsi + 4*rdx]
 	cmp rdx, qword ptr [rsp + 16]
@@ -42,16 +42,16 @@ inspect_asm::alloc_iter_u32::try_up:
 	jne .LBB0_1
 	jmp .LBB0_4
 .LBB0_3:
-	mov qword ptr [rsp + 32], rdx
-	mov r13, rsi
+	mov qword ptr [rsp + 32], rsi
+	mov r13, rdx
 	mov esi, 1
 	mov rdi, rbx
 	call r12
 	test al, al
 	jne .LBB0_8
 	mov rax, qword ptr [rsp]
-	mov rsi, r13
-	mov rdx, qword ptr [rsp + 32]
+	mov rdx, r13
+	mov rsi, qword ptr [rsp + 32]
 	jmp .LBB0_2
 .LBB0_4:
 	mov rax, qword ptr [rsp]
@@ -84,7 +84,7 @@ inspect_asm::alloc_iter_u32::try_up:
 	mov r15, rsi
 	mov rsi, rdx
 	mov r12, rdx
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<bump_scope::alloc::AllocError, core::option::Option<core::num::nonzero::NonZero<u32>>>@GOTPCREL]
 	mov rdi, rbx
 	mov rdx, r12
 	mov rsi, r15

@@ -31,7 +31,7 @@ inspect_asm::alloc_u32_slice_clone::up:
 	mov r14, rsi
 	mov rsi, rdx
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<core::convert::Infallible, core::option::Option<core::num::nonzero::NonZero<u32>>>@GOTPCREL]
 	mov rsi, r14
 	mov rdx, r15
 	mov r14, rax

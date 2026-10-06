@@ -20,7 +20,7 @@ inspect_asm::alloc_big::bumpalo_a:
 	mov esi, 512
 	mov edx, 512
 	mov rdi, rax
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + <bumpalo::Bump<4>>::alloc_layout_slow@GOTPCREL]
 	mov rsi, rbx
 	mov rdi, rax
 	test rax, rax

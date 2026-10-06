@@ -22,7 +22,7 @@ inspect_asm::alloc_u32::blink_alloc:
 	mov ecx, 4
 	mov ebx, esi
 	mov rsi, rax
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	mov esi, ebx
 	test rax, rax
 	jne .LBB0_0

@@ -21,6 +21,6 @@ inspect_asm::alloc_12_u32::up:
 	ret
 .LBB0_1:
 	mov rbx, rsi
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_sized_in_another_chunk::<core::convert::Infallible, core::mem::maybe_uninit::MaybeUninit<[u32; 12]>>@GOTPCREL]
 	mov rsi, rbx
 	jmp .LBB0_0

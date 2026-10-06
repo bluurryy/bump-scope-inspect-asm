@@ -25,9 +25,9 @@ inspect_asm::alloc_vec3::blink_alloc:
 	mov ecx, 12
 	mov rbx, rsi
 	mov rsi, rax
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	mov rsi, rbx
 	test rax, rax
 	jne .LBB0_0
 	mov edi, 4
-	call blink_alloc::blink::Emplace<A,T,R,S>::value::{{closure}}
+	call <blink_alloc::blink::Emplace<blink_alloc::local::BlinkAlloc, [u32; 3]>>::value::{closure#1}

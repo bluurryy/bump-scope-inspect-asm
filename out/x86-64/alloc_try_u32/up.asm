@@ -57,7 +57,7 @@ inspect_asm::alloc_try_u32::up:
 .LBB0_5:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_sized_in_another_chunk::<core::convert::Infallible, core::result::Result<u32, u32>>@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

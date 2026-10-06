@@ -68,7 +68,7 @@ inspect_asm::grow::blink_alloc:
 	mov rsi, qword ptr [rdi + 8]
 	mov rdx, r8
 	mov rcx, rbx
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	test rax, rax
 	je .LBB0_7
 	mov r15, rdx

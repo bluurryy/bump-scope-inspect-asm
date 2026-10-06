@@ -12,91 +12,100 @@ inspect_asm::grow::bumpalo:
 	cmp r14, rsi
 	sete r10b
 	test al, r10b
-	je .LBB0_1
+	je .LBB0_0
 	mov r11, rbx
 	sub r11, rcx
-	lea r15, [rdx - 1]
-	test rdx, r15
-	setne al
+	lea rax, [rdx - 1]
+	test rdx, rax
+	sete al
 	movabs r10, -9223372036854775808
 	sub r10, rdx
 	cmp r11, r10
-	seta r10b
-	or r10b, al
-	je .LBB0_3
-.LBB0_0:
-	xor eax, eax
-	jmp .LBB0_9
-.LBB0_1:
-	mov r10, qword ptr [r9]
-.LBB0_2:
-	cmp r8, 2
-	setae al
-	cmp r8, 1
-	sbb al, 0
-	je .LBB0_4
-	movzx eax, al
-	cmp eax, 1
-	jne .LBB0_10
-	lea rax, [r8 - 1]
-	not rax
-	and r14, rax
-	mov rdx, r14
-	sub rdx, r10
-	jb .LBB0_11
-	lea r10, [rbx + r8]
-	dec r10
-	mov rax, r8
-	neg rax
-	and rax, r10
-	jmp .LBB0_5
-.LBB0_3:
+	setbe r10b
+	and r10b, al
+	cmp r10b, 1
+	jne .LBB0_7
 	mov r10, qword ptr [r9]
 	cmp rdx, 2
 	setae al
-	cmp rdx, 1
+	mov r15, rdx
+	sub r15, 1
 	sbb al, 0
-	je .LBB0_12
+	je .LBB0_10
 	movzx eax, al
 	cmp eax, 1
-	jne .LBB0_13
-	lea rax, [r11 + rdx]
-	dec rax
+	jne .LBB0_11
+	add r11, r15
 	neg rdx
-	and rdx, rax
+	and r11, rdx
 	and r15, rsi
 	mov rax, r14
 	sub rax, r15
-	mov r11, rax
-	sub r11, r10
-	setb bpl
-	cmp rdx, r11
-	seta r11b
-	or r11b, bpl
-	mov r11, rdx
-	jne .LBB0_2
-	jmp .LBB0_14
-.LBB0_4:
-	lea rdx, [r8 + rbx]
-	dec rdx
-	mov rax, r8
-	neg rax
-	and rax, rdx
-	mov rdx, r14
+	mov rdx, rax
 	sub rdx, r10
-.LBB0_5:
-	cmp rax, rdx
-	ja .LBB0_11
-.LBB0_6:
-	sub r14, rax
+	setb bpl
+	cmp r11, rdx
+	seta dl
+	or dl, bpl
+	jne .LBB0_1
+	jmp .LBB0_12
+.LBB0_0:
+	mov r10, qword ptr [r9]
+.LBB0_1:
+	cmp r8, 2
+	setae dl
+	mov rax, r8
+	sub rax, 1
+	sbb dl, 0
+	je .LBB0_5
+	movzx edx, dl
+	cmp edx, 1
+	jne .LBB0_9
+	mov rdx, rax
+	not rdx
+	and r14, rdx
+	mov r11, r14
+	sub r11, r10
+	jb .LBB0_6
+	add rax, rbx
+	mov rdx, r8
+	neg rdx
+	and rdx, rax
+	cmp rdx, r11
+	ja .LBB0_6
+.LBB0_2:
+	sub r14, rdx
 	mov qword ptr [r9 + 32], r14
-.LBB0_7:
+.LBB0_3:
 	mov rdi, r14
 	mov rdx, rcx
 	call qword ptr [rip + memcpy@GOTPCREL]
-.LBB0_8:
+.LBB0_4:
 	mov rax, r14
-.LBB0_9:
+	jmp .LBB0_8
+.LBB0_5:
+	add rax, rbx
+	mov rdx, r8
+	neg rdx
+	and rdx, rax
+	mov rax, r14
+	sub rax, r10
+	cmp rdx, rax
+	jbe .LBB0_2
+.LBB0_6:
+	mov r14, rsi
+	mov rsi, r8
+	mov rdx, rbx
+	mov r15, rcx
+	call qword ptr [rip + <bumpalo::Bump>::alloc_layout_slow@GOTPCREL]
+	mov rsi, r14
+	mov rcx, r15
+	mov r14, rax
+	test rax, rax
+	jne .LBB0_3
+.LBB0_7:
+	xor eax, eax
+.LBB0_8:
 	mov rdx, rbx
 	add rsp, 8
 	pop rbx
@@ -104,41 +113,30 @@ inspect_asm::grow::bumpalo:
 	pop r15
 	pop rbp
 	ret
-.LBB0_10:
-	mov rdx, r14
-	sub rdx, r10
-	mov rax, rbx
-	cmp rbx, rdx
-	jbe .LBB0_6
-.LBB0_11:
-	mov r14, rsi
-	mov rsi, r8
+.LBB0_9:
+	mov rax, r14
+	sub rax, r10
 	mov rdx, rbx
-	mov r15, rcx
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
-	mov rsi, r14
-	mov rcx, r15
-	mov r14, rax
-	test rax, rax
-	jne .LBB0_7
-	jmp .LBB0_0
-.LBB0_12:
-	lea rax, [rdx + r11]
-	dec rax
+	cmp rbx, rax
+	jbe .LBB0_2
+	jmp .LBB0_6
+.LBB0_10:
+	mov rax, r11
+	add rax, r15
 	neg rdx
 	mov r11, rdx
 	and r11, rax
-.LBB0_13:
+.LBB0_11:
 	mov rax, rsi
 	sub rax, r10
 	cmp r11, rax
-	ja .LBB0_2
+	ja .LBB0_1
 	mov rax, r14
-.LBB0_14:
+.LBB0_12:
 	sub rax, r11
 	mov qword ptr [r9 + 32], rax
 	mov rdi, rax
 	mov rdx, rcx
 	mov r14, rax
 	call qword ptr [rip + memmove@GOTPCREL]
-	jmp .LBB0_8
+	jmp .LBB0_4

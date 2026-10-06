@@ -32,7 +32,7 @@ inspect_asm::alloc_iter_u32::try_mut_down_a:
 	neg rdx
 	xor r14d, r14d
 	mov r15, rsp
-	mov r12, qword ptr [rip + bump_scope::mut_bump_vec::MutBumpVec<T,A>::generic_grow_amortized@GOTPCREL]
+	mov r12, qword ptr [rip + <bump_scope::mut_bump_vec::MutBumpVec<u32, &mut bump_scope::bump_scope::BumpScope<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings<4, false>>>>::generic_grow_amortized::<bump_scope::alloc::AllocError>@GOTPCREL]
 	xor ebx, ebx
 .LBB0_1:
 	mov ebp, dword ptr [rsi + 4*rbx]
@@ -92,7 +92,7 @@ inspect_asm::alloc_iter_u32::try_mut_down_a:
 	mov esi, 4
 	mov r14, rdi
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::prepare_allocation_range_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings<4, false>>>::prepare_allocation_range_in_another_chunk::<bump_scope::alloc::AllocError>@GOTPCREL]
 	test rax, rax
 	je .LBB0_8
 	mov rcx, rdx

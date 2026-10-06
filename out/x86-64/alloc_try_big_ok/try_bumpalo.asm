@@ -63,7 +63,7 @@ inspect_asm::alloc_try_big_ok::try_bumpalo:
 	mov r15, rdx
 	mov edx, 1024
 	mov rdi, r14
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + <bumpalo::Bump>::alloc_layout_slow@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	test rax, rax

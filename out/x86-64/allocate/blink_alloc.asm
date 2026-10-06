@@ -20,4 +20,4 @@ inspect_asm::allocate::blink_alloc:
 	ret
 .LBB0_0:
 	mov rsi, qword ptr [rdi + 8]
-	jmp blink_alloc::arena::local::alloc_slow
+	jmp blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>

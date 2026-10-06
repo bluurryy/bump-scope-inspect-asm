@@ -20,6 +20,6 @@ inspect_asm::alloc_layout::try_blink_alloc:
 .LBB0_0:
 	push rax
 	mov rsi, qword ptr [rdi + 8]
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	add rsp, 8
 	ret

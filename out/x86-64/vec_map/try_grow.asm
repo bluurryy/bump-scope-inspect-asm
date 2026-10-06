@@ -64,14 +64,15 @@ inspect_asm::vec_map::try_grow:
 	mov rdi, r15
 .LBB0_5:
 	lea r8, [r15 + 4*r14]
+	add rdi, 4
 .LBB0_6:
-	mov r9d, dword ptr [rdi]
+	mov r9d, dword ptr [rdi - 4]
 	mov qword ptr [rcx + 8*rdx], r9
 	cmp rsi, rdx
 	lea rdx, [rdx + 1]
 	je .LBB0_9
-	add rdi, 4
 	cmp rdi, r8
+	lea rdi, [rdi + 4]
 	jne .LBB0_6
 	jmp .LBB0_9
 .LBB0_7:
@@ -126,7 +127,7 @@ inspect_asm::vec_map::try_grow:
 	mov rdi, rbx
 	mov rsi, r14
 	mov r13, rax
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_slice_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<bump_scope::alloc::AllocError, u64>@GOTPCREL]
 	mov rcx, rax
 	mov rax, r13
 	test rcx, rcx

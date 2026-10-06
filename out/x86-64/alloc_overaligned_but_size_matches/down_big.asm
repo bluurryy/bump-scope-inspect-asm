@@ -19,6 +19,6 @@ inspect_asm::alloc_overaligned_but_size_matches::down_big:
 	ret
 .LBB0_1:
 	mov rbx, rsi
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings<4, false>>>::alloc_sized_in_another_chunk::<core::convert::Infallible, core::mem::maybe_uninit::MaybeUninit<[u8; 40]>>@GOTPCREL]
 	mov rsi, rbx
 	jmp .LBB0_0

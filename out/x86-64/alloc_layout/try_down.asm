@@ -12,4 +12,4 @@ inspect_asm::alloc_layout::try_down:
 	mov qword ptr [rcx], rax
 	ret
 .LBB0_0:
-	jmp qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_in_another_chunk@GOTPCREL]
+	jmp qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings<1, false>>>::alloc_in_another_chunk::<bump_scope::alloc::AllocError>@GOTPCREL]

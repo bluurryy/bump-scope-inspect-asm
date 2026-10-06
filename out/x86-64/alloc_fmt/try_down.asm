@@ -7,7 +7,7 @@ inspect_asm::alloc_fmt::try_down:
 	mov qword ptr [rsp + 40], rdx
 	lea rax, [rsp + 32]
 	mov qword ptr [rsp + 48], rax
-	lea rax, [rip + <&T as core::fmt::Display>::fmt]
+	lea rax, [rip + <&str as core::fmt::Display>::fmt]
 	mov qword ptr [rsp + 56], rax
 	movups xmm0, xmmword ptr [rip + .Lanon.facade.0]
 	movaps xmmword ptr [rsp], xmm0

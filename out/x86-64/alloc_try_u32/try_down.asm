@@ -50,7 +50,7 @@ inspect_asm::alloc_try_u32::try_down:
 .LBB0_5:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::alloc_sized_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings<1, false>>>::alloc_sized_in_another_chunk::<bump_scope::alloc::AllocError, core::result::Result<u32, u32>>@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	test rax, rax

@@ -9,8 +9,7 @@ inspect_asm::alloc_u32_slice::blink_alloc:
 	mov rax, qword ptr [rdi]
 	test rax, rax
 	je .LBB0_1
-	mov r14, rdx
-	or r14, 3
+	lea r14, [rdx + 3]
 	add r14, qword ptr [rax]
 	jb .LBB0_1
 	sub r14, rdx
@@ -36,7 +35,7 @@ inspect_asm::alloc_u32_slice::blink_alloc:
 	mov rcx, rdx
 	mov edx, 4
 	mov r15, rcx
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	test rax, rax
 	je .LBB0_2
 	mov r14, rax
@@ -46,4 +45,4 @@ inspect_asm::alloc_u32_slice::blink_alloc:
 .LBB0_2:
 	mov edi, 4
 	mov rsi, r15
-	call core::ops::function::FnOnce::call_once
+	call <blink_alloc::oom::handle_alloc_error as core::ops::function::FnOnce<(core::alloc::layout::Layout,)>>::call_once

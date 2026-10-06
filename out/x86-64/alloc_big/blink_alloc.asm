@@ -24,10 +24,10 @@ inspect_asm::alloc_big::blink_alloc:
 	mov rdi, rax
 	mov rbx, rsi
 	mov rsi, r8
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	mov rsi, rbx
 	mov rdi, rax
 	test rax, rax
 	jne .LBB0_0
 	mov edi, 512
-	call blink_alloc::blink::Emplace<A,T,R,S>::value::{{closure}}
+	call <blink_alloc::blink::Emplace<blink_alloc::local::BlinkAlloc, inspect_asm::big>>::value::{closure#1}

@@ -55,7 +55,7 @@ inspect_asm::shrink::bumpalo:
 	mov r14, rsi
 	mov rsi, r8
 	mov rdx, rbx
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + <bumpalo::Bump>::alloc_layout_slow@GOTPCREL]
 	mov rsi, r14
 	mov r14, rax
 	test rax, rax

@@ -11,6 +11,6 @@ inspect_asm::alloc_zst::try_blink_alloc:
 	mov rsi, qword ptr [rdi + 8]
 	mov edx, 1
 	xor ecx, ecx
-	call blink_alloc::arena::local::alloc_slow
+	call blink_alloc::arena::local::alloc_slow::<&allocator_api2::alloc::global::Global>
 	add rsp, 8
 	ret

@@ -23,7 +23,7 @@ inspect_asm::alloc_12_u32::bumpalo:
 	mov rbx, rsi
 	mov esi, 4
 	mov edx, 48
-	call qword ptr [rip + bumpalo::Bump<_>::alloc_layout_slow@GOTPCREL]
+	call qword ptr [rip + <bumpalo::Bump>::alloc_layout_slow@GOTPCREL]
 	mov rsi, rbx
 	test rax, rax
 	jne .LBB0_0

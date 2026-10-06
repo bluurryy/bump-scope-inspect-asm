@@ -50,7 +50,7 @@ inspect_asm::bump_vec_u32::up::try_with_capacity:
 	mov rbx, rdx
 	mov rdx, r9
 	mov r14, rax
-	call qword ptr [rip + bump_scope::raw_bump::RawBump<A,S>::prepare_allocation_range_in_another_chunk@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::prepare_allocation_range_in_another_chunk::<bump_scope::alloc::AllocError>@GOTPCREL]
 	mov rcx, rax
 	mov rax, r14
 	test rcx, rcx
