@@ -24,9 +24,9 @@ with
 ## Reproducing
 
 Install 
-- just <!-- just version start -->1.52.0<!-- just version end -->
-- nushell <!-- nu version start -->0.113.1<!-- nu version end -->
-- cargo-show-asm <!-- cargo-show-asm version start -->0.2.61<!-- cargo-show-asm version end -->
+- just <!-- just version start -->1.58.0<!-- just version end -->
+- nushell <!-- nu version start -->0.116.0<!-- nu version end -->
+- cargo-show-asm <!-- cargo-show-asm version start -->0.2.62<!-- cargo-show-asm version end -->
 
 Run
 ```bash
