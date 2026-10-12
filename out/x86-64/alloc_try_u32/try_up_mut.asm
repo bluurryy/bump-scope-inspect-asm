@@ -18,8 +18,8 @@ inspect_asm::alloc_try_u32::try_up_mut:
 	mov dword ptr [r15], eax
 	lea rcx, [r15 + 4]
 	mov dword ptr [r15 + 4], edx
-	test al, 1
-	je .LBB0_1
+	cmp eax, 1
+	jne .LBB0_1
 	mov qword ptr [r12], r13
 	mov qword ptr [r14], r12
 	mov eax, 1

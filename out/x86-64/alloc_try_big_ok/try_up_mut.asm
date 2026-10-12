@@ -8,46 +8,50 @@ inspect_asm::alloc_try_big_ok::try_up_mut:
 	push rbx
 	and rsp, -512
 	sub rsp, 2048
-	mov r14, rsi
+	mov r15, rsi
 	mov rbx, rdi
 	mov r13, qword ptr [rsi]
 	mov r12, qword ptr [r13]
-	lea r15, [r12 - 1]
-	and r15, -512
-	mov rax, r15
+	lea r14, [r12 - 1]
+	and r14, -512
+	mov rax, r14
 	add rax, 1536
 	mov rcx, -1
 	cmovae rcx, rax
 	cmp rcx, qword ptr [r13 + 8]
 	ja .LBB0_4
-	add r15, 512
+	add r14, 512
 .LBB0_0:
 	mov qword ptr [rsp + 504], r12
 	lea r12, [rsp + 512]
 	mov rdi, r12
 	call rdx
 	mov edx, 1024
-	mov rdi, r15
+	mov rdi, r14
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	cmp dword ptr [r15], 1
+	mov eax, dword ptr [r14]
+	lea rcx, [r14 + 512]
+	add r14, 4
+	test eax, eax
+	cmove r14, rcx
+	cmp eax, 1
 	jne .LBB0_1
-	mov ecx, dword ptr [r15 + 4]
-	mov rax, qword ptr [rsp + 504]
-	mov qword ptr [r13], rax
-	mov qword ptr [r14], r13
-	mov edx, 1
+	mov eax, dword ptr [r14]
+	mov rcx, qword ptr [rsp + 504]
+	mov qword ptr [r13], rcx
+	mov qword ptr [r15], r13
+	mov ecx, 1
 	jmp .LBB0_2
 .LBB0_1:
-	lea rax, [r15 + 512]
-	add r15, 1024
-	mov rcx, qword ptr [r14]
-	mov qword ptr [rcx], r15
-	xor edx, edx
+	lea rax, [r14 + 512]
+	mov rcx, qword ptr [r15]
+	mov qword ptr [rcx], rax
+	xor ecx, ecx
 .LBB0_2:
-	mov dword ptr [rbx], edx
-	mov dword ptr [rbx + 4], ecx
-	mov qword ptr [rbx + 8], rax
+	mov dword ptr [rbx], ecx
+	mov dword ptr [rbx + 4], eax
+	mov qword ptr [rbx + 8], r14
 .LBB0_3:
 	mov rax, rbx
 	lea rsp, [rbp - 40]
@@ -59,11 +63,11 @@ inspect_asm::alloc_try_big_ok::try_up_mut:
 	pop rbp
 	ret
 .LBB0_4:
-	mov rdi, r14
-	mov r15, rdx
+	mov rdi, r15
+	mov r14, rdx
 	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings>>::prepare_allocation_in_another_chunk::<core::alloc::AllocError, core::result::Result<inspect_asm::big, u32>>@GOTPCREL]
-	mov rdx, r15
-	mov r15, rax
+	mov rdx, r14
+	mov r14, rax
 	test rax, rax
 	jne .LBB0_0
 	mov dword ptr [rbx], 2

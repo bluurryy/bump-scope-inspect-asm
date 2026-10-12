@@ -17,8 +17,8 @@ inspect_asm::alloc_try_u32::down_mut:
 	call rdx
 	mov dword ptr [r15], eax
 	mov dword ptr [r15 + 4], edx
-	test al, 1
-	je .LBB0_1
+	cmp eax, 1
+	jne .LBB0_1
 	mov qword ptr [r12], r13
 	mov qword ptr [r14], r12
 	mov dword ptr [rbx + 4], edx

@@ -29,30 +29,34 @@ inspect_asm::alloc_try_big_ok::try_down:
 	mov rdi, r15
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	mov rcx, qword ptr [r14]
-	mov rsi, qword ptr [rcx]
-	cmp dword ptr [r15], 1
+	mov rdx, qword ptr [r14]
+	mov rsi, qword ptr [rdx]
+	mov ecx, dword ptr [r15]
+	lea rax, [r15 + 512]
+	lea rdi, [r15 + 4]
+	test ecx, ecx
+	cmovne rax, rdi
+	cmp ecx, 1
 	jne .LBB0_2
-	mov ecx, dword ptr [r15 + 4]
-	mov eax, 1
+	mov edx, dword ptr [rax]
+	mov ecx, 1
 	cmp r15, rsi
 	jne .LBB0_1
-	mov rdx, qword ptr [rsp + 504]
-	mov qword ptr [r13], rdx
+	mov rax, qword ptr [rsp + 504]
+	mov qword ptr [r13], rax
 	mov qword ptr [r14], r13
 .LBB0_1:
 	jmp .LBB0_4
 .LBB0_2:
-	lea rdx, [r15 + 512]
-	xor eax, eax
+	xor ecx, ecx
 	cmp r15, rsi
 	jne .LBB0_3
-	mov qword ptr [rcx], rdx
+	mov qword ptr [rdx], rax
 .LBB0_3:
 .LBB0_4:
-	mov dword ptr [rbx], eax
-	mov dword ptr [rbx + 4], ecx
-	mov qword ptr [rbx + 8], rdx
+	mov dword ptr [rbx], ecx
+	mov dword ptr [rbx + 4], edx
+	mov qword ptr [rbx + 8], rax
 .LBB0_5:
 	mov rax, rbx
 	lea rsp, [rbp - 40]

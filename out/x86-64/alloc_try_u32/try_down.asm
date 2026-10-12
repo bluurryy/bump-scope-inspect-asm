@@ -21,8 +21,8 @@ inspect_asm::alloc_try_u32::try_down:
 	mov dword ptr [r15 + 4], edx
 	mov rsi, qword ptr [r14]
 	mov rdi, qword ptr [rsi]
-	test al, 1
-	je .LBB0_1
+	cmp eax, 1
+	jne .LBB0_1
 	mov eax, 1
 	cmp r15, rdi
 	jne .LBB0_3
