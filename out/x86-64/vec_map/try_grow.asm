@@ -127,7 +127,7 @@ inspect_asm::vec_map::try_grow:
 	mov rdi, rbx
 	mov rsi, r14
 	mov r13, rax
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<bump_scope::alloc::AllocError, u64>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<core::alloc::AllocError, u64>@GOTPCREL]
 	mov rcx, rax
 	mov rax, r13
 	test rcx, rcx

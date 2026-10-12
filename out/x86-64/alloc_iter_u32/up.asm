@@ -79,7 +79,7 @@ inspect_asm::alloc_iter_u32::up:
 	mov r14, rdi
 	mov rsi, rdx
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<!, core::option::Option<core::num::nonzero::NonZero<u32>>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<!, core::option::Option<core::num::nonzero::NonZero<u32>>>@GOTPCREL]
 	mov rdi, r14
 	mov rdx, r15
 	jmp .LBB0_0

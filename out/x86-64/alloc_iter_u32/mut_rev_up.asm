@@ -95,7 +95,7 @@ inspect_asm::alloc_iter_u32::mut_rev_up:
 	mov esi, 4
 	mov r14, rdi
 	mov rbx, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<bump_scope::alloc::global::Global, bump_scope::settings::BumpSettings>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
 	mov rdi, r14
 	mov rsi, r15
 	mov r8, rax
