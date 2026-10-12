@@ -6,13 +6,13 @@ Last run was using:
 
 <!-- rust version start -->
 ```
-rustc 1.99.0 (b940084d7 2026-09-28)
+rustc 1.101.0-nightly (32dba69d6 2026-10-09)
 binary: rustc
-commit-hash: b940084d7eb6a299eb4bfeb8e34901bc051e7ac4
-commit-date: 2026-09-28
+commit-hash: 32dba69d69c5b10ea89a4042de8d0619f7756203
+commit-date: 2026-10-09
 host: x86_64-unknown-linux-gnu
-release: 1.99.0
-LLVM version: 23.1.1
+release: 1.101.0-nightly
+LLVM version: 23.1.3
 ```
 <!-- rust version end -->
 
@@ -26,7 +26,7 @@ with
 Install 
 - just <!-- just version start -->1.58.0<!-- just version end -->
 - nushell <!-- nu version start -->0.116.0<!-- nu version end -->
-- cargo-show-asm <!-- cargo-show-asm version start -->0.2.62<!-- cargo-show-asm version end -->
+- cargo-show-asm <!-- cargo-show-asm version start -->0.2.63<!-- cargo-show-asm version end -->
 
 Run
 ```bash

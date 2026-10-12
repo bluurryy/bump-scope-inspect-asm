@@ -29,8 +29,8 @@ inspect_asm::grow::blink_alloc:
 	cmp rdx, qword ptr [rax + 8]
 	ja .LBB0_6
 	mov qword ptr [rax], rdx
-	cmp rcx, rbx
-	cmovae rcx, rbx
+	cmp rbx, rcx
+	cmovb rcx, rbx
 	mov rdi, r14
 	mov rdx, rcx
 	call qword ptr [rip + memcpy@GOTPCREL]
@@ -72,11 +72,11 @@ inspect_asm::grow::blink_alloc:
 	test rax, rax
 	je .LBB0_7
 	mov r15, rdx
-	cmp r12, rbx
-	cmovb rbx, r12
+	mov rdx, r12
+	cmp rbx, r12
+	cmovb rdx, rbx
 	mov rdi, rax
 	mov rsi, r14
-	mov rdx, rbx
 	mov r14, rax
 	call qword ptr [rip + memcpy@GOTPCREL]
 	mov rbx, r15
