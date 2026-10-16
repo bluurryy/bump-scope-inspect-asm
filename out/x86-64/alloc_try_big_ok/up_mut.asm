@@ -30,14 +30,9 @@ inspect_asm::alloc_try_big_ok::up_mut:
 	mov rdi, r15
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	mov eax, dword ptr [r15]
-	lea rcx, [r15 + 512]
-	add r15, 4
-	test eax, eax
-	cmove r15, rcx
-	cmp eax, 1
+	cmp dword ptr [r15], 1
 	jne .LBB0_1
-	mov eax, dword ptr [r15]
+	mov eax, dword ptr [r15 + 4]
 	mov rcx, qword ptr [rsp + 504]
 	mov qword ptr [r13], rcx
 	mov qword ptr [r14], r13
@@ -46,9 +41,10 @@ inspect_asm::alloc_try_big_ok::up_mut:
 	jmp .LBB0_2
 .LBB0_1:
 	lea rax, [r15 + 512]
+	add r15, 1024
 	mov rcx, qword ptr [r14]
-	mov qword ptr [rcx], rax
-	mov qword ptr [rbx + 8], r15
+	mov qword ptr [rcx], r15
+	mov qword ptr [rbx + 8], rax
 	xor eax, eax
 .LBB0_2:
 	mov dword ptr [rbx], eax

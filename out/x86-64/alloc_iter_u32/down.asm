@@ -8,7 +8,7 @@ inspect_asm::alloc_iter_u32::down:
 	sub rsp, 40
 	test rdx, rdx
 	je .LBB0_6
-	mov r15, rsi
+	mov r14, rsi
 	lea r13, [4*rdx]
 	mov rcx, qword ptr [rdi]
 	mov rax, qword ptr [rcx]
@@ -25,20 +25,20 @@ inspect_asm::alloc_iter_u32::down:
 	mov qword ptr [rsp + 24], rdx
 	mov qword ptr [rsp + 32], rdi
 	neg r13
-	xor r14d, r14d
+	xor r15d, r15d
 	lea rdi, [rsp + 8]
 	mov rbp, qword ptr [rip + <bump_scope::bump_vec::BumpVec<u32, &bump_scope::bump_scope::BumpScope<alloc::alloc::Global, bump_scope::settings::BumpSettings<1, false>>>>::generic_grow_amortized::<!>@GOTPCREL]
 	xor ebx, ebx
 .LBB0_1:
-	mov r12d, dword ptr [r15 + 4*rbx]
+	mov r12d, dword ptr [r14 + 4*rbx]
 	cmp rbx, qword ptr [rsp + 24]
 	je .LBB0_3
 .LBB0_2:
 	mov dword ptr [rax + 4*rbx], r12d
 	inc rbx
 	mov qword ptr [rsp + 16], rbx
-	add r14, -4
-	cmp r13, r14
+	add r15, -4
+	cmp r13, r15
 	jne .LBB0_1
 	jmp .LBB0_4
 .LBB0_3:
@@ -53,8 +53,8 @@ inspect_asm::alloc_iter_u32::down:
 	cmp rax, rbx
 	jbe .LBB0_5
 	mov rcx, qword ptr [rsp + 32]
-	mov r15, qword ptr [rcx]
-	cmp rsi, qword ptr [r15]
+	mov r14, qword ptr [rcx]
+	cmp rsi, qword ptr [r14]
 	je .LBB0_7
 .LBB0_5:
 	mov rax, rsi
@@ -65,15 +65,15 @@ inspect_asm::alloc_iter_u32::down:
 	jmp .LBB0_10
 .LBB0_7:
 	mov rcx, rsi
-	sub rcx, r14
-	neg r14
+	sub rcx, r15
+	neg r15
 	lea rax, [rsi + 4*rax]
 	xor edi, edi
-	sub rax, r14
+	sub rax, r15
 	cmovae rdi, rax
 	and rdi, -4
-	mov rdx, r14
-	mov r14, rdi
+	mov rdx, r15
+	mov r15, rdi
 	cmp rcx, rdi
 	jbe .LBB0_8
 	call qword ptr [rip + memmove@GOTPCREL]
@@ -81,8 +81,8 @@ inspect_asm::alloc_iter_u32::down:
 .LBB0_8:
 	call qword ptr [rip + memcpy@GOTPCREL]
 .LBB0_9:
-	mov rax, r14
-	mov qword ptr [r15], r14
+	mov rax, r15
+	mov qword ptr [r14], r15
 .LBB0_10:
 	mov rdx, rbx
 	add rsp, 40
@@ -96,10 +96,10 @@ inspect_asm::alloc_iter_u32::down:
 .LBB0_11:
 	mov rbx, rdi
 	mov rsi, rdx
-	mov r14, rdx
+	mov r15, rdx
 	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings<1, false>>>::alloc_slice_in_another_chunk::<!, u32>@GOTPCREL]
 	mov rdi, rbx
-	mov rdx, r14
+	mov rdx, r15
 	jmp .LBB0_0
 	mov rcx, qword ptr [rsp + 24]
 	test rcx, rcx
