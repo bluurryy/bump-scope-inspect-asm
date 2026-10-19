@@ -18,7 +18,7 @@ inspect_asm::bump_vec_u32::down::push:
 	mov ebp, esi
 	mov esi, 1
 	mov rbx, rdi
-	call qword ptr [rip + <bump_scope::mut_bump_vec::MutBumpVec<u32, &mut bump_scope::bump_scope::BumpScope<alloc::alloc::Global, bump_scope::settings::BumpSettings<1, false>>>>::generic_grow_amortized::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::mut_bump_vec::MutBumpVec<u32, &mut bump_scope::bump_scope::BumpScope<alloc::alloc::Global, 0xf240000000000000000000000000000>>>::generic_grow_amortized::<!>@GOTPCREL]
 	mov esi, ebp
 	mov rdi, rbx
 	jmp .LBB0_0

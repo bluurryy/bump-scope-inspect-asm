@@ -27,7 +27,7 @@ inspect_asm::alloc_u32_slice::up:
 	mov r14, rsi
 	mov rsi, rbx
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<!, core::option::Option<core::num::nonzero::NonZero<u32>>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x1f240000000000000000000000000000>>::alloc_slice_in_another_chunk::<!, core::option::Option<core::num::nonzero::NonZero<u32>>>@GOTPCREL]
 	mov rdx, r15
 	mov rsi, r14
 	mov r14, rax

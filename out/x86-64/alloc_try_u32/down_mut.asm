@@ -42,7 +42,7 @@ inspect_asm::alloc_try_u32::down_mut:
 .LBB0_3:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings<1, false>>>::prepare_allocation_in_another_chunk::<!, core::result::Result<u32, u32>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0xf240000000000000000000000000000>>::prepare_allocation_in_another_chunk::<!, core::result::Result<u32, u32>>@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

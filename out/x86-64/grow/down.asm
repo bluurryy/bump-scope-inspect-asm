@@ -60,7 +60,7 @@ inspect_asm::grow::down:
 	mov rsi, r8
 	mov rdx, rbx
 	mov r15, rcx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings<1, false>>>::alloc_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0xf240000000000000000000000000000>>::alloc_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
 	mov rsi, r14
 	mov rcx, r15
 	mov r14, rax
@@ -72,7 +72,7 @@ inspect_asm::grow::down:
 	mov r15, rcx
 	mov rsi, r8
 	mov rdx, rbx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings<1, false>>>::alloc_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0xf240000000000000000000000000000>>::alloc_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
 	test rax, rax
 	je .LBB0_7
 	mov r14, rax

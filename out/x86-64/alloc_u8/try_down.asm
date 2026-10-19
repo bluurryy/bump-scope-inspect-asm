@@ -12,7 +12,7 @@ inspect_asm::alloc_u8::try_down:
 	ret
 .LBB0_1:
 	mov ebx, esi
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings<1, false>>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<u8>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0xf240000000000000000000000000000>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<u8>>@GOTPCREL]
 	mov esi, ebx
 	test rax, rax
 	jne .LBB0_0

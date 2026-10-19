@@ -107,7 +107,7 @@ inspect_asm::vec_map::grow:
 .LBB0_9:
 	mov rdi, rbx
 	mov rsi, r15
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, bump_scope::settings::BumpSettings>>::alloc_slice_in_another_chunk::<!, u64>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x1f240000000000000000000000000000>>::alloc_slice_in_another_chunk::<!, u64>@GOTPCREL]
 	jmp .LBB0_0
 .LBB0_10:
 	call qword ptr [rip + bump_scope::private::capacity_overflow@GOTPCREL]

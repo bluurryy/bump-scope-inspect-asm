@@ -6,5 +6,5 @@ edition = "2021"
 allocator-api2 = "0.2.21"
 allocator-api2-04 = { package = "allocator-api2", version = "0.4.0" }
 blink-alloc = "0.4.0"
-bump-scope = { git = "https://github.com/bluurryy/bump-scope", rev = "bdefde929aa5ec7a09ec086f26ed4f079a96e0ce" }
+bump-scope = { git = "https://github.com/bluurryy/bump-scope", rev = "b97d47c9a23a358b9aed17243a4cd7b7229dd4b1" }
 bumpalo = { version = "3.20.3", features = ["allocator-api2"] }
