@@ -8,44 +8,49 @@ inspect_asm::alloc_try_big_ok::try_down_mut:
 	push rbx
 	and rsp, -512
 	sub rsp, 2048
-	mov r15, rsi
+	mov r14, rsi
 	mov r13, qword ptr [rsi]
 	mov r12, qword ptr [r13]
-	xor r14d, r14d
+	xor r15d, r15d
 	mov rax, r12
 	sub rax, 1024
-	cmovae r14, rax
+	cmovae r15, rax
 	mov rbx, rdi
-	and r14, -512
-	cmp r14, qword ptr [r13 + 8]
-	jb .LBB0_4
+	and r15, -512
+	cmp r15, qword ptr [r13 + 8]
+	jb .LBB0_5
 .LBB0_0:
 	mov qword ptr [rsp + 504], r12
 	lea r12, [rsp + 512]
 	mov rdi, r12
 	call rdx
 	mov edx, 1024
-	mov rdi, r14
+	mov rdi, r15
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	cmp dword ptr [r14], 1
-	jne .LBB0_1
-	mov eax, dword ptr [r14 + 4]
-	mov rcx, qword ptr [rsp + 504]
-	mov qword ptr [r13], rcx
-	mov qword ptr [r15], r13
+	cmp dword ptr [r15], 1
+	jne .LBB0_2
+	mov eax, dword ptr [r15 + 4]
+	mov rdx, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	add rdx, 32
 	mov ecx, 1
-	jmp .LBB0_2
+	cmp qword ptr [r13], rdx
+	je .LBB0_1
+	mov rdx, qword ptr [rsp + 504]
+	mov qword ptr [r13], rdx
+	mov qword ptr [r14], r13
 .LBB0_1:
-	add r14, 512
-	mov rax, qword ptr [r15]
-	mov qword ptr [rax], r14
-	xor ecx, ecx
+	jmp .LBB0_3
 .LBB0_2:
+	add r15, 512
+	mov rax, qword ptr [r14]
+	mov qword ptr [rax], r15
+	xor ecx, ecx
+.LBB0_3:
 	mov dword ptr [rbx], ecx
 	mov dword ptr [rbx + 4], eax
-	mov qword ptr [rbx + 8], r14
-.LBB0_3:
+	mov qword ptr [rbx + 8], r15
+.LBB0_4:
 	mov rax, rbx
 	lea rsp, [rbp - 40]
 	pop rbx
@@ -55,13 +60,13 @@ inspect_asm::alloc_try_big_ok::try_down_mut:
 	pop r15
 	pop rbp
 	ret
-.LBB0_4:
-	mov rdi, r15
-	mov r14, rdx
+.LBB0_5:
+	mov rdi, r14
+	mov r15, rdx
 	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0xf240000000000000000000000000000>>::prepare_allocation_in_another_chunk::<core::alloc::AllocError, core::result::Result<inspect_asm::big, u32>>@GOTPCREL]
-	mov rdx, r14
-	mov r14, rax
+	mov rdx, r15
+	mov r15, rax
 	test rax, rax
 	jne .LBB0_0
 	mov dword ptr [rbx], 2
-	jmp .LBB0_3
+	jmp .LBB0_4

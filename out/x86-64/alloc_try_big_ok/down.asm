@@ -40,6 +40,10 @@ inspect_asm::alloc_try_big_ok::down:
 	mov eax, dword ptr [rax]
 	cmp r15, rdx
 	jne .LBB0_1
+	mov rcx, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	add rcx, 32
+	cmp qword ptr [r13], rcx
+	je .LBB0_1
 	mov rcx, qword ptr [rsp + 504]
 	mov qword ptr [r13], rcx
 	mov qword ptr [r14], r13

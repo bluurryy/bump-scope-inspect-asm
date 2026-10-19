@@ -20,9 +20,13 @@ inspect_asm::alloc_try_u32::try_down_mut:
 	add r14, 4
 	test al, 1
 	je .LBB0_1
+	mov rcx, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	add rcx, 32
+	mov eax, 1
+	cmp qword ptr [r12], rcx
+	je .LBB0_2
 	mov qword ptr [r12], r13
 	mov qword ptr [r15], r12
-	mov eax, 1
 	jmp .LBB0_2
 .LBB0_1:
 	mov rax, qword ptr [r15]

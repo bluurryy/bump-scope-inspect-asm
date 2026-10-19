@@ -28,6 +28,10 @@ inspect_asm::alloc_try_u32::up:
 	jne .LBB0_2
 	cmp rbp, rsi
 	jne .LBB0_1
+	mov rax, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	add rax, 32
+	cmp qword ptr [r12], rax
+	je .LBB0_1
 	mov qword ptr [r12], r13
 	mov qword ptr [r14], r12
 .LBB0_1:

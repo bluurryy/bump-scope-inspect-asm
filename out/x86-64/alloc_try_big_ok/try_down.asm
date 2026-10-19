@@ -10,9 +10,9 @@ inspect_asm::alloc_try_big_ok::try_down:
 	sub rsp, 2048
 	mov r14, rsi
 	mov r13, qword ptr [rsi]
-	mov r12, qword ptr [r13]
+	mov rax, qword ptr [r13]
 	xor r15d, r15d
-	mov rax, r12
+	mov qword ptr [rsp + 504], rax
 	sub rax, 1024
 	cmovae r15, rax
 	mov rbx, rdi
@@ -21,7 +21,6 @@ inspect_asm::alloc_try_big_ok::try_down:
 	jb .LBB0_6
 	mov qword ptr [r13], r15
 .LBB0_0:
-	mov qword ptr [rsp + 504], r12
 	lea r12, [rsp + 512]
 	mov rdi, r12
 	call rdx
@@ -29,34 +28,38 @@ inspect_asm::alloc_try_big_ok::try_down:
 	mov rdi, r15
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	mov rdx, qword ptr [r14]
-	mov rsi, qword ptr [rdx]
-	mov ecx, dword ptr [r15]
-	lea rax, [r15 + 512]
+	mov rcx, qword ptr [r14]
+	mov rsi, qword ptr [rcx]
+	mov eax, dword ptr [r15]
+	lea rdx, [r15 + 512]
 	lea rdi, [r15 + 4]
-	test ecx, ecx
-	cmovne rax, rdi
-	cmp ecx, 1
+	test eax, eax
+	cmovne rdx, rdi
+	cmp eax, 1
 	jne .LBB0_2
-	mov edx, dword ptr [rax]
-	mov ecx, 1
+	mov ecx, dword ptr [rdx]
+	mov eax, 1
 	cmp r15, rsi
 	jne .LBB0_1
-	mov rax, qword ptr [rsp + 504]
-	mov qword ptr [r13], rax
+	mov rdx, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	add rdx, 32
+	cmp qword ptr [r13], rdx
+	je .LBB0_1
+	mov rdx, qword ptr [rsp + 504]
+	mov qword ptr [r13], rdx
 	mov qword ptr [r14], r13
 .LBB0_1:
 	jmp .LBB0_4
 .LBB0_2:
-	xor ecx, ecx
+	xor eax, eax
 	cmp r15, rsi
 	jne .LBB0_3
-	mov qword ptr [rdx], rax
+	mov qword ptr [rcx], rdx
 .LBB0_3:
 .LBB0_4:
-	mov dword ptr [rbx], ecx
-	mov dword ptr [rbx + 4], edx
-	mov qword ptr [rbx + 8], rax
+	mov dword ptr [rbx], eax
+	mov dword ptr [rbx + 4], ecx
+	mov qword ptr [rbx + 8], rdx
 .LBB0_5:
 	mov rax, rbx
 	lea rsp, [rbp - 40]

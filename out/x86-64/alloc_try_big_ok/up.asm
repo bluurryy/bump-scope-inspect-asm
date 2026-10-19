@@ -46,6 +46,10 @@ inspect_asm::alloc_try_big_ok::up:
 	cmp rbx, rcx
 	mov rax, qword ptr [rsp + 496]
 	jne .LBB0_1
+	mov rcx, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	add rcx, 32
+	cmp qword ptr [r13], rcx
+	je .LBB0_1
 	mov rcx, qword ptr [rsp + 504]
 	mov qword ptr [r13], rcx
 	mov qword ptr [r14], r13
