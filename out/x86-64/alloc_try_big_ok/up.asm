@@ -9,10 +9,10 @@ inspect_asm::alloc_try_big_ok::up:
 	and rsp, -512
 	sub rsp, 2048
 	mov r14, rsi
-	mov qword ptr [rsp + 496], rdi
+	mov rbx, rdi
 	mov r13, qword ptr [rsi]
 	mov rax, qword ptr [r13]
-	mov qword ptr [rsp + 504], rax
+	mov qword ptr [rsp + 496], rax
 	lea r15, [rax - 1]
 	and r15, -512
 	mov rcx, r15
@@ -20,12 +20,13 @@ inspect_asm::alloc_try_big_ok::up:
 	mov rax, -1
 	cmovae rax, rcx
 	cmp rax, qword ptr [r13 + 8]
-	ja .LBB0_5
+	ja .LBB0_4
 	add r15, 512
 	mov qword ptr [r13], rax
 .LBB0_0:
 	mov rax, qword ptr [r14]
-	mov rbx, qword ptr [rax]
+	mov rax, qword ptr [rax]
+	mov qword ptr [rsp + 504], rax
 	lea r12, [rsp + 512]
 	mov rdi, r12
 	call rdx
@@ -33,41 +34,35 @@ inspect_asm::alloc_try_big_ok::up:
 	mov rdi, r15
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	mov rdi, qword ptr [r14]
-	mov rcx, qword ptr [rdi]
-	mov edx, dword ptr [r15]
-	lea rsi, [r15 + 512]
+	mov eax, dword ptr [r15]
+	lea rcx, [r15 + 512]
 	add r15, 4
-	test edx, edx
-	cmove r15, rsi
-	cmp edx, 1
+	test eax, eax
+	cmove r15, rcx
+	cmp eax, 1
 	jne .LBB0_2
-	mov edx, dword ptr [r15]
-	cmp rbx, rcx
-	mov rax, qword ptr [rsp + 496]
+	mov eax, dword ptr [r15]
+	mov rcx, qword ptr [r14]
+	mov rdx, qword ptr [rsp + 504]
+	cmp rdx, qword ptr [rcx]
 	jne .LBB0_1
 	mov rcx, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
 	add rcx, 32
 	cmp qword ptr [r13], rcx
 	je .LBB0_1
-	mov rcx, qword ptr [rsp + 504]
+	mov rcx, qword ptr [rsp + 496]
 	mov qword ptr [r13], rcx
 	mov qword ptr [r14], r13
 .LBB0_1:
-	mov dword ptr [rax + 4], edx
-	mov ecx, 1
-	jmp .LBB0_4
+	mov dword ptr [rbx + 4], eax
+	mov eax, 1
+	jmp .LBB0_3
 .LBB0_2:
-	cmp rbx, rcx
-	mov rax, qword ptr [rsp + 496]
-	jne .LBB0_3
-	lea rcx, [r15 + 512]
-	mov qword ptr [rdi], rcx
+	mov qword ptr [rbx + 8], r15
+	xor eax, eax
 .LBB0_3:
-	mov qword ptr [rax + 8], r15
-	xor ecx, ecx
-.LBB0_4:
-	mov dword ptr [rax], ecx
+	mov dword ptr [rbx], eax
+	mov rax, rbx
 	lea rsp, [rbp - 40]
 	pop rbx
 	pop r12
@@ -76,10 +71,10 @@ inspect_asm::alloc_try_big_ok::up:
 	pop r15
 	pop rbp
 	ret
-.LBB0_5:
+.LBB0_4:
 	mov rdi, r14
-	mov rbx, rdx
+	mov r15, rdx
 	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x17240000000000000000000000000000>>::alloc_sized_in_another_chunk::<!, core::result::Result<inspect_asm::big, u32>>@GOTPCREL]
-	mov rdx, rbx
+	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

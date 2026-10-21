@@ -2,8 +2,7 @@ inspect_asm::alloc_u8::try_down_a:
 	push rbx
 	mov rcx, qword ptr [rdi]
 	mov rax, qword ptr [rcx]
-	dec rax
-	and rax, -4
+	add rax, -4
 	cmp rax, qword ptr [rcx + 8]
 	jb .LBB0_1
 	mov qword ptr [rcx], rax

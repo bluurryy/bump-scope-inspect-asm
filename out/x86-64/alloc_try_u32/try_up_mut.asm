@@ -1,17 +1,15 @@
 inspect_asm::alloc_try_u32::try_up_mut:
 	push r15
 	push r14
-	push r13
-	push r12
 	push rbx
 	mov r14, rsi
 	mov rbx, rdi
-	mov r12, qword ptr [rsi]
-	mov r13, qword ptr [r12]
-	lea r15, [r13 + 3]
+	mov rax, qword ptr [rsi]
+	mov r15, qword ptr [rax]
+	add r15, 3
 	and r15, -4
-	lea rax, [r15 + 8]
-	cmp rax, qword ptr [r12 + 8]
+	lea rcx, [r15 + 8]
+	cmp rcx, qword ptr [rax + 8]
 	ja .LBB0_4
 .LBB0_0:
 	call rdx
@@ -20,13 +18,7 @@ inspect_asm::alloc_try_u32::try_up_mut:
 	mov dword ptr [r15 + 4], edx
 	test al, 1
 	je .LBB0_1
-	mov rsi, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
-	add rsi, 32
 	mov eax, 1
-	cmp qword ptr [r12], rsi
-	je .LBB0_2
-	mov qword ptr [r12], r13
-	mov qword ptr [r14], r12
 	jmp .LBB0_2
 .LBB0_1:
 	add r15, 8
@@ -40,8 +32,6 @@ inspect_asm::alloc_try_u32::try_up_mut:
 .LBB0_3:
 	mov rax, rbx
 	pop rbx
-	pop r12
-	pop r13
 	pop r14
 	pop r15
 	ret

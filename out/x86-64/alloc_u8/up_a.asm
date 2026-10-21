@@ -2,12 +2,9 @@ inspect_asm::alloc_u8::up_a:
 	push rbx
 	mov rcx, qword ptr [rdi]
 	mov rax, qword ptr [rcx]
-	lea rdx, [rax + 1]
+	lea rdx, [rax + 4]
 	cmp rdx, qword ptr [rcx + 8]
 	ja .LBB0_0
-	mov rdx, rax
-	and rdx, -4
-	add rdx, 4
 	mov qword ptr [rcx], rdx
 	mov byte ptr [rax], sil
 	pop rbx

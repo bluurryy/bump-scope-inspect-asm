@@ -12,38 +12,33 @@ inspect_asm::alloc_try_u32::try_down:
 	and r15, -4
 	add r15, -8
 	cmp r15, qword ptr [r12 + 8]
-	jb .LBB0_5
+	jb .LBB0_4
 	mov qword ptr [r12], r15
 .LBB0_0:
 	call rdx
 	mov dword ptr [r15], eax
 	lea rcx, [r15 + 4]
 	mov dword ptr [r15 + 4], edx
-	mov rsi, qword ptr [r14]
-	mov rdi, qword ptr [rsi]
 	cmp eax, 1
 	jne .LBB0_1
+	mov rsi, qword ptr [r14]
 	mov eax, 1
-	cmp r15, rdi
-	jne .LBB0_3
+	cmp r15, qword ptr [rsi]
+	jne .LBB0_2
 	mov rsi, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
 	add rsi, 32
 	cmp qword ptr [r12], rsi
-	je .LBB0_3
+	je .LBB0_2
 	mov qword ptr [r12], r13
 	mov qword ptr [r14], r12
-	jmp .LBB0_3
+	jmp .LBB0_2
 .LBB0_1:
 	xor eax, eax
-	cmp r15, rdi
-	jne .LBB0_2
-	mov qword ptr [rsi], rcx
 .LBB0_2:
-.LBB0_3:
 	mov dword ptr [rbx], eax
 	mov dword ptr [rbx + 4], edx
 	mov qword ptr [rbx + 8], rcx
-.LBB0_4:
+.LBB0_3:
 	mov rax, rbx
 	pop rbx
 	pop r12
@@ -51,7 +46,7 @@ inspect_asm::alloc_try_u32::try_down:
 	pop r14
 	pop r15
 	ret
-.LBB0_5:
+.LBB0_4:
 	mov rdi, r14
 	mov r15, rdx
 	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x7240000000000000000000000000000>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::result::Result<u32, u32>>@GOTPCREL]
@@ -60,4 +55,4 @@ inspect_asm::alloc_try_u32::try_down:
 	test rax, rax
 	jne .LBB0_0
 	mov dword ptr [rbx], 2
-	jmp .LBB0_4
+	jmp .LBB0_3
