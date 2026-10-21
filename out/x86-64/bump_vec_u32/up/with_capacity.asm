@@ -42,7 +42,7 @@ inspect_asm::bump_vec_u32::up::with_capacity:
 	mov rdi, rdx
 	mov rbx, rdx
 	mov rdx, rax
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x1f240000000000000000000000000000>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x17240000000000000000000000000000>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
 	mov rdi, r14
 	mov rcx, rdx
 	mov rdx, rbx

@@ -40,7 +40,7 @@ inspect_asm::alloc_iter_u32::exact_up_a:
 	mov rbx, rsi
 	mov rsi, rdx
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x5f240000000000000000000000000000>>::alloc_slice_in_another_chunk::<!, u32>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x57240000000000000000000000000000>>::alloc_slice_in_another_chunk::<!, u32>@GOTPCREL]
 	mov rsi, rbx
 	mov rdx, r15
 	mov rbx, rax

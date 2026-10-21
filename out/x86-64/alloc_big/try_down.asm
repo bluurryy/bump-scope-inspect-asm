@@ -17,7 +17,7 @@ inspect_asm::alloc_big::try_down:
 .LBB0_1:
 	mov rdi, rax
 	mov rbx, rsi
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0xf240000000000000000000000000000>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<inspect_asm::big>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x7240000000000000000000000000000>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<inspect_asm::big>>@GOTPCREL]
 	mov rsi, rbx
 	mov rdi, rax
 	test rax, rax

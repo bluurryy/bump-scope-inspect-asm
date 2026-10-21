@@ -10,7 +10,7 @@ use std::{alloc::Global, alloc::Layout, ptr::NonNull};
 
 use bump_scope::{
     config::{BumpConfig, BumpConfigBuilder},
-    traits::BumpAllocatorTyped as _,
+    traits::BumpAllocator as _,
     Bump, BumpBox, BumpVec, MutBumpVec, MutBumpVecRev,
 };
 
@@ -26,10 +26,8 @@ pub struct zst;
 
 const UP_1: BumpConfig = BumpConfigBuilder::new().upwards(true).min_align(1).build();
 const UP_4: BumpConfig = BumpConfigBuilder::new().upwards(true).min_align(4).build();
-const UP_8: BumpConfig = BumpConfigBuilder::new().upwards(true).min_align(8).build();
 const DOWN_1: BumpConfig = BumpConfigBuilder::new().upwards(false).min_align(1).build();
 const DOWN_4: BumpConfig = BumpConfigBuilder::new().upwards(false).min_align(4).build();
-const DOWN_8: BumpConfig = BumpConfigBuilder::new().upwards(false).min_align(8).build();
 
 macro_rules! alloc {
     (

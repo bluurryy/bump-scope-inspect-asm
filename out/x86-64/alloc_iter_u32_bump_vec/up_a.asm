@@ -37,7 +37,7 @@ inspect_asm::alloc_iter_u32_bump_vec::up_a:
 	shr rsi, 2
 	inc rsi
 	mov rdi, rsp
-	call qword ptr [rip + <bump_scope::mut_bump_vec::MutBumpVec<u32, &mut bump_scope::bump_scope::BumpScope<alloc::alloc::Global, 0x5f240000000000000000000000000000>>>::generic_grow_amortized::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::mut_bump_vec::MutBumpVec<u32, &mut bump_scope::bump_scope::BumpScope<alloc::alloc::Global, 0x57240000000000000000000000000000>>>::generic_grow_amortized::<!>@GOTPCREL]
 	mov rax, qword ptr [rsp]
 	jmp .LBB0_0
 .LBB0_2:

@@ -30,7 +30,7 @@ inspect_asm::alloc_iter_u32::mut_rev_down_a:
 	neg rdx
 	xor r15d, r15d
 	mov r14, rsp
-	mov r12, qword ptr [rip + <bump_scope::mut_bump_vec_rev::MutBumpVecRev<u32, &mut bump_scope::bump_scope::BumpScope<alloc::alloc::Global, 0x4f240000000000000000000000000000>>>::generic_grow_amortized::<!>@GOTPCREL]
+	mov r12, qword ptr [rip + <bump_scope::mut_bump_vec_rev::MutBumpVecRev<u32, &mut bump_scope::bump_scope::BumpScope<alloc::alloc::Global, 0x47240000000000000000000000000000>>>::generic_grow_amortized::<!>@GOTPCREL]
 	xor ebx, ebx
 .LBB0_1:
 	mov ebp, dword ptr [rsi + 4*rbx]
@@ -81,7 +81,7 @@ inspect_asm::alloc_iter_u32::mut_rev_down_a:
 	mov esi, 4
 	mov r14, rdi
 	mov rbx, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x4f240000000000000000000000000000>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x47240000000000000000000000000000>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
 	mov rdi, r14
 	mov rsi, r15
 	mov r8, rax
