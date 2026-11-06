@@ -1,4 +1,4 @@
-inspect_asm::alloc_iter_u32_bump_vec::down_a:
+inspect_asm::alloc_iter_u32::std_down_a:
 	push r15
 	push r14
 	push r13

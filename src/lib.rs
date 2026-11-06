@@ -482,30 +482,26 @@ pub mod alloc_iter_u32 {
     pub fn bumpalo<'a>(bump: &'a bumpalo::Bump, slice: &[u32]) -> &'a [u32] {
         bump.alloc_slice_fill_iter(slice.iter().copied())
     }
-}
 
-pub mod alloc_iter_u32_bump_vec {
-    use super::*;
-
-    pub fn up<'a>(bump: &'a mut Bump<Global, UP_1>, slice: &[u32]) -> &'a [u32] {
+    pub fn std_up<'a>(bump: &'a mut Bump<Global, UP_1>, slice: &[u32]) -> &'a [u32] {
         let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
         Box::leak(vec.into_boxed_slice())
     }
 
-    pub fn up_a<'a>(bump: &'a mut Bump<Global, UP_4>, slice: &[u32]) -> &'a [u32] {
+    pub fn std_up_a<'a>(bump: &'a mut Bump<Global, UP_4>, slice: &[u32]) -> &'a [u32] {
         let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
         Box::leak(vec.into_boxed_slice())
     }
 
-    pub fn down<'a>(bump: &'a mut Bump<Global, DOWN_1>, slice: &[u32]) -> &'a [u32] {
+    pub fn std_down<'a>(bump: &'a mut Bump<Global, DOWN_1>, slice: &[u32]) -> &'a [u32] {
         let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
         Box::leak(vec.into_boxed_slice())
     }
 
-    pub fn down_a<'a>(bump: &'a mut Bump<Global, DOWN_4>, slice: &[u32]) -> &'a [u32] {
+    pub fn std_down_a<'a>(bump: &'a mut Bump<Global, DOWN_4>, slice: &[u32]) -> &'a [u32] {
         let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
         Box::leak(vec.into_boxed_slice())

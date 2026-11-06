@@ -223,32 +223,16 @@ def --wrapped main [
         $names ++= [$"alloc_overaligned_but_size_matches::($dir)"]
     }
 
-    for ty in [u32, u32_bump_vec] {
-        let prefixes = if $ty == "u32" {
-            ["", exact_, mut_, mut_rev_]
-        } else {
-            ["", rev_]
-        }
-
-        let tries = if $ty == "u32" {
-            ["", try_]
-        } else {
-            [""]
-        }
-
-        for try in $tries {
-            for prefix in $prefixes {
-                $names ++= [$"alloc_iter_($ty)::($try)($prefix)up"]
-                $names ++= [$"alloc_iter_($ty)::($try)($prefix)up_a"]
-                $names ++= [$"alloc_iter_($ty)::($try)($prefix)down"]
-                $names ++= [$"alloc_iter_($ty)::($try)($prefix)down_a"]
-            }
-        }
-
-        if $ty == "u32" {
-            $names ++= [$"alloc_iter_($ty)::bumpalo"]
+    for try in ["", try_] {
+        for prefix in ["", exact_, mut_, std_] {
+            $names ++= [$"alloc_iter_u32::($try)($prefix)up"]
+            $names ++= [$"alloc_iter_u32::($try)($prefix)up_a"]
+            $names ++= [$"alloc_iter_u32::($try)($prefix)down"]
+            $names ++= [$"alloc_iter_u32::($try)($prefix)down_a"]
         }
     }
+
+    $names ++= [$"alloc_iter_u32::bumpalo"]
 
     for try in ["", try_] {
         for $mut in ["", mut_] {
