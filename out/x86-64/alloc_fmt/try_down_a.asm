@@ -9,37 +9,40 @@ inspect_asm::alloc_fmt::try_down_a:
 	mov qword ptr [rsp + 48], rax
 	lea rax, [rip + <&str as core::fmt::Display>::fmt]
 	mov qword ptr [rsp + 56], rax
-	movups xmm0, xmmword ptr [rip + .Lanon.facade.0]
-	movaps xmmword ptr [rsp], xmm0
-	mov qword ptr [rsp + 16], 0
-	mov qword ptr [rsp + 24], rdi
-	lea rsi, [rip + .Lanon.facade.1]
-	lea rdx, [rip + .Lanon.facade.2]
+	mov qword ptr [rsp], 0
+	mov qword ptr [rsp + 8], 1
+	mov qword ptr [rsp + 16], rdi
+	mov qword ptr [rsp + 24], 0
+	lea rsi, [rip + .Lanon.facade.0]
+	lea rdx, [rip + .Lanon.facade.1]
 	mov rdi, rsp
 	lea rcx, [rsp + 48]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
 	je .LBB0_1
 	mov rax, qword ptr [rsp]
-	mov rcx, qword ptr [rsp + 24]
+	test rax, rax
+	je .LBB0_0
+	mov rdx, qword ptr [rsp + 8]
+	mov rcx, qword ptr [rsp + 16]
 	mov rcx, qword ptr [rcx]
-	cmp rax, qword ptr [rcx]
+	cmp rdx, qword ptr [rcx]
 	jne .LBB0_0
-	add rax, qword ptr [rsp + 16]
+	add rax, rdx
 	and rax, -4
 	mov qword ptr [rcx], rax
 .LBB0_0:
 	xor eax, eax
 	jmp .LBB0_3
 .LBB0_1:
-	mov rsi, qword ptr [rsp]
-	mov rdx, qword ptr [rsp + 8]
-	mov rax, qword ptr [rsp + 16]
-	cmp rax, rdx
-	jbe .LBB0_2
-	mov rcx, qword ptr [rsp + 24]
-	mov rbx, qword ptr [rcx]
-	cmp rsi, qword ptr [rbx]
+	mov rax, qword ptr [rsp]
+	mov rsi, qword ptr [rsp + 8]
+	mov rdx, qword ptr [rsp + 24]
+	cmp rdx, rax
+	jae .LBB0_2
+	mov rcx, qword ptr [rsp + 16]
+	mov r14, qword ptr [rcx]
+	cmp rsi, qword ptr [r14]
 	je .LBB0_4
 .LBB0_2:
 	mov rax, rsi
@@ -56,8 +59,8 @@ inspect_asm::alloc_fmt::try_down_a:
 	cmovae rdi, rax
 	and rdi, -4
 	lea rax, [rdx + rsi]
-	mov r14, rdi
-	mov r15, rdx
+	mov rbx, rdx
+	mov r15, rdi
 	cmp rax, rdi
 	jbe .LBB0_5
 	call qword ptr [rip + memmove@GOTPCREL]
@@ -65,16 +68,19 @@ inspect_asm::alloc_fmt::try_down_a:
 .LBB0_5:
 	call qword ptr [rip + memcpy@GOTPCREL]
 .LBB0_6:
-	mov rax, r14
-	mov qword ptr [rbx], r14
-	mov rdx, r15
+	mov rax, r15
+	mov rdx, rbx
+	mov qword ptr [r14], r15
 	jmp .LBB0_3
 	mov rcx, qword ptr [rsp]
-	mov rdx, qword ptr [rsp + 24]
+	test rcx, rcx
+	je .LBB0_7
+	mov rsi, qword ptr [rsp + 8]
+	mov rdx, qword ptr [rsp + 16]
 	mov rdx, qword ptr [rdx]
-	cmp rcx, qword ptr [rdx]
+	cmp rsi, qword ptr [rdx]
 	jne .LBB0_7
-	add rcx, qword ptr [rsp + 16]
+	add rcx, rsi
 	and rcx, -4
 	mov qword ptr [rdx], rcx
 .LBB0_7:

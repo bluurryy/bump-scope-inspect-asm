@@ -1,71 +1,80 @@
 inspect_asm::alloc_fmt::down_a:
 	push r15
 	push r14
+	push r12
 	push rbx
-	sub rsp, 64
-	mov qword ptr [rsp + 32], rsi
-	mov qword ptr [rsp + 40], rdx
-	lea rax, [rsp + 32]
-	mov qword ptr [rsp + 48], rax
-	lea rax, [rip + <&str as core::fmt::Display>::fmt]
+	sub rsp, 72
+	mov qword ptr [rsp + 40], rsi
+	mov qword ptr [rsp + 48], rdx
+	lea rax, [rsp + 40]
 	mov qword ptr [rsp + 56], rax
-	movups xmm0, xmmword ptr [rip + .Lanon.facade.0]
-	movaps xmmword ptr [rsp], xmm0
-	mov qword ptr [rsp + 16], 0
+	lea rax, [rip + <&str as core::fmt::Display>::fmt]
+	mov qword ptr [rsp + 64], rax
+	mov qword ptr [rsp + 8], 0
+	mov qword ptr [rsp + 16], 1
 	mov qword ptr [rsp + 24], rdi
-	lea rsi, [rip + .Lanon.facade.1]
-	lea rdx, [rip + .Lanon.facade.2]
-	mov rdi, rsp
-	lea rcx, [rsp + 48]
+	mov qword ptr [rsp + 32], 0
+	lea rsi, [rip + .Lanon.facade.0]
+	lea rdx, [rip + .Lanon.facade.1]
+	lea rdi, [rsp + 8]
+	lea rcx, [rsp + 56]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
 	jne .LBB0_5
-	mov rsi, qword ptr [rsp]
-	mov rdx, qword ptr [rsp + 8]
+	mov rcx, qword ptr [rsp + 8]
 	mov rax, qword ptr [rsp + 16]
-	cmp rax, rdx
-	jbe .LBB0_0
-	mov rcx, qword ptr [rsp + 24]
-	mov rbx, qword ptr [rcx]
-	cmp rsi, qword ptr [rbx]
-	je .LBB0_2
+	mov rdx, qword ptr [rsp + 32]
+	cmp rdx, rcx
+	jae .LBB0_4
+	mov rsi, qword ptr [rsp + 24]
+	mov r14, qword ptr [rsi]
+	cmp rax, qword ptr [r14]
+	je .LBB0_0
+	xor ebx, ebx
+	jmp .LBB0_3
 .LBB0_0:
-	mov rax, rsi
+	add rcx, rax
+	xor ebx, ebx
+	sub rcx, rdx
+	cmovae rbx, rcx
+	and rbx, -4
+	lea rcx, [rdx + rax]
+	mov rdi, rbx
+	mov r15, rax
+	mov rsi, rax
+	mov r12, rdx
+	cmp rcx, rbx
+	jbe .LBB0_1
+	call qword ptr [rip + memmove@GOTPCREL]
+	jmp .LBB0_2
 .LBB0_1:
-	add rsp, 64
+	call qword ptr [rip + memcpy@GOTPCREL]
+.LBB0_2:
+	mov qword ptr [r14], rbx
+	mov rdx, r12
+	mov rax, r15
+.LBB0_3:
+	test rbx, rbx
+	cmovne rax, rbx
+.LBB0_4:
+	add rsp, 72
 	pop rbx
+	pop r12
 	pop r14
 	pop r15
 	ret
-.LBB0_2:
-	add rax, rsi
-	xor edi, edi
-	sub rax, rdx
-	cmovae rdi, rax
-	and rdi, -4
-	lea rax, [rdx + rsi]
-	mov r14, rdi
-	mov r15, rdx
-	cmp rax, rdi
-	jbe .LBB0_3
-	call qword ptr [rip + memmove@GOTPCREL]
-	jmp .LBB0_4
-.LBB0_3:
-	call qword ptr [rip + memcpy@GOTPCREL]
-.LBB0_4:
-	mov rax, r14
-	mov qword ptr [rbx], r14
-	mov rdx, r15
-	jmp .LBB0_1
 .LBB0_5:
-	call qword ptr [rip + bump_scope::private::format_trait_error@GOTPCREL]
+	call qword ptr [rip + bump_scope::error_behavior::panic::format_trait_error@GOTPCREL]
 	ud2
-	mov rcx, qword ptr [rsp]
+	mov rcx, qword ptr [rsp + 8]
+	test rcx, rcx
+	je .LBB0_6
+	mov rsi, qword ptr [rsp + 16]
 	mov rdx, qword ptr [rsp + 24]
 	mov rdx, qword ptr [rdx]
-	cmp rcx, qword ptr [rdx]
+	cmp rsi, qword ptr [rdx]
 	jne .LBB0_6
-	add rcx, qword ptr [rsp + 16]
+	add rcx, rsi
 	and rcx, -4
 	mov qword ptr [rdx], rcx
 .LBB0_6:

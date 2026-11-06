@@ -5,73 +5,83 @@ inspect_asm::alloc_iter_u32::try_up_a:
 	push r13
 	push r12
 	push rbx
-	sub rsp, 40
+	sub rsp, 88
+	mov qword ptr [rsp + 32], 0
+	mov qword ptr [rsp + 40], 4
+	mov qword ptr [rsp + 48], rdi
+	mov qword ptr [rsp + 56], 0
 	test rdx, rdx
-	je .LBB0_5
-	lea r14, [4*rdx]
-	mov rcx, qword ptr [rdi]
-	mov rax, qword ptr [rcx]
-	mov r8, qword ptr [rcx + 8]
-	sub r8, rax
-	cmp r14, r8
-	jg .LBB0_7
-	lea r8, [r14 + rax]
-	mov qword ptr [rcx], r8
-.LBB0_0:
-	mov qword ptr [rsp], rax
-	mov qword ptr [rsp + 8], 0
-	mov qword ptr [rsp + 16], rdx
-	mov qword ptr [rsp + 24], rdi
-	mov r15, -3
-	xor edx, edx
-	mov rbx, rsp
-	mov r12, qword ptr [rip + <bump_scope::bump_vec::BumpVec<u32, &bump_scope::bump_scope::BumpScope<alloc::alloc::Global, 0x57240000000000000000000000000000>>>::generic_grow_amortized::<core::alloc::AllocError>@GOTPCREL]
-.LBB0_1:
-	mov ebp, dword ptr [rsi + 4*rdx]
-	cmp rdx, qword ptr [rsp + 16]
-	je .LBB0_3
-.LBB0_2:
-	mov dword ptr [rax + 4*rdx], ebp
-	inc rdx
-	mov qword ptr [rsp + 8], rdx
-	lea rcx, [r14 + r15]
-	add rcx, -4
-	add r15, -4
-	cmp rcx, -3
-	jne .LBB0_1
-	jmp .LBB0_4
-.LBB0_3:
-	mov qword ptr [rsp + 32], rsi
-	mov r13, rdx
-	mov esi, 1
-	mov rdi, rbx
-	call r12
-	test al, al
-	jne .LBB0_8
-	mov rax, qword ptr [rsp]
-	mov rdx, r13
-	mov rsi, qword ptr [rsp + 32]
-	jmp .LBB0_2
-.LBB0_4:
-	mov rax, qword ptr [rsp]
-	mov rsi, qword ptr [rsp + 16]
-	cmp rsi, rdx
-	jbe .LBB0_6
-	mov rcx, qword ptr [rsp + 24]
-	mov rcx, qword ptr [rcx]
-	lea rsi, [rax + 4*rsi]
-	cmp rsi, qword ptr [rcx]
-	jne .LBB0_6
-	mov rsi, rax
-	sub rsi, r15
-	and rsi, -4
-	mov qword ptr [rcx], rsi
-	jmp .LBB0_6
-.LBB0_5:
+	je .LBB0_4
+	mov qword ptr [rsp], rdi
+	shl rdx, 2
+	lea rbp, [rdx - 4]
+	neg rdx
+	xor r14d, r14d
+	xor r13d, r13d
+	xor r15d, r15d
 	mov eax, 4
-	xor edx, edx
-.LBB0_6:
-	add rsp, 40
+	xor ebx, ebx
+	mov qword ptr [rsp + 24], rdx
+	mov qword ptr [rsp + 16], rsi
+	jmp .LBB0_1
+.LBB0_0:
+	inc r14
+	mov dword ptr [rax + r15], r12d
+	mov qword ptr [rsp + 56], r14
+	add r15, 4
+	add r13, 2
+	add rbp, -4
+	mov rcx, rdx
+	add rcx, r15
+	je .LBB0_2
+.LBB0_1:
+	mov r12d, dword ptr [rsi + r15]
+	cmp r14, rbx
+	jne .LBB0_0
+	mov qword ptr [rsp + 8], rax
+	mov rbx, rbp
+	shr rbx, 2
+	inc rbx
+	add rbx, r14
+	cmp r13, rbx
+	cmova rbx, r13
+	cmp rbx, 5
+	mov eax, 4
+	cmovb rbx, rax
+	mov ecx, 4
+	mov r8d, 4
+	lea rdi, [rsp + 64]
+	lea rsi, [rsp + 32]
+	mov rdx, rbx
+	call <alloc::raw_vec::RawVecInner<bump_scope::containers::mut_bump_vec::AllocatorWrapper<bump_scope::bump::Bump<alloc::alloc::Global, 0x57240000000000000000000000000000>>>>::finish_grow
+	cmp byte ptr [rsp + 64], 0
+	jne .LBB0_6
+	mov rax, qword ptr [rsp + 72]
+	mov qword ptr [rsp + 40], rax
+	mov qword ptr [rsp + 32], rbx
+	mov rdx, qword ptr [rsp + 24]
+	mov rsi, qword ptr [rsp + 16]
+	jmp .LBB0_0
+.LBB0_2:
+	cmp r14, rbx
+	jae .LBB0_5
+	mov rcx, qword ptr [rsp]
+	mov rdx, qword ptr [rcx]
+	lea rcx, [rax + 4*rbx]
+	cmp rcx, qword ptr [rdx]
+	jne .LBB0_5
+	lea rcx, [rax + r15]
+	add rcx, 3
+.LBB0_3:
+	and rcx, -4
+	mov qword ptr [rdx], rcx
+	jmp .LBB0_5
+.LBB0_4:
+	mov eax, 4
+	xor r14d, r14d
+.LBB0_5:
+	mov rdx, r14
+	add rsp, 88
 	pop rbx
 	pop r12
 	pop r13
@@ -79,31 +89,19 @@ inspect_asm::alloc_iter_u32::try_up_a:
 	pop r15
 	pop rbp
 	ret
-.LBB0_7:
-	mov rbx, rdi
-	mov r15, rsi
-	mov rsi, rdx
-	mov r12, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x57240000000000000000000000000000>>::alloc_slice_in_another_chunk::<core::alloc::AllocError, u32>@GOTPCREL]
-	mov rdi, rbx
-	mov rdx, r12
-	mov rsi, r15
-	test rax, rax
-	jne .LBB0_0
-	jmp .LBB0_9
-.LBB0_8:
-	mov rcx, qword ptr [rsp + 16]
-	test rcx, rcx
-	je .LBB0_9
+.LBB0_6:
+	test r15, r15
+	je .LBB0_7
+	mov rcx, qword ptr [rsp + 8]
+	add r15, rcx
 	mov rax, qword ptr [rsp]
-	mov rdx, qword ptr [rsp + 24]
-	lea rsi, [rax + 4*rcx]
-	mov rcx, qword ptr [rdx]
-	cmp rsi, qword ptr [rcx]
-	jne .LBB0_9
-	add rax, 3
-	and rax, -4
-	mov qword ptr [rcx], rax
-.LBB0_9:
+	mov rdx, qword ptr [rax]
+	cmp r15, qword ptr [rdx]
+	je .LBB0_8
+.LBB0_7:
 	xor eax, eax
-	jmp .LBB0_6
+	jmp .LBB0_5
+.LBB0_8:
+	add rcx, 3
+	xor eax, eax
+	jmp .LBB0_3

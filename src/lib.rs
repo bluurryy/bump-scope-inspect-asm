@@ -10,8 +10,7 @@ use std::{alloc::Global, alloc::Layout, ptr::NonNull};
 
 use bump_scope::{
     config::{BumpConfig, BumpConfigBuilder},
-    traits::BumpAllocator as _,
-    Bump, BumpBox, BumpVec, MutBumpVec, MutBumpVecRev,
+    extra, Bump, BumpAllocation, BumpAllocator as _, MutBumpAllocator as _,
 };
 
 #[derive(Clone, Copy)]
@@ -116,35 +115,35 @@ macro_rules! alloc_try_with {
                 use super::*;
 
                 pub fn up$(<$lifetime>)?(bump: &$($lifetime)? Bump<Global, UP_1>, f: fn() -> Result<$ok, $err>) -> Result<&$($lifetime)? mut $ok, $err> {
-                    bump.alloc_try_with(f).map(BumpBox::into_mut)
+                    bump.alloc_try_with(f).map(BumpAllocation::into_mut)
                 }
 
                 pub fn down$(<$lifetime>)?(bump: &$($lifetime)? Bump<Global, DOWN_1>, f: fn() -> Result<$ok, $err>) -> Result<&$($lifetime)? mut $ok, $err> {
-                    bump.alloc_try_with(f).map(BumpBox::into_mut)
+                    bump.alloc_try_with(f).map(BumpAllocation::into_mut)
                 }
 
                 pub fn try_up$(<$lifetime>)?(bump: &$($lifetime)? Bump<Global, UP_1>, f: fn() -> Result<$ok, $err>) -> Option<Result<&$($lifetime)? mut $ok, $err>> {
-                    bump.try_alloc_try_with(f).ok().map(|x| x.map(BumpBox::into_mut))
+                    bump.try_alloc_try_with(f).ok().map(|x| x.map(BumpAllocation::into_mut))
                 }
 
                 pub fn try_down$(<$lifetime>)?(bump: &$($lifetime)? Bump<Global, DOWN_1>, f: fn() -> Result<$ok, $err>) -> Option<Result<&$($lifetime)? mut $ok, $err>> {
-                    bump.try_alloc_try_with(f).ok().map(|x| x.map(BumpBox::into_mut))
+                    bump.try_alloc_try_with(f).ok().map(|x| x.map(BumpAllocation::into_mut))
                 }
 
                 pub fn up_mut$(<$lifetime>)?(bump: &mut $($lifetime)? Bump<Global, UP_1>, f: fn() -> Result<$ok, $err>) -> Result<&$($lifetime)? mut $ok, $err> {
-                   bump.alloc_try_with_mut(f).map(BumpBox::into_mut)
+                   bump.alloc_try_with_mut(f).map(BumpAllocation::into_mut)
                 }
 
                 pub fn down_mut$(<$lifetime>)?(bump: &mut $($lifetime)? Bump<Global, DOWN_1>, f: fn() -> Result<$ok, $err>) -> Result<&$($lifetime)? mut $ok, $err> {
-                    bump.alloc_try_with_mut(f).map(BumpBox::into_mut)
+                    bump.alloc_try_with_mut(f).map(BumpAllocation::into_mut)
                 }
 
                 pub fn try_up_mut$(<$lifetime>)?(bump: &mut $($lifetime)? Bump<Global, UP_1>, f: fn() -> Result<$ok, $err>) -> Option<Result<&$($lifetime)? mut $ok, $err>> {
-                    bump.try_alloc_try_with_mut(f).ok().map(|x| x.map(BumpBox::into_mut))
+                    bump.try_alloc_try_with_mut(f).ok().map(|x| x.map(BumpAllocation::into_mut))
                 }
 
                 pub fn try_down_mut$(<$lifetime>)?(bump: &mut $($lifetime)? Bump<Global, DOWN_1>, f: fn() -> Result<$ok, $err>) -> Option<Result<&$($lifetime)? mut $ok, $err>> {
-                    bump.try_alloc_try_with_mut(f).ok().map(|x| x.map(BumpBox::into_mut))
+                    bump.try_alloc_try_with_mut(f).ok().map(|x| x.map(BumpAllocation::into_mut))
                 }
 
                 pub fn bumpalo$(<$lifetime>)?(bump: &$($lifetime)? bumpalo::Bump, f: fn() -> Result<$ok, $err>) -> Result<&$($lifetime)? mut $ok, $err> {
@@ -163,45 +162,6 @@ macro_rules! alloc_try_with {
             }
         )*
     };
-}
-
-pub mod alloc_layout {
-    use super::*;
-
-    pub fn up(bump: &Bump<Global, UP_1>, layout: Layout) -> NonNull<u8> {
-        bump.allocate_layout(layout)
-    }
-
-    pub fn down(bump: &Bump<Global, DOWN_1>, layout: Layout) -> NonNull<u8> {
-        bump.allocate_layout(layout)
-    }
-
-    pub fn bumpalo(bump: &bumpalo::Bump, layout: Layout) -> NonNull<u8> {
-        bump.alloc_layout(layout)
-    }
-
-    pub fn blink_alloc(bump: &blink_alloc::Blink, layout: Layout) -> NonNull<u8> {
-        bump.allocator()
-            .allocate(layout)
-            .map(|ptr| ptr.cast())
-            .unwrap()
-    }
-
-    pub fn try_up(bump: &Bump<Global, UP_1>, layout: Layout) -> Option<NonNull<u8>> {
-        bump.try_allocate_layout(layout).ok()
-    }
-
-    pub fn try_down(bump: &Bump<Global, DOWN_1>, layout: Layout) -> Option<NonNull<u8>> {
-        bump.try_allocate_layout(layout).ok()
-    }
-
-    pub fn try_bumpalo(bump: &bumpalo::Bump, layout: Layout) -> Option<NonNull<u8>> {
-        bump.try_alloc_layout(layout).ok()
-    }
-
-    pub fn try_blink_alloc(bump: &blink_alloc::Blink, layout: Layout) -> Option<NonNull<u8>> {
-        bump.allocator().allocate(layout).map(|ptr| ptr.cast()).ok()
-    }
 }
 
 alloc! {
@@ -385,50 +345,8 @@ pub mod shrink {
     }
 }
 
-macro_rules! cases_bump_vec {
-    ($vec:ident, $ty:ident, $c:ident) => {
-        use super::*;
-
-        pub fn with_capacity(capacity: usize, bump: &mut Bump<Global, $c>) -> $vec<$ty, &mut Bump<Global, $c>> {
-            $vec::with_capacity_in(capacity, bump)
-        }
-
-        pub fn push(bump: &mut $vec<$ty, &mut Bump<Global, $c>>, value: $ty) {
-            bump.push(value)
-        }
-
-        pub fn try_with_capacity(capacity: usize, bump: &mut Bump<Global, $c>) -> Result<$vec<$ty, &mut Bump<Global, $c>>, std::alloc::AllocError> {
-            $vec::try_with_capacity_in(capacity, bump)
-        }
-
-        pub fn try_push(bump: &mut $vec<$ty, &mut Bump<Global, $c>>, value: $ty) -> Result<(), std::alloc::AllocError> {
-            bump.try_push(value)
-        }
-    };
-    ($(mod $mod:ident for $vec:ident $ty:ident)*) => {
-        $(
-            pub mod $mod {
-                use super::*;
-
-                pub mod up {
-                    cases_bump_vec!($vec, $ty, UP_1);
-                }
-
-                pub mod down {
-                    cases_bump_vec!($vec, $ty, DOWN_1);
-                }
-            }
-        )*
-    };
-}
-
-cases_bump_vec! {
-    mod bump_vec_u32 for MutBumpVec u32
-    mod bump_vec_u32_rev for MutBumpVec u32
-}
-
 pub mod alloc_iter_u32 {
-    use bump_scope::BumpBox;
+    use bump_scope::BumpAllocation;
 
     use super::*;
 
@@ -480,62 +398,46 @@ pub mod alloc_iter_u32 {
         bump.alloc_iter_mut(slice.iter().copied()).into_mut()
     }
 
-    pub fn mut_rev_up<'a>(bump: &'a mut Bump<Global, UP_1>, slice: &[u32]) -> &'a [u32] {
-        bump.alloc_iter_mut_rev(slice.iter().copied()).into_mut()
-    }
-
-    pub fn mut_rev_up_a<'a>(bump: &'a mut Bump<Global, UP_4>, slice: &[u32]) -> &'a [u32] {
-        bump.alloc_iter_mut_rev(slice.iter().copied()).into_mut()
-    }
-
-    pub fn mut_rev_down<'a>(bump: &'a mut Bump<Global, DOWN_1>, slice: &[u32]) -> &'a [u32] {
-        bump.alloc_iter_mut_rev(slice.iter().copied()).into_mut()
-    }
-
-    pub fn mut_rev_down_a<'a>(bump: &'a mut Bump<Global, DOWN_4>, slice: &[u32]) -> &'a [u32] {
-        bump.alloc_iter_mut_rev(slice.iter().copied()).into_mut()
-    }
-
     pub fn try_up<'a>(bump: &'a Bump<Global, UP_1>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_up_a<'a>(bump: &'a Bump<Global, UP_4>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_down<'a>(bump: &'a Bump<Global, DOWN_1>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_down_a<'a>(bump: &'a Bump<Global, DOWN_4>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_exact_up<'a>(bump: &'a Bump<Global, UP_1>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter_exact(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_exact_up_a<'a>(bump: &'a Bump<Global, UP_4>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter_exact(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_exact_down<'a>(bump: &'a Bump<Global, DOWN_1>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter_exact(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_exact_down_a<'a>(
@@ -544,19 +446,19 @@ pub mod alloc_iter_u32 {
     ) -> Option<&'a [u32]> {
         bump.try_alloc_iter_exact(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_up<'a>(bump: &'a mut Bump<Global, UP_1>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter_mut(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_up_a<'a>(bump: &'a mut Bump<Global, UP_4>, slice: &[u32]) -> Option<&'a [u32]> {
         bump.try_alloc_iter_mut(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_down<'a>(
@@ -565,7 +467,7 @@ pub mod alloc_iter_u32 {
     ) -> Option<&'a [u32]> {
         bump.try_alloc_iter_mut(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_down_a<'a>(
@@ -574,43 +476,7 @@ pub mod alloc_iter_u32 {
     ) -> Option<&'a [u32]> {
         bump.try_alloc_iter_mut(slice.iter().copied())
             .ok()
-            .map(BumpBox::into_ref)
-    }
-
-    pub fn try_mut_rev_up<'a>(
-        bump: &'a mut Bump<Global, UP_1>,
-        slice: &[u32],
-    ) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied())
-            .ok()
-            .map(BumpBox::into_ref)
-    }
-
-    pub fn try_mut_rev_up_a<'a>(
-        bump: &'a mut Bump<Global, UP_4>,
-        slice: &[u32],
-    ) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied())
-            .ok()
-            .map(BumpBox::into_ref)
-    }
-
-    pub fn try_mut_rev_down<'a>(
-        bump: &'a mut Bump<Global, DOWN_1>,
-        slice: &[u32],
-    ) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied())
-            .ok()
-            .map(BumpBox::into_ref)
-    }
-
-    pub fn try_mut_rev_down_a<'a>(
-        bump: &'a mut Bump<Global, DOWN_4>,
-        slice: &[u32],
-    ) -> Option<&'a [u32]> {
-        bump.try_alloc_iter_mut_rev(slice.iter().copied())
-            .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn bumpalo<'a>(bump: &'a bumpalo::Bump, slice: &[u32]) -> &'a [u32] {
@@ -622,57 +488,31 @@ pub mod alloc_iter_u32_bump_vec {
     use super::*;
 
     pub fn up<'a>(bump: &'a mut Bump<Global, UP_1>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVec::new_in(bump);
+        let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
+        Box::leak(vec.into_boxed_slice())
     }
 
     pub fn up_a<'a>(bump: &'a mut Bump<Global, UP_4>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVec::new_in(bump);
+        let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
+        Box::leak(vec.into_boxed_slice())
     }
 
     pub fn down<'a>(bump: &'a mut Bump<Global, DOWN_1>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVec::new_in(bump);
+        let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
+        Box::leak(vec.into_boxed_slice())
     }
 
     pub fn down_a<'a>(bump: &'a mut Bump<Global, DOWN_4>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVec::new_in(bump);
+        let mut vec = Vec::new_in(bump);
         vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
-    }
-
-    pub fn rev_up<'a>(bump: &'a mut Bump<Global, UP_1>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVecRev::new_in(bump);
-        vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
-    }
-
-    pub fn rev_up_a<'a>(bump: &'a mut Bump<Global, UP_4>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVecRev::new_in(bump);
-        vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
-    }
-
-    pub fn rev_down<'a>(bump: &'a mut Bump<Global, DOWN_1>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVecRev::new_in(bump);
-        vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
-    }
-
-    pub fn rev_down_a<'a>(bump: &'a mut Bump<Global, DOWN_4>, slice: &[u32]) -> &'a [u32] {
-        let mut vec = MutBumpVecRev::new_in(bump);
-        vec.extend(slice.iter().copied());
-        vec.into_boxed_slice().into_ref()
+        Box::leak(vec.into_boxed_slice())
     }
 }
 
 pub mod alloc_fmt {
-    use bump_scope::BumpBox;
-
     use super::*;
 
     pub fn up<'a>(bump: &'a Bump<Global, UP_1>, display: &str) -> &'a str {
@@ -714,43 +554,43 @@ pub mod alloc_fmt {
     pub fn try_up<'a>(bump: &'a Bump<Global, UP_1>, display: &str) -> Option<&'a str> {
         bump.try_alloc_fmt(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_up_a<'a>(bump: &'a Bump<Global, UP_4>, display: &str) -> Option<&'a str> {
         bump.try_alloc_fmt(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_down<'a>(bump: &'a Bump<Global, DOWN_1>, display: &str) -> Option<&'a str> {
         bump.try_alloc_fmt(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_down_a<'a>(bump: &'a Bump<Global, DOWN_4>, display: &str) -> Option<&'a str> {
         bump.try_alloc_fmt(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_up<'a>(bump: &'a mut Bump<Global, UP_1>, display: &str) -> Option<&'a str> {
         bump.try_alloc_fmt_mut(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_up_a<'a>(bump: &'a mut Bump<Global, UP_4>, display: &str) -> Option<&'a str> {
         bump.try_alloc_fmt_mut(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_down<'a>(bump: &'a mut Bump<Global, DOWN_1>, display: &str) -> Option<&'a str> {
         bump.try_alloc_fmt_mut(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 
     pub fn try_mut_down_a<'a>(
@@ -759,37 +599,35 @@ pub mod alloc_fmt {
     ) -> Option<&'a str> {
         bump.try_alloc_fmt_mut(format_args!("begin{display}end"))
             .ok()
-            .map(BumpBox::into_ref)
+            .map(BumpAllocation::into_ref)
     }
 }
 
 pub mod vec_map {
-    use bump_scope::Bump;
+    use super::*;
     use std::{alloc::AllocError, num::NonZeroU32};
 
-    type BumpVec<'a, T> = bump_scope::BumpVec<T, &'a Bump>;
-
-    pub fn same(vec: BumpVec<u32>) -> BumpVec<Option<NonZeroU32>> {
-        vec.map(NonZeroU32::new)
+    pub fn same(vec: Vec<u32, &Bump>) -> Vec<Option<NonZeroU32>, &Bump> {
+        extra::vec_map(vec, NonZeroU32::new)
     }
 
-    pub fn try_same(vec: BumpVec<u32>) -> Result<BumpVec<Option<NonZeroU32>>, AllocError> {
-        vec.try_map(NonZeroU32::new)
+    pub fn try_same(vec: Vec<u32, &Bump>) -> Result<Vec<Option<NonZeroU32>, &Bump>, AllocError> {
+        extra::vec_try_map(vec, NonZeroU32::new)
     }
 
-    pub fn grow(vec: BumpVec<u32>) -> BumpVec<u64> {
-        vec.map(|i| i as _)
+    pub fn grow(vec: Vec<u32, &Bump>) -> Vec<u64, &Bump> {
+        extra::vec_map(vec, |i| i as _)
     }
 
-    pub fn try_grow(vec: BumpVec<u32>) -> Result<BumpVec<u64>, AllocError> {
-        vec.try_map(|i| i as _)
+    pub fn try_grow(vec: Vec<u32, &Bump>) -> Result<Vec<u64, &Bump>, AllocError> {
+        extra::vec_try_map(vec, |i| i as _)
     }
 
-    pub fn shrink(vec: BumpVec<u64>) -> BumpVec<u32> {
-        vec.map(|i| i as _)
+    pub fn shrink(vec: Vec<u64, &Bump>) -> Vec<u32, &Bump> {
+        extra::vec_map(vec, |i| i as _)
     }
 
-    pub fn try_shrink(vec: BumpVec<u64>) -> Result<BumpVec<u32>, AllocError> {
-        vec.try_map(|i| i as _)
+    pub fn try_shrink(vec: Vec<u64, &Bump>) -> Result<Vec<u32, &Bump>, AllocError> {
+        extra::vec_try_map(vec, |i| i as _)
     }
 }

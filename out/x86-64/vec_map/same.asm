@@ -1,20 +1,20 @@
 inspect_asm::vec_map::same:
 	mov rax, rdi
-	mov rcx, qword ptr [rsi]
-	mov rdi, qword ptr [rsi + 8]
+	mov rcx, qword ptr [rsi + 24]
+	mov rdx, qword ptr [rsi]
 	movups xmm0, xmmword ptr [rsi + 8]
-	mov rdx, qword ptr [rsi + 24]
-	test rdi, rdi
+	test rcx, rcx
 	je .LBB0_1
-	lea rsi, [rcx + 4*rdi]
-	mov rdi, rcx
+	mov rsi, qword ptr [rsi + 8]
+	lea rdi, [rsi + 4*rcx]
 .LBB0_0:
-	add rdi, 4
-	cmp rdi, rsi
+	add rsi, 4
+	cmp rsi, rdi
 	jb .LBB0_0
 .LBB0_1:
-	andps xmm0, xmmword ptr [rip + .LCPI0_0]
-	mov qword ptr [rax], rcx
+	movabs rsi, 4611686018427387903
+	and rdx, rsi
+	mov qword ptr [rax], rdx
 	movups xmmword ptr [rax + 8], xmm0
-	mov qword ptr [rax + 24], rdx
+	mov qword ptr [rax + 24], rcx
 	ret

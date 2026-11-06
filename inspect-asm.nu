@@ -197,13 +197,6 @@ def --wrapped main [
         $names ++= [$"($name)::blink_alloc"]
     }
 
-    for try in ["", try_] {
-        $names ++= [$"alloc_layout::($try)up"]
-        $names ++= [$"alloc_layout::($try)down"]
-        $names ++= [$"alloc_layout::($try)bumpalo"]
-        $names ++= [$"alloc_layout::($try)blink_alloc"]
-    }
-
     for ty in [zst, u8, u32, vec3, 12_u32, big, str, u32_slice, u32_slice_clone] {
         for prefix in ["", try_] {
             $names ++= [$"alloc_($ty)::($prefix)up"]
@@ -228,22 +221,6 @@ def --wrapped main [
 
     for dir in [up, down, down_big] {
         $names ++= [$"alloc_overaligned_but_size_matches::($dir)"]
-    }
-
-    # for prefix in ["", try_] {
-    #     $names ++= $"alloc_with_drop::($prefix)up"
-    #     $names ++= $"alloc_with_drop::($prefix)up_a"
-    #     $names ++= $"alloc_with_drop::($prefix)down"
-    #     $names ++= $"alloc_with_drop::($prefix)down_a"
-    # }
-
-    for ty in [u32] {
-        for dir in [up, down] {
-            for try in ["", try_] {
-                $names ++= [$"bump_vec_($ty)::($dir)::($try)with_capacity"]
-                $names ++= [$"bump_vec_($ty)::($dir)::($try)push"]
-            }
-        }
     }
 
     for ty in [u32, u32_bump_vec] {

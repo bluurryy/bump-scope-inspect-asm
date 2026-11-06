@@ -34,14 +34,9 @@ inspect_asm::alloc_try_big_ok::up:
 	mov rdi, r15
 	mov rsi, r12
 	call qword ptr [rip + memcpy@GOTPCREL]
-	mov eax, dword ptr [r15]
-	lea rcx, [r15 + 512]
-	add r15, 4
-	test eax, eax
-	cmove r15, rcx
-	cmp eax, 1
+	cmp dword ptr [r15], 1
 	jne .LBB0_2
-	mov eax, dword ptr [r15]
+	mov eax, dword ptr [r15 + 4]
 	mov rcx, qword ptr [r14]
 	mov rdx, qword ptr [rsp + 504]
 	cmp rdx, qword ptr [rcx]
@@ -58,6 +53,7 @@ inspect_asm::alloc_try_big_ok::up:
 	mov eax, 1
 	jmp .LBB0_3
 .LBB0_2:
+	add r15, 512
 	mov qword ptr [rbx + 8], r15
 	xor eax, eax
 .LBB0_3:
@@ -74,7 +70,7 @@ inspect_asm::alloc_try_big_ok::up:
 .LBB0_4:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x17240000000000000000000000000000>>::alloc_sized_in_another_chunk::<!, core::result::Result<inspect_asm::big, u32>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x17240000000000000000000000000000>>::allocate_sized_in_another_chunk::<!, core::mem::maybe_uninit::MaybeUninit<core::result::Result<inspect_asm::big, u32>>>@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

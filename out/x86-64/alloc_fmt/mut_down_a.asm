@@ -9,25 +9,30 @@ inspect_asm::alloc_fmt::mut_down_a:
 	mov qword ptr [rsp + 48], rax
 	lea rax, [rip + <&str as core::fmt::Display>::fmt]
 	mov qword ptr [rsp + 56], rax
-	movups xmm0, xmmword ptr [rip + .Lanon.facade.0]
-	movaps xmmword ptr [rsp], xmm0
-	mov qword ptr [rsp + 16], 0
-	mov qword ptr [rsp + 24], rdi
-	lea rsi, [rip + .Lanon.facade.1]
-	lea rdx, [rip + .Lanon.facade.2]
+	mov rax, qword ptr [rdi]
+	mov rdx, qword ptr [rax]
+	mov rax, qword ptr [rax + 8]
+	cmp rdx, rax
+	js .LBB0_1
+.LBB0_0:
+	sub rdx, rax
+	mov qword ptr [rsp], rdx
+	mov qword ptr [rsp + 8], rax
+	mov qword ptr [rsp + 16], rdi
+	mov qword ptr [rsp + 24], 0
+	lea rsi, [rip + .Lanon.facade.0]
+	lea rdx, [rip + .Lanon.facade.1]
 	mov rdi, rsp
 	lea rcx, [rsp + 48]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
 	jne .LBB0_2
-	mov rbx, qword ptr [rsp + 16]
-	test rbx, rbx
-	je .LBB0_0
-	mov rax, qword ptr [rsp + 24]
-	mov rsi, qword ptr [rsp]
-	mov r14, qword ptr [rsp + 8]
+	mov rbx, qword ptr [rsp + 8]
+	mov rax, qword ptr [rsp + 16]
+	mov r14, qword ptr [rsp + 24]
 	mov r15, qword ptr [rax]
-	add rbx, rsi
+	mov rsi, rbx
+	add rbx, qword ptr [rsp]
 	sub rbx, r14
 	mov rdi, rbx
 	mov rdx, r14
@@ -35,11 +40,6 @@ inspect_asm::alloc_fmt::mut_down_a:
 	mov rax, rbx
 	and rax, -4
 	mov qword ptr [r15], rax
-	jmp .LBB0_1
-.LBB0_0:
-	mov ebx, 1
-	xor r14d, r14d
-.LBB0_1:
 	mov rax, rbx
 	mov rdx, r14
 	add rsp, 64
@@ -47,5 +47,12 @@ inspect_asm::alloc_fmt::mut_down_a:
 	pop r14
 	pop r15
 	ret
+.LBB0_1:
+	mov esi, 1
+	mov rbx, rdi
+	xor edx, edx
+	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x47240000000000000000000000000000>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
+	mov rdi, rbx
+	jmp .LBB0_0
 .LBB0_2:
-	call qword ptr [rip + bump_scope::private::format_trait_error@GOTPCREL]
+	call qword ptr [rip + bump_scope::error_behavior::panic::format_trait_error@GOTPCREL]
