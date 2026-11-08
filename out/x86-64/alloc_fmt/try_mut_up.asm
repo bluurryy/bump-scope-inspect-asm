@@ -46,7 +46,7 @@ inspect_asm::alloc_fmt::try_mut_up:
 	mov esi, 1
 	mov rbx, rdi
 	xor edx, edx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x17240000000000000000000000000000>>::prepare_allocation_range_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x17240000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
 	test rax, rax
 	je .LBB0_4
 	mov rdi, rbx

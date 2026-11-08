@@ -51,8 +51,8 @@ inspect_asm::alloc_fmt::mut_down_a:
 	mov esi, 1
 	mov rbx, rdi
 	xor edx, edx
-	call qword ptr [rip + <bump_scope::raw_bump::RawBump<alloc::alloc::Global, 0x47240000000000000000000000000000>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x47240000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
 	mov rdi, rbx
 	jmp .LBB0_0
 .LBB0_2:
-	call qword ptr [rip + bump_scope::error_behavior::panic::format_trait_error@GOTPCREL]
+	call qword ptr [rip + bump_scope::error_mode::panic::format_trait_error@GOTPCREL]

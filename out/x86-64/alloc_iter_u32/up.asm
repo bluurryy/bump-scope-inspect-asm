@@ -44,7 +44,7 @@ inspect_asm::alloc_iter_u32::up:
 	mov r8d, 4
 	xor esi, esi
 	mov r14, rdx
-	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<&bump_scope::bump::Bump<alloc::alloc::Global, 0x17240000000000000000000000000000>>
+	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<&bump_scope::bump::Bump<0x17240000000000000000000000000000>>
 	mov r15, qword ptr [rsp + 16]
 	mov r12, qword ptr [rsp + 32]
 	lea rdi, [r15 + 4*r12]

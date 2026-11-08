@@ -64,7 +64,7 @@ inspect_asm::alloc_fmt::down_a:
 	pop r15
 	ret
 .LBB0_5:
-	call qword ptr [rip + bump_scope::error_behavior::panic::format_trait_error@GOTPCREL]
+	call qword ptr [rip + bump_scope::error_mode::panic::format_trait_error@GOTPCREL]
 	ud2
 	mov rcx, qword ptr [rsp + 8]
 	test rcx, rcx

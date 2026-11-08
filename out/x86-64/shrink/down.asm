@@ -45,4 +45,4 @@ inspect_asm::shrink::down:
 	pop rbx
 	pop r14
 	pop r15
-	jmp qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit::<alloc::alloc::Global, 0x7240000000000000000000000000000>@GOTPCREL]
+	jmp qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit::<0x7240000000000000000000000000000, alloc::alloc::Global, false>@GOTPCREL]

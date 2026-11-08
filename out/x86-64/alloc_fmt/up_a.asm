@@ -42,7 +42,7 @@ inspect_asm::alloc_fmt::up_a:
 	add rsp, 72
 	ret
 .LBB0_3:
-	call qword ptr [rip + bump_scope::error_behavior::panic::format_trait_error@GOTPCREL]
+	call qword ptr [rip + bump_scope::error_mode::panic::format_trait_error@GOTPCREL]
 	ud2
 	mov rdx, qword ptr [rsp + 8]
 	test rdx, rdx

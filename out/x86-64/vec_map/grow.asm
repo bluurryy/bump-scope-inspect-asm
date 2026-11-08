@@ -40,7 +40,7 @@ inspect_asm::vec_map::grow:
 	mov r8d, 8
 	xor esi, esi
 	mov rdx, r14
-	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<&bump_scope::bump::Bump<alloc::alloc::Global, 0x17240000000000000000000000000000>>
+	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<&bump_scope::bump::Bump<0x17240000000000000000000000000000>>
 	lea rdi, [4*r14]
 	lea rcx, [r15 + 4*r14]
 	mov rdx, qword ptr [rsp + 8]
@@ -102,6 +102,6 @@ inspect_asm::vec_map::grow:
 	jmp .LBB0_0
 	mov rbx, rax
 	mov rdi, rsp
-	call core::ptr::drop_glue::<bump_scope::extra::map::vec_map_fallback::DropGuard<u32, u64, &bump_scope::bump::Bump<alloc::alloc::Global, 0x17240000000000000000000000000000>>>
+	call core::ptr::drop_glue::<bump_scope::extra::map::vec_map_fallback::DropGuard<u32, u64, &bump_scope::bump::Bump<0x17240000000000000000000000000000>>>
 	mov rdi, rbx
 	call _Unwind_Resume@PLT

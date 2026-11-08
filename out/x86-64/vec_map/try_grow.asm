@@ -56,7 +56,7 @@ inspect_asm::vec_map::try_grow:
 	lea rdi, [rsp + 80]
 	lea rsi, [rsp + 32]
 	mov rdx, r12
-	call <alloc::raw_vec::RawVecInner<&bump_scope::bump::Bump<alloc::alloc::Global, 0x17240000000000000000000000000000>>>::finish_grow
+	call <alloc::raw_vec::RawVecInner<&bump_scope::bump::Bump<0x17240000000000000000000000000000>>>::finish_grow
 	cmp byte ptr [rsp + 80], 0
 	jne .LBB0_7
 	lea rcx, [rbp + 1]
