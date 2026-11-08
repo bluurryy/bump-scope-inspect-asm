@@ -53,7 +53,7 @@ inspect_asm::alloc_iter_u32::try_up_a:
 	lea rdi, [rsp + 64]
 	lea rsi, [rsp + 32]
 	mov rdx, rbx
-	call <alloc::raw_vec::RawVecInner<bump_scope::containers::mut_bump_vec::AllocatorWrapper<bump_scope::bump::Bump<0x57240000000000000000000000000000>>>>::finish_grow
+	call <alloc::raw_vec::RawVecInner<bump_scope::containers::mut_bump_vec::AllocatorWrapper<bump_scope::bump::Bump<0xaf920000000000000000000000000000>>>>::finish_grow
 	cmp byte ptr [rsp + 64], 0
 	jne .LBB0_6
 	mov rax, qword ptr [rsp + 72]

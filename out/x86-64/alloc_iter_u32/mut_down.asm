@@ -60,7 +60,7 @@ inspect_asm::alloc_iter_u32::mut_down:
 	mov esi, 4
 	mov r14, rdi
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x7240000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87920000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
 	mov rdi, r14
 	mov rsi, r12
 	mov r14, rdx
@@ -74,7 +74,7 @@ inspect_asm::alloc_iter_u32::mut_down:
 	xor esi, esi
 	mov r15, rdx
 	mov rdx, rbx
-	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<bump_scope::containers::mut_bump_vec::AllocatorWrapper<bump_scope::bump::Bump<0x7240000000000000000000000000000>>>
+	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<bump_scope::containers::mut_bump_vec::AllocatorWrapper<bump_scope::bump::Bump<0x87920000000000000000000000000000>>>
 	mov rdx, r15
 	mov rsi, r14
 	mov r14, qword ptr [rsp + 16]

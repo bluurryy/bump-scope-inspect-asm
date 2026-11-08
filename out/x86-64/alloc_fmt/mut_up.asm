@@ -38,7 +38,7 @@ inspect_asm::alloc_fmt::mut_up:
 	mov esi, 1
 	mov rbx, rdi
 	xor edx, edx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x17240000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<!>@GOTPCREL]
 	mov rdi, rbx
 	jmp .LBB0_0
 .LBB0_2:
