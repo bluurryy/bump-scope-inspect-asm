@@ -26,7 +26,7 @@ dependencies = [
 [[package]]
 name = "bump-scope"
 version = "3.0.0-dev"
-source = "git+https://github.com/bluurryy/bump-scope?rev=c57866daffbcc38024697a70299ff2d99b1e0374#c57866daffbcc38024697a70299ff2d99b1e0374"
+source = "git+https://github.com/bluurryy/bump-scope?rev=a70e08fa324d25a0ad2dd7b5323395357504ff0c#a70e08fa324d25a0ad2dd7b5323395357504ff0c"
 
 [[package]]
 name = "bumpalo"

@@ -6,50 +6,45 @@ inspect_asm::alloc_try_u32::try_up:
 	push r12
 	push rbx
 	push rax
-	mov r14, rsi
+	mov r15, rsi
 	mov rbx, rdi
 	mov r12, qword ptr [rsi]
 	mov r13, qword ptr [r12]
-	lea r15, [r13 + 3]
-	and r15, -4
-	lea rax, [r15 + 8]
+	lea r14, [r13 + 3]
+	and r14, -4
+	lea rax, [r14 + 8]
 	cmp rax, qword ptr [r12 + 8]
-	ja .LBB0_6
+	ja .LBB0_5
 	mov qword ptr [r12], rax
 .LBB0_0:
-	mov rax, qword ptr [r14]
+	mov rax, qword ptr [r15]
 	mov rbp, qword ptr [rax]
 	call rdx
-	mov dword ptr [r15], eax
-	mov dword ptr [r15 + 4], edx
+	mov dword ptr [r14], eax
+	mov dword ptr [r14 + 4], edx
 	test al, 1
-	je .LBB0_3
-	mov rcx, qword ptr [r14]
-	mov eax, 1
-	cmp rbp, qword ptr [rcx]
-	jne .LBB0_2
-	mov rsi, qword ptr [r12]
-	mov rdi, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
-	lea r8, [rdi + 32]
-	cmp rsi, r8
 	je .LBB0_2
-	add rdi, 16
-	cmp rsi, rdi
-	je .LBB0_7
+	mov rax, qword ptr [r15]
+	mov ecx, 1
+	cmp rbp, qword ptr [rax]
+	jne .LBB0_1
+	mov rax, qword ptr [r12]
+	and rax, -64
+	cmp rax, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	je .LBB0_6
 	mov qword ptr [r12], r13
+	mov qword ptr [r15], r12
 .LBB0_1:
-	mov qword ptr [r14], r12
+	xor r14d, r14d
+	jmp .LBB0_3
 .LBB0_2:
-	xor r15d, r15d
-	jmp .LBB0_4
+	add r14, 4
+	xor ecx, ecx
 .LBB0_3:
-	add r15, 4
-	xor eax, eax
-.LBB0_4:
-	mov dword ptr [rbx], eax
+	mov dword ptr [rbx], ecx
 	mov dword ptr [rbx + 4], edx
-	mov qword ptr [rbx + 8], r15
-.LBB0_5:
+	mov qword ptr [rbx + 8], r14
+.LBB0_4:
 	mov rax, rbx
 	add rsp, 8
 	pop rbx
@@ -59,32 +54,21 @@ inspect_asm::alloc_try_u32::try_up:
 	pop r15
 	pop rbp
 	ret
-.LBB0_6:
-	mov rdi, r14
-	mov r15, rdx
+.LBB0_5:
+	mov rdi, r15
+	mov r14, rdx
 	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<core::result::Result<u32, u32>>>@GOTPCREL]
-	mov rdx, r15
-	mov r15, rax
+	mov rdx, r14
+	mov r14, rax
 	test rax, rax
 	jne .LBB0_0
 	mov dword ptr [rbx], 2
-	jmp .LBB0_5
-.LBB0_7:
-	mov rsi, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
-	lea rdi, [rsi + 16]
-	cmp rbp, rdi
-	setne dil
-	add rsi, 32
-	cmp rbp, rsi
-	setne sil
-	and sil, dil
-	cmp sil, 1
-	jne .LBB0_2
-.LBB0_8:
-	mov r12, rcx
-	mov rcx, qword ptr [rcx + 16]
-	test rcx, rcx
-	jne .LBB0_8
-	lea rcx, [r12 + 32]
-	mov qword ptr [r12], rcx
+	jmp .LBB0_4
+.LBB0_6:
+	mov ebp, edx
+	mov rdi, r15
+	mov rsi, r12
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::reset_to_with_dummy_checkpoint@GOTPCREL]
+	mov ecx, 1
+	mov edx, ebp
 	jmp .LBB0_1

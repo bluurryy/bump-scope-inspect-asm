@@ -1,48 +1,38 @@
 inspect_asm::shrink::down:
-	push r15
-	push r14
-	push rbx
-	mov rbx, r9
 	lea rax, [r8 - 1]
 	test rax, rsi
-	jne .LBB0_4
+	jne .LBB0_1
 	mov rax, qword ptr [rdi]
 	cmp rsi, qword ptr [rax]
 	je .LBB0_0
 	mov rax, rsi
-	mov rbx, rcx
-	jmp .LBB0_3
+	mov rdx, rcx
+	ret
 .LBB0_0:
-	mov r14, rdi
+	push r15
+	push r14
+	push rbx
 	add rcx, rsi
 	xor eax, eax
-	sub rcx, rbx
+	sub rcx, r9
 	cmovae rax, rcx
 	neg r8
 	and r8, rax
-	lea rax, [rbx + rsi]
-	mov r15, r8
+	mov rbx, rdi
 	mov rdi, r8
-	mov rdx, rbx
-	cmp rax, r8
-	jbe .LBB0_1
+	mov rdx, r9
+	mov r14, r9
+	mov r15, r8
 	call qword ptr [rip + memmove@GOTPCREL]
-	jmp .LBB0_2
-.LBB0_1:
-	call qword ptr [rip + memcpy@GOTPCREL]
-.LBB0_2:
-	mov rcx, qword ptr [r14]
-	mov rax, r15
-	mov qword ptr [rcx], r15
-.LBB0_3:
-	mov rdx, rbx
+	mov rax, qword ptr [rbx]
+	mov qword ptr [rax], r15
+	mov rsi, r15
+	mov rcx, r14
 	pop rbx
 	pop r14
 	pop r15
+	mov rax, rsi
+	mov rdx, rcx
 	ret
-.LBB0_4:
-	mov r9, rbx
-	pop rbx
-	pop r14
-	pop r15
+.LBB0_1:
 	jmp qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit::<0x87920000000000000000000000000000, alloc::alloc::Global, false>@GOTPCREL]

@@ -1,9 +1,11 @@
 inspect_asm::alloc_try_u32::try_down:
+	push rbp
 	push r15
 	push r14
 	push r13
 	push r12
 	push rbx
+	push rax
 	mov r15, rsi
 	mov rbx, rdi
 	mov r12, qword ptr [rsi]
@@ -12,48 +14,45 @@ inspect_asm::alloc_try_u32::try_down:
 	and r14, -4
 	add r14, -8
 	cmp r14, qword ptr [r12 + 8]
-	jb .LBB0_6
+	jb .LBB0_5
 	mov qword ptr [r12], r14
 .LBB0_0:
 	call rdx
 	mov dword ptr [r14], eax
 	mov dword ptr [r14 + 4], edx
 	test al, 1
-	je .LBB0_3
-	mov rcx, qword ptr [r15]
-	mov eax, 1
-	cmp r14, qword ptr [rcx]
-	jne .LBB0_2
-	mov rsi, qword ptr [r12]
-	mov rdi, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
-	lea r8, [rdi + 32]
-	cmp rsi, r8
 	je .LBB0_2
-	add rdi, 16
-	cmp rsi, rdi
-	je .LBB0_7
+	mov rax, qword ptr [r15]
+	mov ebp, 1
+	cmp r14, qword ptr [rax]
+	jne .LBB0_1
+	mov rax, qword ptr [r12]
+	and rax, -64
+	cmp rax, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
+	je .LBB0_6
 	mov qword ptr [r12], r13
-.LBB0_1:
 	mov qword ptr [r15], r12
-.LBB0_2:
+.LBB0_1:
 	xor r14d, r14d
-	jmp .LBB0_4
-.LBB0_3:
+	jmp .LBB0_3
+.LBB0_2:
 	add r14, 4
-	xor eax, eax
-.LBB0_4:
-	mov dword ptr [rbx], eax
+	xor ebp, ebp
+.LBB0_3:
+	mov dword ptr [rbx], ebp
 	mov dword ptr [rbx + 4], edx
 	mov qword ptr [rbx + 8], r14
-.LBB0_5:
+.LBB0_4:
 	mov rax, rbx
+	add rsp, 8
 	pop rbx
 	pop r12
 	pop r13
 	pop r14
 	pop r15
+	pop rbp
 	ret
-.LBB0_6:
+.LBB0_5:
 	mov rdi, r15
 	mov r14, rdx
 	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<core::result::Result<u32, u32>>>@GOTPCREL]
@@ -62,22 +61,11 @@ inspect_asm::alloc_try_u32::try_down:
 	test rax, rax
 	jne .LBB0_0
 	mov dword ptr [rbx], 2
-	jmp .LBB0_5
-.LBB0_7:
-	mov rsi, qword ptr [rip + bump_scope::chunk_types::dummy_memory_region::DUMMY_MEMORY_REGION@GOTPCREL]
-	lea rdi, [rsi + 16]
-	cmp r14, rdi
-	setne dil
-	add rsi, 32
-	cmp r14, rsi
-	setne sil
-	and sil, dil
-	cmp sil, 1
-	jne .LBB0_2
-.LBB0_8:
-	mov r12, rcx
-	mov rcx, qword ptr [rcx + 16]
-	test rcx, rcx
-	jne .LBB0_8
-	mov qword ptr [r12], r12
+	jmp .LBB0_4
+.LBB0_6:
+	mov r14d, edx
+	mov rdi, r15
+	mov rsi, r12
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87920000000000000000000000000000, alloc::alloc::Global, false>>::reset_to_with_dummy_checkpoint@GOTPCREL]
+	mov edx, r14d
 	jmp .LBB0_1

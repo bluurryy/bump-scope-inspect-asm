@@ -20,63 +20,56 @@ inspect_asm::alloc_fmt::down_a:
 	lea rcx, [rsp + 56]
 	call qword ptr [rip + core::fmt::write@GOTPCREL]
 	test al, al
-	jne .LBB0_5
+	jne .LBB0_3
 	mov rcx, qword ptr [rsp + 8]
 	mov rax, qword ptr [rsp + 16]
 	mov rdx, qword ptr [rsp + 32]
 	cmp rdx, rcx
-	jae .LBB0_4
+	jae .LBB0_2
 	mov rsi, qword ptr [rsp + 24]
-	mov r14, qword ptr [rsi]
-	cmp rax, qword ptr [r14]
+	mov r15, qword ptr [rsi]
+	cmp rax, qword ptr [r15]
 	je .LBB0_0
 	xor ebx, ebx
-	jmp .LBB0_3
+	jmp .LBB0_1
 .LBB0_0:
 	add rcx, rax
 	xor ebx, ebx
 	sub rcx, rdx
 	cmovae rbx, rcx
 	and rbx, -4
-	lea rcx, [rdx + rax]
 	mov rdi, rbx
-	mov r15, rax
 	mov rsi, rax
-	mov r12, rdx
-	cmp rcx, rbx
-	jbe .LBB0_1
+	mov r14, rdx
+	mov r12, rax
 	call qword ptr [rip + memmove@GOTPCREL]
-	jmp .LBB0_2
+	mov rax, r12
+	mov rdx, r14
+	mov qword ptr [r15], rbx
 .LBB0_1:
-	call qword ptr [rip + memcpy@GOTPCREL]
-.LBB0_2:
-	mov qword ptr [r14], rbx
-	mov rdx, r12
-	mov rax, r15
-.LBB0_3:
 	test rbx, rbx
 	cmovne rax, rbx
-.LBB0_4:
+.LBB0_2:
 	add rsp, 72
 	pop rbx
 	pop r12
 	pop r14
 	pop r15
 	ret
-.LBB0_5:
+.LBB0_3:
 	call qword ptr [rip + bump_scope::error_mode::panic::format_trait_error@GOTPCREL]
 	ud2
 	mov rcx, qword ptr [rsp + 8]
 	test rcx, rcx
-	je .LBB0_6
+	je .LBB0_4
 	mov rsi, qword ptr [rsp + 16]
 	mov rdx, qword ptr [rsp + 24]
 	mov rdx, qword ptr [rdx]
 	cmp rsi, qword ptr [rdx]
-	jne .LBB0_6
+	jne .LBB0_4
 	add rcx, rsi
 	and rcx, -4
 	mov qword ptr [rdx], rcx
-.LBB0_6:
+.LBB0_4:
 	mov rdi, rax
 	call _Unwind_Resume@PLT
