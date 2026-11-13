@@ -72,7 +72,7 @@ inspect_asm::alloc_try_big_ok::try_up:
 .LBB0_5:
 	mov rdi, r15
 	mov r14, rdx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<core::result::Result<inspect_asm::big, u32>>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f940000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<core::result::Result<inspect_asm::big, u32>>>@GOTPCREL]
 	mov rdx, r14
 	mov r14, rax
 	test rax, rax
@@ -83,6 +83,6 @@ inspect_asm::alloc_try_big_ok::try_up:
 	mov rdi, r15
 	mov rsi, r12
 	mov r14d, ecx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::reset_to_with_dummy_checkpoint@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f940000000000000000000000000000, alloc::alloc::Global, false>>::reset_to_with_dummy_checkpoint@GOTPCREL]
 	mov ecx, r14d
 	jmp .LBB0_1

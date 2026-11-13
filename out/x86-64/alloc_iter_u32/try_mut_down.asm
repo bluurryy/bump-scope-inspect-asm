@@ -65,7 +65,7 @@ inspect_asm::alloc_iter_u32::try_mut_down:
 	lea rdi, [rsp + 48]
 	lea rsi, [rsp + 16]
 	mov rdx, r15
-	call <alloc::raw_vec::RawVecInner<bump_scope::containers::mut_bump_vec::AllocatorWrapper<bump_scope::bump::Bump<0x87920000000000000000000000000000>>>>::finish_grow
+	call <alloc::raw_vec::RawVecInner<bump_scope::containers::mut_bump_vec::AllocatorWrapper<bump_scope::bump::Bump<0x87940000000000000000000000000000>>>>::finish_grow
 	cmp byte ptr [rsp + 48], 0
 	jne .LBB0_8
 	lea r13, [rbp + 1]
@@ -100,7 +100,7 @@ inspect_asm::alloc_iter_u32::try_mut_down:
 	mov esi, 4
 	mov rdi, r12
 	mov rdx, rcx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87920000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87940000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_range_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
 	test rax, rax
 	je .LBB0_8
 	mov rsi, rdx

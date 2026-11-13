@@ -17,6 +17,6 @@ inspect_asm::alloc_vec3::up:
 	ret
 .LBB0_1:
 	mov rbx, rsi
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<!, core::mem::maybe_uninit::MaybeUninit<[u32; 3]>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f940000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<!, core::mem::maybe_uninit::MaybeUninit<[u32; 3]>>@GOTPCREL]
 	mov rsi, rbx
 	jmp .LBB0_0

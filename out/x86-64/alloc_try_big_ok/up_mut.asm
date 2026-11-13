@@ -54,7 +54,7 @@ inspect_asm::alloc_try_big_ok::up_mut:
 .LBB0_3:
 	mov rdi, r14
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_in_another_chunk::<!, core::result::Result<inspect_asm::big, u32>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f940000000000000000000000000000, alloc::alloc::Global, false>>::prepare_allocation_in_another_chunk::<!, core::result::Result<inspect_asm::big, u32>>@GOTPCREL]
 	mov rdx, r15
 	mov r15, rax
 	jmp .LBB0_0

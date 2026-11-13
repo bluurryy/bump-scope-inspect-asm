@@ -53,7 +53,7 @@ inspect_asm::alloc_try_u32::down:
 .LBB0_4:
 	mov rdi, r14
 	mov r12, rdx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<!, core::mem::maybe_uninit::MaybeUninit<core::result::Result<u32, u32>>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87940000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<!, core::mem::maybe_uninit::MaybeUninit<core::result::Result<u32, u32>>>@GOTPCREL]
 	mov rdx, r12
 	mov r12, rax
 	jmp .LBB0_0
@@ -61,6 +61,6 @@ inspect_asm::alloc_try_u32::down:
 	mov ebp, edx
 	mov rdi, r14
 	mov rsi, r15
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87920000000000000000000000000000, alloc::alloc::Global, false>>::reset_to_with_dummy_checkpoint@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x87940000000000000000000000000000, alloc::alloc::Global, false>>::reset_to_with_dummy_checkpoint@GOTPCREL]
 	mov edx, ebp
 	jmp .LBB0_1

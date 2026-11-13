@@ -13,7 +13,7 @@ inspect_asm::alloc_u32::up:
 	ret
 .LBB0_0:
 	mov ebx, esi
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<!, core::mem::maybe_uninit::MaybeUninit<u32>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f940000000000000000000000000000, alloc::alloc::Global, false>>::alloc_sized_in_another_chunk::<!, core::mem::maybe_uninit::MaybeUninit<u32>>@GOTPCREL]
 	mov esi, ebx
 	mov dword ptr [rax], esi
 	pop rbx

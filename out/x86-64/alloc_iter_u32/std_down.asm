@@ -44,7 +44,7 @@ inspect_asm::alloc_iter_u32::std_down:
 	lea rdi, [rsp + 8]
 	xor esi, esi
 	mov r15, rdx
-	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<&mut bump_scope::bump::Bump<0x87920000000000000000000000000000>>
+	call <alloc::raw_vec::RawVecInner<_>>::reserve::do_reserve_and_handle::<&mut bump_scope::bump::Bump<0x87940000000000000000000000000000>>
 	mov r14, qword ptr [rsp + 16]
 	mov r12, qword ptr [rsp + 32]
 	lea rdi, [r14 + 4*r12]
@@ -97,7 +97,7 @@ inspect_asm::alloc_iter_u32::std_down:
 	mov rsi, r14
 	mov rcx, rbx
 	mov r9, r12
-	call qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit::<0x87920000000000000000000000000000, alloc::alloc::Global, false>@GOTPCREL]
+	call qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit::<0x87940000000000000000000000000000, alloc::alloc::Global, false>@GOTPCREL]
 	test rax, rax
 	mov rdx, rbp
 	jne .LBB0_3

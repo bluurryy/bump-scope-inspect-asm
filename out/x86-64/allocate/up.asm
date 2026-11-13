@@ -17,7 +17,7 @@ inspect_asm::allocate::up:
 .LBB0_0:
 	push rbx
 	mov rbx, rdx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0x8f940000000000000000000000000000, alloc::alloc::Global, false>>::alloc_in_another_chunk::<core::alloc::AllocError>@GOTPCREL]
 	mov rdx, rbx
 	pop rbx
 	ret

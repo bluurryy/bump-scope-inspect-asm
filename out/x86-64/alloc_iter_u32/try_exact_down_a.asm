@@ -32,7 +32,7 @@ inspect_asm::alloc_iter_u32::try_exact_down_a:
 	mov rbx, rsi
 	mov rsi, rdx
 	mov r15, rdx
-	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0xa7920000000000000000000000000000, alloc::alloc::Global, false>>::alloc_slice_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<u32>>@GOTPCREL]
+	call qword ptr [rip + <bump_scope::bump_imp::BumpImp<0xa7940000000000000000000000000000, alloc::alloc::Global, false>>::alloc_slice_in_another_chunk::<core::alloc::AllocError, core::mem::maybe_uninit::MaybeUninit<u32>>@GOTPCREL]
 	mov rsi, rbx
 	mov rdx, r15
 	mov rbx, rax

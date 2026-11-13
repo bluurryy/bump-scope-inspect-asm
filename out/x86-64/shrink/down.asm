@@ -35,4 +35,4 @@ inspect_asm::shrink::down:
 	mov rdx, rcx
 	ret
 .LBB0_1:
-	jmp qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit::<0x87920000000000000000000000000000, alloc::alloc::Global, false>@GOTPCREL]
+	jmp qword ptr [rip + bump_scope::allocator_impl::shrink::shrink_unfit::<0x87940000000000000000000000000000, alloc::alloc::Global, false>@GOTPCREL]
